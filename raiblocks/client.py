@@ -1,7 +1,9 @@
 import six
 import json
 import requests
-from raiblocks.models import Account, Wallet, PublicKey, Block, Seed
+from raiblocks.models import (
+    Account, Wallet, PublicKey, Work, PrivateKey, Block, Seed
+)
 
 
 def preprocess_account(account_string):
@@ -24,8 +26,16 @@ def preprocess_public_key(public_key_string):
     return PublicKey(public_key_string)
 
 
+def preprocess_private_key(private_key_string):
+    return PublicKey(private_key_string)
+
+
 def preprocess_strbool(value):
     return value and 'true' or 'false'
+
+
+def preprocess_work(work_string):
+    return Work(work_string)
 
 
 def preprocess_int(integer_string):
@@ -1162,6 +1172,918 @@ class Client(object):
         resp = self.call('rai_to_raw', payload)
 
         return int(resp['amount'])
+
+    def key_create(self):
+        """
+        Generates an **adhoc random keypair**
+
+        >>> rpc.key_create()
+        {
+          "private": "781186FB9EF17DB6E3D1056550D9FAE5D5BBADA6A6BC370E4CBB938B1DC71DA3",
+          "public": "3068BB1CA04525BB0E416C485FE6A67FD52540227D267CC8B6E8DA958A7FA039",
+          "account": "xrb_1e5aqegc1jb7qe964u4adzmcezyo6o146zb8hm6dft8tkp79za3sxwjym5rx"
+        }
+
+        """
+
+        resp = self.call('key_create')
+
+        return resp
+
+    def key_expand(self, key):
+        """
+        Derive public key and account number from **private key**
+
+        :type key: str
+
+        >>> rpc.key_expand(
+            key="781186FB9EF17DB6E3D1056550D9FAE5D5BBADA6A6BC370E4CBB938B1DC71DA3"
+        )
+        {
+          "private": "781186FB9EF17DB6E3D1056550D9FAE5D5BBADA6A6BC370E4CBB938B1DC71DA3",
+          "public": "3068BB1CA04525BB0E416C485FE6A67FD52540227D267CC8B6E8DA958A7FA039",
+          "account": "xrb_1e5aqegc1jb7qe964u4adzmcezyo6o146zb8hm6dft8tkp79za3sxwjym5rx"
+        }
+
+        """
+
+        key = preprocess_private_key(key)
+
+        payload = {
+            "key": key,
+        }
+
+        resp = self.call('key_expand', payload)
+
+        return resp
+
+    def ledger(self, account, count=None, representative=False, weight=False,
+               pending=False):
+        """
+        Returns frontier, open block, change representative block, balance,
+        last modified timestamp from local database & block count starting at
+        **account** up to **count**
+
+        :type account: str
+        :type count: int
+        :type representative: bool
+        :type weight: bool
+        :type pending: bool
+
+        .. enable_control required
+        .. version 8.0 required
+
+        >>> rpc.ledger(
+        ...     account="xrb_1111111111111111111111111111111111111111111111111111hifc8npp",
+        ...     count=1
+        ... )
+        {
+            "xrb_11119gbh8hb4hj1duf7fdtfyf5s75okzxdgupgpgm1bj78ex3kgy7frt3s9n": {
+                "frontier": "E71AF3E9DD86BBD8B4620EFA63E065B34D358CFC091ACB4E103B965F95783321",
+                "open_block": "643B77F1ECEFBDBE1CC909872964C1DBBE23A6149BD3CEF2B50B76044659B60F",
+                "representative_block": "643B77F1ECEFBDBE1CC909872964C1DBBE23A6149BD3CEF2B50B76044659B60F",
+                "balance": 0,
+                "modified_timestamp": 1511476234,
+                "block_count": 2
+            }
+        }
+
+        """
+
+        account = preprocess_account(account)
+
+        payload = {
+            "account": account,
+        }
+
+        if count is not None:
+            payload['count'] = preprocess_int(count)
+
+        if representative:
+            payload['representative'] = preprocess_strbool(representative)
+
+        if weight:
+            payload['weight'] = preprocess_strbool(weight)
+
+        if pending:
+            payload['pending'] = preprocess_strbool(pending)
+
+        resp = self.call('ledger', payload)
+        accounts = resp.get('accounts') or {}
+
+        int_keys = (
+            'balance', 'modified_timestamp', 'block_count', 'weight', 'pending'
+        )
+        for account, frontier in accounts.items():
+            for key in int_keys:
+                if key in frontier:
+                    frontier[key] = int(frontier[key])
+
+        return accounts
+
+    def payment_begin(self, wallet):
+        """
+        Begin a new payment session. Searches wallet for an account that's
+        marked as available and has a 0 balance. If one is found, the account
+        number is returned and is marked as unavailable. If no account is
+        found, a new account is created, placed in the wallet, and returned.
+
+        :type wallet: str
+
+        >>> rpc.payment_begin(
+        ... wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        ... )
+        "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
+
+        """
+
+        wallet = preprocess_wallet(wallet)
+
+        payload = {
+            "wallet": wallet,
+        }
+
+        resp = self.call('payment_begin', payload)
+
+        return resp['account']
+
+    # NOTE(dan): Server RPC is broken here - it *should* return an
+    # 'error' for 'No wallet found', but it returns 'status' instead
+    # https://github.com/clemahieu/raiblocks/blob/e9592e5/rai/node/rpc.cpp#L2238
+    def payment_init(self, wallet):
+        """
+        Marks all accounts in wallet as available for being used as a payment
+        session.
+
+        :type wallet: str
+
+        >>> rpc.payment_init(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        ... )
+        True
+        """
+
+        wallet = preprocess_wallet(wallet)
+
+        payload = {
+            "wallet": wallet,
+        }
+
+        resp = self.call('payment_init', payload)
+
+        return resp['status'] == 'Ready'
+
+    def payment_end(self, account, wallet):
+        """
+        End a payment session.  Marks the account as available for use in a
+        payment session.
+
+        :type account: str
+        :type wallet: str
+
+        >>> rpc.payment_end(
+        ...     account="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+        ...     wallet="FFFD1BAEC8EC20814BBB9059B393051AAA8380F9B5A2E6B2489A277D81789EEE"
+        ... )
+        True
+        """
+
+        account = preprocess_account(account)
+        wallet = preprocess_wallet(wallet)
+
+        payload = {
+            "account": account,
+            "wallet": wallet,
+        }
+
+        resp = self.call('payment_end', payload)
+
+        return resp == {}
+
+    def payment_wait(self, account, amount, timeout):
+        """
+        Wait for payment of 'amount' to arrive in 'account' or until 'timeout'
+        milliseconds have elapsed.
+
+        :type account: str
+        :type amount: int
+        :type timeout: int
+
+        >>> rpc.payment_wait(
+        ...     account="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+        ...     amount=1,
+        ...     timeout=1000
+        ... )
+        True
+
+        """
+
+        account = preprocess_account(account)
+        amount = preprocess_int(amount)
+        timeout = preprocess_int(timeout)
+
+        payload = {
+            "account": account,
+            "amount": amount,
+            "timeout": timeout,
+        }
+
+        resp = self.call('payment_wait', payload)
+
+        return resp['status'] == 'success'
+
+    def process(self, block):
+        """
+        Publish **block** to the network
+
+        :type block: dict or json
+
+        >>> block = {
+            "account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+            "work": "0000000000000000",
+            "source": "FA5B51D063BADDF345EFD7EF0D3C5FB115C85B1EF4CDE89D8B7DF3EAF60A04A4",
+            "representative": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+            "signature": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+            "type": "open"
+        }
+
+        >>> rpc.process(block=block)
+        "42A723D2B60462BF7C9A003FE9A70057D3A6355CA5F1D0A57581000000000000"
+
+        >>> rpc.process(json.dumps(block))
+        "42A723D2B60462BF7C9A003FE9A70057D3A6355CA5F1D0A57581000000000000"
+
+        """
+
+        def _preprocess_json_dict(value):
+            if isinstance(value, dict):
+                return json.dumps(value)
+            return value
+
+
+        block = _preprocess_json_dict(block)
+
+        payload = {
+            "block": block,
+        }
+
+        resp = self.call('process', payload)
+
+        return resp['hash']
+
+    def receive(self, wallet, account, block):
+        """
+        Receive pending **block** for **account** in **wallet**
+
+        :type wallet: str
+        :type account: str
+        :type block: str
+
+        .. enable_control required
+
+        >>> rpc.receive(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+        ...     account="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+        ...     block="53EAA25CE28FA0E6D55EA9704B32604A736966255948594D55CBB05267CECD48"
+        ... )
+        "EE5286AB32F580AB65FD84A69E107C69FBEB571DEC4D99297E19E3FA5529547B"
+
+        """
+
+        wallet = preprocess_wallet(wallet)
+        account = preprocess_account(account)
+        block = preprocess_block(block)
+
+        payload = {
+            "wallet": wallet,
+            "account": account,
+            "block": block,
+        }
+
+        resp = self.call('receive', payload)
+
+        return resp['block']
+
+    def receive_minimum(self):
+        """
+        Returns receive minimum for node
+
+        .. enable_control required
+        .. version 8.0 required
+
+        >>> rpc.receive_minimum()
+        1000000000000000000000000
+
+        """
+
+        resp = self.call('receive_minimum')
+
+        return int(resp['amount'])
+
+    def receive_minimum_set(self, amount):
+        """
+        Set **amount** as new receive minimum for node until restart
+
+        :type amount: int
+
+        .. enable_control required
+        .. version 8.0 required
+
+        >>> rpc.receive_minimum_set(amount=1000000000000000000000000000000)
+        True
+        """
+
+        amount = preprocess_int(amount)
+
+        payload = {
+            "amount": amount,
+        }
+
+        resp = self.call('receive_minimum_set', payload)
+
+        return 'success' in resp
+
+    def representatives(self):
+        """
+        Returns a list of pairs of representative and its voting weight
+
+        >>> rpc.representatives()
+        {
+            "xrb_1111111111111111111111111111111111111111111111111117353trpda":
+                3822372327060170000000000000000000000,
+            "xrb_1111111111111111111111111111111111111111111111111awsq94gtecn":
+                30999999999999999999999999000000,
+            "xrb_114nk4rwjctu6n6tr6g6ps61g1w3hdpjxfas4xj1tq6i8jyomc5d858xr1xi":
+                0
+        }
+
+        """
+
+        resp = self.call('representatives')
+        representatives = resp.get('representatives') or {}
+
+        return {
+            k: int(v) for k, v in representatives.items()
+        }
+
+    def wallet_representative(self, wallet):
+        """
+        Returns the default representative for **wallet**
+
+        :type wallet: str
+
+        >>> rpc.wallet_representative(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        ... )
+        "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
+
+        """
+
+        wallet = preprocess_wallet(wallet)
+
+        payload = {
+            "wallet": wallet,
+        }
+
+        resp = self.call('wallet_representative', payload)
+
+        return resp['representative']
+
+    def wallet_representative_set(self, wallet, representative):
+        """
+        Sets the default **representative** for **wallet**
+
+        :type wallet: str
+        :type representative: str
+
+        .. enable_control required
+
+        >>> rpc.wallet_representative_set(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+        ...     representative="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
+        ... )
+        True
+
+        """
+
+        wallet = preprocess_wallet(wallet)
+        representative = preprocess_account(representative)
+
+        payload = {
+            "wallet": wallet,
+            "representative": representative,
+        }
+
+        resp = self.call('wallet_representative_set', payload)
+
+        return resp['set'] == '1'
+
+    def wallet_contains(self, wallet, account):
+        """
+        Check whether **wallet** contains **account**
+
+        :type wallet: str
+        :type account: str
+
+        >>> rpc.wallet_contains(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+        ...     account="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
+        ... )
+        True
+        """
+
+        wallet = preprocess_wallet(wallet)
+        account = preprocess_account(account)
+
+        payload = {
+            "wallet": wallet,
+            "account": account,
+        }
+
+        resp = self.call('wallet_contains', payload)
+
+        return resp['exists'] == '1'
+
+    def wallet_create(self):
+        """
+        Creates a new random wallet id
+
+        .. enable_control required
+
+        >>> rpc.wallet_create()
+        "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+
+        """
+
+        resp = self.call('wallet_create')
+
+        return resp['wallet']
+
+    def wallet_destroy(self, wallet):
+        """
+        Destroys **wallet** and all contained accounts
+
+        :type wallet: str
+
+        .. enable_control required
+
+        >>> rpc.wallet_destroy(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        ... )
+        True
+        """
+
+        wallet = preprocess_wallet(wallet)
+
+        payload = {
+            "wallet": wallet,
+        }
+
+        resp = self.call('wallet_destroy', payload)
+
+        return resp == {}
+
+    def wallet_export(self, wallet):
+        """
+        Return a json representation of **wallet**
+
+        :type wallet: str
+
+        >>> rpc.wallet_export(wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F")
+        {
+            "0000000000000000000000000000000000000000000000000000000000000000": "0000000000000000000000000000000000000000000000000000000000000001"
+        }
+        """
+
+        wallet = preprocess_wallet(wallet)
+
+        payload = {
+            "wallet": wallet,
+        }
+
+        resp = self.call('wallet_export', payload)
+
+        return json.loads(resp['json'])
+
+    def wallet_frontiers(self, wallet):
+        """
+        Returns a list of pairs of account and block hash representing the
+        head block starting for accounts from **wallet**
+
+        :type wallet: str
+
+        >>> rpc.wallet_frontiers(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        ... )
+        {
+            "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        }
+
+        """
+
+        wallet = preprocess_wallet(wallet)
+
+        payload = {
+            "wallet": wallet,
+        }
+
+        resp = self.call('wallet_frontiers', payload)
+
+        return resp['frontiers']
+
+    def wallet_locked(self, wallet):
+        """
+        Checks whether **wallet** is locked
+
+        :type wallet: str
+
+        >>> rpc.wallet_locked(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        ... )
+        False
+        """
+
+        wallet = preprocess_wallet(wallet)
+
+        payload = {
+            "wallet": wallet,
+        }
+
+        resp = self.call('wallet_locked', payload)
+
+        return resp['locked'] == '1'
+
+    def wallet_pending(self, wallet, count=None, threshold=None, source=False):
+        """
+        Returns a list of block hashes which have not yet been received by
+        accounts in this **wallet**
+
+        :type wallet: str
+        :type count: int
+        :type threshold: int
+        :type source: bool
+
+        .. enable_control required
+        .. version 8.0 required
+
+        >>> rpc.wallet_pending(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+        ...     count=1
+        ... )
+        {
+            "xrb_1111111111111111111111111111111111111111111111111117353trpda": [
+                "142A538F36833D1CC78B94E11C766F75818F8B940771335C6C1B8AB880C5BB1D"
+            ],
+            "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3": [
+                "4C1FEEF0BEA7F50BE35489A1233FE002B212DEA554B55B1B470D78BD8F210C74"
+            ]
+        }
+
+        """
+
+        wallet = preprocess_wallet(wallet)
+
+        payload = {
+            "wallet": wallet,
+        }
+
+        if count is not None:
+            payload['count'] = preprocess_int(count)
+
+        if threshold is not None:
+            payload['threshold'] = preprocess_int(threshold)
+
+        if source:
+            payload['source'] = preprocess_strbool(source)
+
+        resp = self.call('wallet_pending', payload)
+
+        blocks = resp.get('blocks') or {}
+        for account, data in blocks.items():
+            if isinstance(data, list):  # list of block hashes
+                continue
+            for key, value in data.items():
+                if isinstance(value, six.string_types):  # amount
+                    data[key] = int(value)
+                elif isinstance(value, dict):  # dict with "amount" and "source"
+                    for key in ('amount',):
+                        if key in value:
+                            value[key] = int(value[key])
+
+        return resp['blocks'] or {}
+
+    def wallet_republish(self, wallet, count):
+        """
+        Rebroadcast blocks for accounts from **wallet** starting at frontier
+        down to **count** to the network
+
+        :type wallet: str
+        :type count: int
+
+        .. enable_control required
+        .. version 8.0 required
+
+        >>> rpc.wallet_republish(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+        ...     count=2
+        ... )
+        [
+            "991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948",
+            "A170D51B94E00371ACE76E35AC81DC9405D5D04D4CEBC399AEACE07AE05DD293",
+            "90D0C16AC92DD35814E84BFBCC739A039615D0A42A76EF44ADAEF1D99E9F8A35"
+        ]
+
+        """
+
+        wallet = preprocess_wallet(wallet)
+        count = preprocess_int(count)
+
+        payload = {
+            "wallet": wallet,
+            "count": count,
+        }
+
+        resp = self.call('wallet_republish', payload)
+
+        return resp.get('blocks') or []
+
+    def wallet_work_get(self, wallet):
+        """
+        Returns a list of pairs of account and work from **wallet**
+
+        :type wallet: str
+
+        .. enable_control required
+        .. version 8.0 required
+
+        >>> rpc.wallet_work_get(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        ... )
+        {
+            "xrb_1111111111111111111111111111111111111111111111111111hifc8npp":
+                "432e5cf728c90f4f"
+        }
+
+        """
+
+        wallet = preprocess_wallet(wallet)
+
+        payload = {
+            "wallet": wallet,
+        }
+
+        resp = self.call('wallet_work_get', payload)
+
+        return resp.get('works') or {}
+
+    def password_change(self, wallet, password):
+        """
+        Changes the password for **wallet** to **password**
+
+        :type wallet: str
+        :type password: str
+
+        .. enable_control required
+
+        >>> rpc.password_change(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+        ...     password="test"
+        ... )
+        True
+        """
+
+        wallet = preprocess_wallet(wallet)
+
+        payload = {
+            "wallet": wallet,
+            "password": password,
+        }
+
+        resp = self.call('password_change', payload)
+
+        return resp['changed'] == '1'
+
+    def password_enter(self, wallet, password):
+        """
+        Enters the **password** in to **wallet**
+
+        :type wallet: str
+        :type password: str
+
+        >>> rpc.password_enter(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+        ...     password="test"
+        ... )
+        True
+
+        """
+
+        wallet = preprocess_wallet(wallet)
+
+        payload = {
+            "wallet": wallet,
+            "password": password,
+        }
+
+        resp = self.call('password_enter', payload)
+
+        return resp['valid'] == '1'
+
+    def password_valid(self, wallet):
+        """
+        Checks whether the password entered for **wallet** is valid
+
+        :type wallet: str
+
+        >>> rpc.password_valid(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        ... )
+        True
+
+        """
+
+        wallet = preprocess_wallet(wallet)
+
+        payload = {
+            "wallet": wallet,
+        }
+
+        resp = self.call('password_valid', payload)
+
+        return resp['valid'] == '1'
+
+    def work_cancel(self, hash):
+        """
+        Stop generating **work** for block
+
+        :type hash: str
+
+        .. enable_control required
+
+        >>> rpc.work_cancel(
+        ...     hash="718CC2121C3E641059BC1C2CFC45666C99E8AE922F7A807B7D07B62C995D79E2"
+        ... )
+        True
+
+        """
+
+        hash = preprocess_block(hash)
+
+        payload = {
+            "hash": hash,
+        }
+
+        resp = self.call('work_cancel', payload)
+        return resp == {}
+
+    def work_generate(self, hash):
+        """
+        Generates **work** for block
+
+        :type hash: str
+
+        .. enable_control required
+
+        >>> rpc.work_generate(
+        ...     hash="718CC2121C3E641059BC1C2CFC45666C99E8AE922F7A807B7D07B62C995D79E2"
+        ... )
+        "2bf29ef00786a6bc"
+
+        """
+
+        hash = preprocess_block(hash)
+
+        payload = {
+            "hash": hash,
+        }
+
+        resp = self.call('work_generate', payload)
+
+        return resp['work']
+
+    def work_get(self, wallet, account):
+        """
+        Retrieves work for **account** in **wallet**
+
+        :type wallet: str
+        :type account: str
+
+        .. enable_control required
+        .. version 8.0 required
+
+        >>> rpc.work_get(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+        ...     account="xrb_1111111111111111111111111111111111111111111111111111hifc8npp"
+        ... )
+        "432e5cf728c90f4f"
+
+        """
+
+        wallet = preprocess_wallet(wallet)
+        account = preprocess_account(account)
+
+        payload = {
+            "wallet": wallet,
+            "account": account,
+        }
+
+        resp = self.call('work_get', payload)
+
+        return resp['work']
+
+    def work_set(self, wallet, account, work):
+        """
+        Set **work** for **account** in **wallet**
+
+        :type wallet: str
+        :type account: str
+        :type work: int
+
+        .. enable_control required
+        .. version 8.0 required
+
+        >>> rpc.work_set(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+        ...     account="xrb_1111111111111111111111111111111111111111111111111111hifc8npp",
+        ...     work="0000000000000000"
+        ... )
+        True
+        """
+
+        wallet = preprocess_wallet(wallet)
+        account = preprocess_account(account)
+        work = preprocess_work(work)
+
+        payload = {
+            "wallet": wallet,
+            "account": account,
+            "work": work,
+        }
+
+        resp = self.call('work_set', payload)
+
+        return 'success' in resp
+
+    def work_peer_add(self, address, port):
+        """
+        Add specific **IP address** and **port** as work peer for node until
+        restart
+
+        :type address: str
+        :type port: int
+
+        .. enable_control required
+        .. version 8.0 required
+
+        >>> rpc.work_peer_add(address="::ffff:172.17.0.1", port="7076")
+        True
+
+        """
+
+        address = preprocess_ipaddr(address)
+        port = preprocess_int(port)
+
+        payload = {
+            "address": address,
+            "port": port,
+        }
+
+        resp = self.call('work_peer_add', payload)
+
+        return 'success' in resp
+
+    def work_peers(self):
+        """
+        Retrieve work peers
+
+        .. enable_control required
+        .. version 8.0 required
+
+        >>> rpc.work_peers()
+        [
+            "::ffff:172.17.0.1:7076"
+        ]
+
+        """
+
+        resp = self.call('work_peers')
+
+        return resp['work_peers']
+
+    def work_peers_clear(self):
+        """
+        Clear work peers node list until restart
+
+        .. enable_control required
+        .. version 8.0 required
+
+        >>> rpc.work_peers_clear()
+        True
+
+        """
+
+        resp = self.call('work_peers_clear')
+        return 'success' in resp
 
     def version(self):
         """

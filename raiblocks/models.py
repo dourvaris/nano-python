@@ -24,11 +24,12 @@ class Account(str):
 
 
 class Hash(str):
+    size = 64
 
     def __new__(cls, value):
         value = value.upper()
 
-        if not len(value) == 64:
+        if not len(value) == cls.size:
             raise ValueError('invalid wallet id, not 64 characters')
 
         for char in value:
@@ -37,8 +38,15 @@ class Hash(str):
 
         return super(Hash, cls).__new__(cls, value)
 
+class Seed(Hash):
+    pass
+
 
 class Wallet(Hash):
+    pass
+
+
+class PrivateKey(Hash):
     pass
 
 
@@ -52,4 +60,7 @@ class Block(Hash):
 
 class Seed(Hash):
     pass
+
+class Work(Hash):
+    size = 16
 
