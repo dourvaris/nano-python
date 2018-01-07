@@ -302,6 +302,29 @@ class Client(object):
 
         return resp['moved'] == '1'
 
+    def account_key(self, account):
+        """
+        Get the public key for **account**
+
+        :type account: str
+
+        >>> rpc.account_key(
+        ...     account="xrb_1e5aqegc1jb7qe964u4adzmcezyo6o146zb8hm6dft8tkp79za3sxwjym5rx"
+        ... )
+        "3068BB1CA04525BB0E416C485FE6A67FD52540227D267CC8B6E8DA958A7FA039"
+
+        """
+
+        account = preprocess_account(account)
+
+        payload = {
+            "account": account,
+        }
+
+        resp = self.call('account_key', payload)
+
+        return resp['key']
+
     def version(self):
         """
         Returns the node's RPC version
