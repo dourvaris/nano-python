@@ -2,9 +2,9 @@
 
 [![Build Status](https://travis-ci.org/dourvaris/raiblocks-py.svg?branch=master)](https://travis-ci.org/dourvaris/raiblocks-py)
 
-A python wrapper for the RaiBlocks RPC server which tries to make it a little
-easier to work with by converting RPC responses to native python ones and
-exposing a pythonic api for making RPC calls.
+A python wrapper for the [RaiBlocks RPC server](https://github.com/clemahieu/raiblocks)
+which tries to make it a little easier to work with by converting RPC responses
+to native python ones and exposing a pythonic api for making RPC calls.
 
 Note: This library is still new so there may be bugs and api changes.
 
