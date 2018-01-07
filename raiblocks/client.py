@@ -1,7 +1,8 @@
 import six
 import json
 import requests
-from raiblocks.models import (
+
+from .models import (
     Account, Wallet, PublicKey, Work, PrivateKey, Block, Seed
 )
 
