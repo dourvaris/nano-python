@@ -12,9 +12,9 @@ class TestMockRPCSession(object):
             }
         )
         assert resp.json() == {
-            u'rpc_version': u'1',
-            u'node_vendor': u'RaiBlocks 7.5.0',
-            u'store_version': u'2'
+            "rpc_version": "1",
+            "store_version": "10",
+            "node_vendor": "RaiBlocks 9.0"
         }
 
     def test_missing_request(self, mock_rpc_session):

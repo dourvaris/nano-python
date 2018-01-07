@@ -934,8 +934,14 @@
       },
       "response": {
         "rpc_version": "1",
-        "store_version": "2",
-        "node_vendor": "RaiBlocks 7.5.0"
+        "store_version": "10",
+        "node_vendor": "RaiBlocks 9.0"
+      },
+      "args": {},
+      "result": {
+        "rpc_version": 1,
+        "store_version": 10,
+        "node_vendor": "RaiBlocks 9.0"
       }
     }
   ],

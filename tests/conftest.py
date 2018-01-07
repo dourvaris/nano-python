@@ -9,16 +9,18 @@ class MockRPCMatchException(Exception):
     """ Exception used to check if a mock response is missing """
 
 
+def load_mock_rpc_fixtures():
+    mocks_path = os.path.join(
+        os.path.dirname(os.path.realpath(__file__)), 'fixtures', 'rpc.json'
+    )
+    return json.loads(open(mocks_path, 'rb').read())
+
+
 @pytest.fixture
 def mock_rpc_session():
     adapter = requests_mock.Adapter()
     session = requests.Session()
     session.mount('mock', adapter)
-
-    mocks_path = os.path.join(
-        os.path.dirname(os.path.realpath(__file__)), 'fixtures', 'rpc.json'
-    )
-    mock_rpc_fixtures = json.loads(open(mocks_path, 'rb').read())
 
     responses = {}
 
@@ -30,7 +32,7 @@ def mock_rpc_session():
                     request.json(), indent=2))
         return responses[request_json]
 
-    for action, calls in mock_rpc_fixtures.items():
+    for action, calls in load_mock_rpc_fixtures().items():
         for call in calls:
             req_body = json.dumps(call['request'])
             res_body = json.dumps(call['response'])
