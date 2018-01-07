@@ -25,17 +25,17 @@ def mock_rpc_session():
     responses = {}
 
     def _text_callback(request, context):
-        request_json = json.dumps(request.json())
+        request_json = json.dumps(request.json(), sort_keys=True)
         if request_json not in responses:
             raise MockRPCMatchException(
                 'Could not match mock request: %s' % json.dumps(
-                    request.json(), indent=2))
+                    request.json(), sort_keys=True, indent=2))
         return responses[request_json]
 
     for action, calls in load_mock_rpc_fixtures().items():
         for call in calls:
-            req_body = json.dumps(call['request'])
-            res_body = json.dumps(call['response'])
+            req_body = json.dumps(call['request'], sort_keys=True)
+            res_body = json.dumps(call['response'], sort_keys=True)
             responses[req_body] = res_body
 
     adapter.register_uri(

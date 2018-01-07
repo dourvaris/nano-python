@@ -5,6 +5,9 @@ from raiblocks.models import Account
 def preprocess_account(account_string):
     return Account(account_string)
 
+def preprocess_strbool(value):
+    return value and 'true' or 'false'
+
 
 class Client(object):
     """ RaiBlocks node RPC client """
@@ -86,6 +89,53 @@ class Client(object):
         resp = self.call('account_block_count', payload)
 
         return int(resp['block_count'])
+
+    def account_info(self, account, representative=False, weight=False,
+                     pending=False):
+        """
+        Returns frontier, open block, change representative block, balance,
+        last modified timestamp from local database & block count for
+        **account**
+
+        :type account: str
+        :type representative: bool
+        :type weight: bool
+        :type pending: bool
+
+        >>> rpc.account_info(
+        ...     account="xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3"
+        ... )
+        {
+          "frontier": "FF84533A571D953A596EA401FD41743AC85D04F406E76FDE4408EAED50B473C5",
+          "open_block": "991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948",
+          "representative_block": "991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948",
+          "balance": "235580100176034320859259343606608761791",
+          "modified_timestamp": "1501793775",
+          "block_count": "33"
+        }
+
+        """
+
+        account = preprocess_account(account)
+
+        payload = {
+            "account": account,
+        }
+
+        if representative:
+            payload['representative'] = preprocess_strbool(representative)
+        if weight:
+            payload['weight'] = preprocess_strbool(weight)
+        if pending:
+            payload['pending'] = preprocess_strbool(pending)
+
+        resp = self.call('account_info', payload)
+
+        for key in ('modified_timestamp', 'block_count', 'balance', 'pending', 'weight'):
+            if key in resp:
+                resp[key] = int(resp[key])
+
+        return resp
 
     def version(self):
         """
