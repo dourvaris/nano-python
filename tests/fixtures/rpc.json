@@ -899,7 +899,9 @@
       },
       "response": {
         "success": ""
-      }
+      },
+      "args": {},
+      "result": true
     }
   ],
   "validate_account_number": [
