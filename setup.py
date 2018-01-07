@@ -16,16 +16,12 @@ DESCRIPTION = 'RaiBlocks Python RPC client for rai_node'
 URL = 'https://github.com/dourvaris/raiblocks'
 EMAIL = 'dourvaris@gmail.com'
 AUTHOR = 'Daniel Dourvaris'
-INSTALL_REQUIRES = [
-    'six',
-    'requests',
-]
-TESTS_REQUIRE = [
-    'pytest',
-    'pytest-cov',
-    'pytest-runner',
-    'requests_mock',
-]
+
+with open('requirements.pip') as f:
+    INSTALL_REQUIRES = f.read().splitlines()
+
+with open('test-requirements.pip') as f:
+    TESTS_REQUIRE = f.read().splitlines()
 
 here = os.path.abspath(os.path.dirname(__file__))
 

@@ -10,18 +10,13 @@ pip install raiblocks
 ## Development
 ```
 virtualenv venv
-. venv/bin/activate
-python setup.py develop
+source venv/bin/activate
+pip install -r requirements.txt -r test-requirements.txt
 ```
 
 ### Tests
 
-Normal:
-```
-py.test
-```
-
-Coverage:
+With coverage:
 ```
 py.test --cov-report term:missing --cov=raiblocks
 ```
