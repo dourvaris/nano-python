@@ -175,7 +175,7 @@ class Client(object):
 
         return int(resp['block_count'])
 
-    def accounts_create(self, wallet, count):
+    def accounts_create(self, wallet, count, work=True):
         """
         Creates new accounts, insert next deterministic keys in **wallet** up
         to **count**
@@ -204,6 +204,9 @@ class Client(object):
             "wallet": wallet,
             "count": count,
         }
+
+        if not work:
+            payload['work'] = preprocess_strbool(work)
 
         resp = self.call('accounts_create', payload)
 
@@ -570,13 +573,14 @@ class Client(object):
 
         return resp['representative']
 
-    def account_representative_set(self, wallet, account, representative):
+    def account_representative_set(self, wallet, account, representative, work=None):
         """
         Sets the representative for **account** in **wallet**
 
         :type wallet: str
         :type account: str
         :type representative: str
+        :type work: str
 
         .. enable_control required
 
@@ -598,6 +602,9 @@ class Client(object):
             "account": account,
             "representative": representative,
         }
+
+        if work is not None:
+            payload['work'] = preprocess_work(work)
 
         resp = self.call('account_representative_set', payload)
 
@@ -1459,20 +1466,22 @@ class Client(object):
 
         return resp['hash']
 
-    def receive(self, wallet, account, block):
+    def receive(self, wallet, account, block, work=None):
         """
         Receive pending **block** for **account** in **wallet**
 
         :type wallet: str
         :type account: str
         :type block: str
+        :type work: str
 
         .. enable_control required
 
         >>> rpc.receive(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
         ...     account="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
-        ...     block="53EAA25CE28FA0E6D55EA9704B32604A736966255948594D55CBB05267CECD48"
+        ...     block="53EAA25CE28FA0E6D55EA9704B32604A736966255948594D55CBB05267CECD48",
+        ...     work="12041e830ad10de1"
         ... )
         "EE5286AB32F580AB65FD84A69E107C69FBEB571DEC4D99297E19E3FA5529547B"
 
@@ -1487,6 +1496,9 @@ class Client(object):
             "account": account,
             "block": block,
         }
+
+        if work:
+            payload['work'] = preprocess_work(work)
 
         resp = self.call('receive', payload)
 
@@ -2572,7 +2584,7 @@ class Client(object):
 
         return 'success' in resp
 
-    def send(self, wallet, source, destination, amount):
+    def send(self, wallet, source, destination, amount, work=None):
         """
         Send **amount** from **source** in **wallet** to **destination**
 
@@ -2580,6 +2592,7 @@ class Client(object):
         :type source: str
         :type destination: str
         :type amount: int
+        :type work: str
 
         .. enable_control required
 
@@ -2587,7 +2600,8 @@ class Client(object):
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
         ...     source="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
         ...     destination="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
-        ...     amount=1000000
+        ...     amount=1000000,
+        ...     work="2bf29ef00786a6bc"
         ... )
         "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
 
@@ -2604,6 +2618,9 @@ class Client(object):
             "destination": destination,
             "amount": amount,
         }
+
+        if work is not None:
+            payload['work'] = preprocess_work(work)
 
         resp = self.call('send', payload)
 
