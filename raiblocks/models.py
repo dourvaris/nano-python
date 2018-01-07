@@ -23,7 +23,7 @@ class Account(str):
         return super(Account, cls).__new__(cls, value)
 
 
-class Wallet(str):
+class Hash(str):
 
     def __new__(cls, value):
         value = value.upper()
@@ -35,4 +35,13 @@ class Wallet(str):
             if char not in '0123456789ABCDEF':
                 raise ValueError('invalid character in wallet id: %r' % char)
 
-        return super(Wallet, cls).__new__(cls, value)
+        return super(Hash, cls).__new__(cls, value)
+
+
+class Wallet(Hash):
+    pass
+
+
+class PublicKey(Hash):
+    pass
+

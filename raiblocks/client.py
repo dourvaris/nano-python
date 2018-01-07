@@ -1,5 +1,5 @@
 import requests
-from raiblocks.models import Account, Wallet
+from raiblocks.models import Account, Wallet, PublicKey
 
 
 def preprocess_account(account_string):
@@ -8,6 +8,10 @@ def preprocess_account(account_string):
 
 def preprocess_wallet(wallet_string):
     return Wallet(wallet_string)
+
+
+def preprocess_public_key(public_key_string):
+    return PublicKey(public_key_string)
 
 
 def preprocess_strbool(value):
@@ -164,6 +168,29 @@ class Client(object):
         }
 
         resp = self.call('account_create', payload)
+
+        return resp['account']
+
+    def account_get(self, key):
+        """
+        Get account number for the **public key**
+
+        :type key: str
+
+        >>> rpc.account_get(
+        ...    key="3068BB1CA04525BB0E416C485FE6A67FD52540227D267CC8B6E8DA958A7FA039"
+        ... )
+        "xrb_1e5aqegc1jb7qe964u4adzmcezyo6o146zb8hm6dft8tkp79za3sxwjym5rx"
+
+        """
+
+        key = preprocess_public_key(key)
+
+        payload = {
+            "key": key,
+        }
+
+        resp = self.call('account_get', payload)
 
         return resp['account']
 
