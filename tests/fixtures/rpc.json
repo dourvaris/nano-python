@@ -1559,6 +1559,16 @@
         "blocks": {
           "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F": "6000000000000000000000000000000"
         }
+      },
+      "func": {
+        "args": {
+          "account": "xrb_1111111111111111111111111111111111111111111111111117353trpda",
+          "count": 1,
+          "threshold": 1000000000000000000000000
+        },
+        "result": {
+          "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F": 6000000000000000000000000000000
+        }
       }
     },
     {
@@ -1575,6 +1585,19 @@
             "source": "xrb_3dcfozsmekr1tr9skf1oa5wbgmxt81qepfdnt7zicq5x3hk65fg4fqj58mbr"
           }
         }
+      },
+      "func": {
+        "args": {
+          "account": "xrb_1111111111111111111111111111111111111111111111111117353trpda",
+          "count": 1,
+          "source": true
+        },
+        "result": {
+          "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F": {
+            "amount": 6000000000000000000000000000000,
+            "source": "xrb_3dcfozsmekr1tr9skf1oa5wbgmxt81qepfdnt7zicq5x3hk65fg4fqj58mbr"
+          }
+        }
       }
     }
   ],
@@ -1586,6 +1609,12 @@
       },
       "response": {
         "exists": "1"
+      },
+      "func": {
+        "args": {
+          "hash": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        },
+        "result": true
       }
     }
   ],
@@ -1599,6 +1628,21 @@
         "blocks": {
           "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F": "{\n  \"account\": \"xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000\", \n  \"work\": \"0000000000000000\", \n  \"source\": \"FA5B51D063BADDF345EFD7EF0D3C5FB115C85B1EF4CDE89D8B7DF3EAF60A04A4\", \n  \"representative\": \"xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000\", \n  \"signature\": \"00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\", \n  \"type\": \"open\"\n}"
         }
+      },
+      "func": {
+        "args": {
+          "count": 1
+        },
+        "result": {
+          "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F": {
+            "account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+            "work": "0000000000000000",
+            "source": "FA5B51D063BADDF345EFD7EF0D3C5FB115C85B1EF4CDE89D8B7DF3EAF60A04A4",
+            "representative": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+            "signature": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+            "type": "open"
+          }
+        }
       }
     }
   ],
@@ -1609,6 +1653,9 @@
       },
       "response": {
         "success": ""
+      },
+      "func": {
+        "result": true
       }
     }
   ],
@@ -1620,6 +1667,19 @@
       },
       "response": {
         "contents": "{\n  \"account\": \"xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000\", \n  \"work\": \"0000000000000000\", \n  \"source\": \"FA5B51D063BADDF345EFD7EF0D3C5FB115C85B1EF4CDE89D8B7DF3EAF60A04A4\", \n  \"representative\": \"xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000\", \n  \"signature\": \"00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\", \n  \"type\": \"open\"\n}"
+      },
+      "func": {
+        "args": {
+          "hash": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        },
+        "result": {
+          "account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+          "work": "0000000000000000",
+          "source": "FA5B51D063BADDF345EFD7EF0D3C5FB115C85B1EF4CDE89D8B7DF3EAF60A04A4",
+          "representative": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+          "signature": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+          "type": "open"
+        }
       }
     }
   ],
@@ -1638,6 +1698,26 @@
             "contents": "{\n  \"account\": \"xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000\", \n  \"work\": \"0000000000000000\", \n  \"source\": \"FA5B51D063BADDF345EFD7EF0D3C5FB115C85B1EF4CDE89D8B7DF3EAF60A04A4\", \n  \"representative\": \"xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000\", \n  \"signature\": \"00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\", \n  \"type\": \"open\"\n}"
           }
         ]
+      },
+      "func": {
+        "args": {
+          "key": "FA5B51D063BADDF345EFD7EF0D3C5FB115C85B1EF4CDE89D8B7DF3EAF60A04A4",
+          "count": 1
+        },
+        "result": [
+          {
+            "key": "FA5B51D063BADDF345EFD7EF0D3C5FB115C85B1EF4CDE89D8B7DF3EAF60A04A4",
+            "hash": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+            "contents": {
+              "account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+              "work": "0000000000000000",
+              "source": "FA5B51D063BADDF345EFD7EF0D3C5FB115C85B1EF4CDE89D8B7DF3EAF60A04A4",
+              "representative": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+              "signature": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "type": "open"
+            }
+          }
+        ]
       }
     }
   ],
@@ -1650,6 +1730,13 @@
       },
       "response": {
         "account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
+      },
+      "func": {
+        "args": {
+          "wallet": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+          "key": "34F0A37AAD20F4A260F0A5B3CB3D7FB50673212263E58A380BC10474BB039CE4"
+        },
+        "result": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
       }
     }
   ],
@@ -1662,6 +1749,15 @@
       "response": {
         "balance": "10000",
         "pending": "10000"
+      },
+      "func": {
+        "args": {
+          "wallet": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        },
+        "result": {
+          "balance": 10000,
+          "pending": 10000
+        }
       }
     }
   ],
@@ -1678,6 +1774,17 @@
             "pending": "10000"
           }
         }
+      },
+      "func": {
+        "args": {
+          "wallet": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        },
+        "result": {
+          "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000": {
+            "balance": 10000,
+            "pending": 10000
+          }
+        }
       }
     }
   ],
@@ -1690,6 +1797,13 @@
       },
       "response": {
         "success": ""
+      },
+      "func": {
+        "args": {
+          "wallet": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+          "seed": "74F2B37AAD20F4A260F0A5B3CB3D7FB51673212263E58A380BC10474BB039CEE"
+        },
+        "result": true
       }
     }
   ],

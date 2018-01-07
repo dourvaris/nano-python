@@ -1526,6 +1526,140 @@ class Client(object):
             k: int(v) for k, v in representatives.items()
         }
 
+    def unchecked(self, count=None):
+        """
+        Returns a list of pairs of unchecked synchronizing block hash and its
+        json representation up to **count**
+
+        :type count: int
+
+        .. version 8.0 required
+
+        >>> rpc.unchecked(count=1)
+        {
+            "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F": {
+                "account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+                "work": "0000000000000000",
+                "source": "FA5B51D063BADDF345EFD7EF0D3C5FB115C85B1EF4CDE89D8B7DF3EAF60A04A4",
+                "representative": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+                "signature": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                "type": "open"
+            }
+        }
+
+        """
+
+        payload = {}
+
+        if count is not None:
+            payload["count"] = preprocess_int(count)
+
+        resp = self.call('unchecked', payload)
+
+        blocks = resp.get('blocks') or {}
+        for block, block_json in blocks.items():
+            blocks[block] = json.loads(block_json)
+
+        return blocks
+
+    def unchecked_clear(self):
+        """
+        Clear unchecked synchronizing blocks
+
+        .. enable_control required
+        .. version 8.0 required
+
+        >>> rpc.unchecked_clear()
+        True
+
+        """
+
+        resp = self.call('unchecked_clear')
+
+        return 'success' in resp
+
+    def unchecked_get(self, hash):
+        """
+        Retrieves a json representation of unchecked synchronizing block by
+        **hash**
+
+        :type hash: str
+
+        .. version 8.0 required
+
+        >>> rpc.unchecked_get(
+        ...     hash="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        ... )
+        {
+            "account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+            "work": "0000000000000000",
+            "source": "FA5B51D063BADDF345EFD7EF0D3C5FB115C85B1EF4CDE89D8B7DF3EAF60A04A4",
+            "representative": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+            "signature": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+            "type": "open"
+        }
+
+        """
+
+        hash = preprocess_block(hash)
+
+        payload = {
+            "hash": hash,
+        }
+
+        resp = self.call('unchecked_get', payload)
+
+        return json.loads(resp['contents'])
+
+    def unchecked_keys(self, key, count=None):
+        """
+        Retrieves unchecked database keys, blocks hashes & a json
+        representations of unchecked pending blocks starting from **key** up
+        to **count**
+
+        :type key: str
+        :type count: int
+
+        .. version 8.0 required
+
+        >>> rpc.unchecked_keys(
+        ...     key="FA5B51D063BADDF345EFD7EF0D3C5FB115C85B1EF4CDE89D8B7DF3EAF60A04A4",
+        ...     count=1
+        ... )
+        [
+            {
+                "key": "FA5B51D063BADDF345EFD7EF0D3C5FB115C85B1EF4CDE89D8B7DF3EAF60A04A4",
+                "hash": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+                "contents": {
+                    "account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+                    "work": "0000000000000000",
+                    "source": "FA5B51D063BADDF345EFD7EF0D3C5FB115C85B1EF4CDE89D8B7DF3EAF60A04A4",
+                    "representative": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+                    "signature": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                    "type": "open"
+                }
+            }
+        ]
+
+        """
+
+        key = preprocess_public_key(key)
+
+        payload = {
+            "key": key,
+        }
+
+        if count is not None:
+            payload['count'] = preprocess_int(count)
+
+        resp = self.call('unchecked_keys', payload)
+        unchecked = resp.get('unchecked') or []
+
+        for entry in unchecked:
+            entry['contents'] = json.loads(entry['contents'])
+
+        return unchecked
+
     def wallet_representative(self, wallet):
         """
         Returns the default representative for **wallet**
@@ -1577,6 +1711,125 @@ class Client(object):
         resp = self.call('wallet_representative_set', payload)
 
         return resp['set'] == '1'
+
+    def wallet_add(self, wallet, key):
+        """
+        Add an adhoc private key **key** to **wallet**
+
+        :type wallet: str
+        :type key: str
+
+        .. enable_control required
+
+        >>> rpc.wallet_add(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+        ...     key="34F0A37AAD20F4A260F0A5B3CB3D7FB50673212263E58A380BC10474BB039CE4"
+        ... )
+        "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
+
+        """
+
+        wallet = preprocess_wallet(wallet)
+        key = preprocess_private_key(key)
+
+        payload = {
+            "wallet": wallet,
+            "key": key,
+        }
+
+        resp = self.call('wallet_add', payload)
+
+        return resp['account']
+
+    def wallet_balance_total(self, wallet):
+        """
+        Returns the sum of all accounts balances in **wallet**
+
+        :type wallet: str
+
+        >>> rpc.wallet_balance_total(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        ... )
+        {
+          "balance": 10000,
+          "pending": 10000
+        }
+
+        """
+
+        wallet = preprocess_wallet(wallet)
+
+        payload = {
+            "wallet": wallet,
+        }
+
+        resp = self.call('wallet_balance_total', payload)
+
+        return {
+            k: int(v) for k, v in resp.items()
+        }
+
+    def wallet_balances(self, wallet):
+        """
+        Returns how many rai is owned and how many have not yet been received
+        by all accounts in **wallet**
+
+        :type wallet: str
+
+        >>> rpc.wallet_balances(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        ... )
+        {
+            "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000": {
+                "balance": 10000,
+                "pending": 10000
+            }
+        }
+
+        """
+
+        wallet = preprocess_wallet(wallet)
+
+        payload = {
+            "wallet": wallet,
+        }
+
+        resp = self.call('wallet_balances', payload)
+        balances = resp.get('balances') or {}
+        for account, balance in balances.items():
+            balances[account] = {
+                k: int(v) for k, v in balances[account].items()
+            }
+
+        return balances
+
+    def wallet_change_seed(self, wallet, seed):
+        """
+        Changes seed for **wallet** to **seed**
+
+        :type wallet: str
+        :type seed: str
+
+        .. enable_control required
+
+        >>> rpc.wallet_change_seed(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+        ...     seed="74F2B37AAD20F4A260F0A5B3CB3D7FB51673212263E58A380BC10474BB039CEE"
+        ... )
+        True
+        """
+
+        wallet = preprocess_wallet(wallet)
+        seed = preprocess_seed(seed)
+
+        payload = {
+            "wallet": wallet,
+            "seed": seed,
+        }
+
+        resp = self.call('wallet_change_seed', payload)
+
+        return 'success' in resp
 
     def wallet_contains(self, wallet, account):
         """
@@ -1911,6 +2164,82 @@ class Client(object):
         resp = self.call('password_valid', payload)
 
         return resp['valid'] == '1'
+
+    def pending(self, account, count=None, threshold=None, source=False):
+        """
+        Returns a list of pending block hashes with amount more or equal to
+        **threshold**
+
+        :type account: str
+        :type count: int
+        :type threshold: int
+        :type source: bool
+
+        .. version 8.0 required
+
+        >>> rpc.pending(
+        ...     account="xrb_1111111111111111111111111111111111111111111111111117353trpda",
+        ...     count=1,
+        ...     threshold=1000000000000000000000000
+        ... )
+        {
+            "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F": "6000000000000000000000000000000"
+        }
+
+        """
+
+        account = preprocess_account(account)
+
+        payload = {
+            "account": account,
+        }
+
+        if count is not None:
+            payload['count'] = preprocess_int(count)
+
+        if threshold is not None:
+            payload['threshold'] = preprocess_int(threshold)
+
+        if source:
+            payload['source'] = preprocess_strbool(source)
+
+        resp = self.call('pending', payload)
+
+        blocks = resp['blocks'] or {}
+
+        for block, value in blocks.items():
+            if isinstance(value, six.string_types):  # amount
+                blocks[block] = int(value)
+            elif isinstance(value, dict):  # dict with "amount" and "source"
+                for key in ('amount',):
+                    if key in value:
+                        value[key] = int(value[key])
+
+        return blocks
+
+    def pending_exists(self, hash):
+        """
+        Check whether block is pending by **hash**
+
+        :type hash: str
+
+        .. version 8.0 required
+
+        >>> rpc.pending_exists(
+            hash="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        )
+        True
+        """
+
+        hash = preprocess_block(hash)
+
+        payload = {
+            "hash": hash,
+        }
+
+        resp = self.call('pending_exists', payload)
+
+        return resp['exists'] == '1'
 
     def work_cancel(self, hash):
         """

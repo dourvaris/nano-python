@@ -29,7 +29,7 @@ def mock_rpc_session():
         request_json = json.dumps(request.json(), sort_keys=True)
         if request_json not in responses:
             raise MockRPCMatchException(
-                'Could not match mock request: %s' % json.dumps(
+                'No mock response found for this request: %s' % json.dumps(
                     request.json(), sort_keys=True, indent=2))
         return responses[request_json]
 
