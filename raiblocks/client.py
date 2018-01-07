@@ -2248,11 +2248,12 @@ class Client(object):
 
         resp = self.call('peers')
 
-        return {
-            host: int(version)
-            for host, version
-            in resp['peers'].items()
-        }
+        result = {}
+
+        for host, version in resp['peers'].items():
+            result[host] = int(version)
+
+        return result
 
     def pending(self, account, count=None, threshold=None, source=False):
         """
