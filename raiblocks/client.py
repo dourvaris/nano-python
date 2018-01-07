@@ -897,6 +897,31 @@ class Client(object):
 
         return resp.get('delegators') or {}
 
+    def delegators_count(self, account):
+        """
+        Get number of delegators for a specific representative **account**
+
+        :type account: str
+
+        .. version 8.0 required
+
+        >>> rpc.delegators_count(
+        ...     account="xrb_1111111111111111111111111111111111111111111111111117353trpda"
+        ... )
+        2
+
+        """
+
+        account = preprocess_account(account)
+
+        payload = {
+            "account": account,
+        }
+
+        resp = self.call('delegators_count', payload)
+
+        return int(resp['count'])
+
     def version(self):
         """
         Returns the node's RPC version
