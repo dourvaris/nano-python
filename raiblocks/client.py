@@ -1260,7 +1260,7 @@ class Client(object):
         return resp == {}
 
     def ledger(self, account, count=None, representative=False, weight=False,
-               pending=False):
+               pending=False, sorting=False):
         """
         Returns frontier, open block, change representative block, balance,
         last modified timestamp from local database & block count starting at
@@ -1271,6 +1271,7 @@ class Client(object):
         :type representative: bool
         :type weight: bool
         :type pending: bool
+        :type sorting: bool
 
         .. enable_control required
         .. version 8.0 required
@@ -1300,6 +1301,9 @@ class Client(object):
 
         if count is not None:
             payload['count'] = preprocess_int(count)
+
+        if sorting:
+            payload['sorting'] = preprocess_strbool(sort)
 
         if representative:
             payload['representative'] = preprocess_strbool(representative)
@@ -1550,7 +1554,7 @@ class Client(object):
 
         return 'success' in resp
 
-    def representatives(self):
+    def representatives(self, count=None, sorting=False):
         """
         Returns a list of pairs of representative and its voting weight
 
@@ -1564,7 +1568,15 @@ class Client(object):
                 0
         }
 
+
         """
+        payload = {}
+
+        if count is not None:
+            payload['count'] = preprocess_int(count)
+
+        if sorting:
+            payload['sorting'] = preprocess_strbool(sort)
 
         resp = self.call('representatives')
         representatives = resp.get('representatives') or {}
