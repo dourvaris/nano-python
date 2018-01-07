@@ -1,12 +1,13 @@
 # RaiBlocks Python RPC client for rai_node
 
 [![Build Status](https://travis-ci.org/dourvaris/raiblocks-py.svg?branch=master)](https://travis-ci.org/dourvaris/raiblocks-py)
+[![Coverage](./coverage.svg)](https://travis-ci.org/dourvaris/raiblocks-py)
 
 A python wrapper for the [RaiBlocks RPC server](https://github.com/clemahieu/raiblocks)
 which tries to make it a little easier to work with by converting RPC responses
 to native python ones and exposing a pythonic api for making RPC calls.
 
-Note: This library is still new so there may be bugs and api changes.
+Note: This library is still new so there may be bugs and api changes, PRs are welcome.
 
 ## Install
 
@@ -63,7 +64,14 @@ pip install -r requirements.txt -r test-requirements.txt
 
 ### Tests
 
-With coverage:
+Regular
 ```
-py.test --cov-report term:missing --cov=raiblocks
+pytest
 ```
+
+Coverage:
+```
+./coverage
+```
+
+
