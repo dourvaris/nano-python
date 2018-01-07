@@ -17,10 +17,6 @@ pip install raiblocks
 
 ## Usage
 
-The client exposes the methods that can be found here:
-
-https://github.com/clemahieu/raiblocks/wiki/RPC-protocol
-
 ```python
     >>> from raiblocks import Client
     >>> client = Client('http://localhost:7076')
@@ -32,6 +28,8 @@ https://github.com/clemahieu/raiblocks/wiki/RPC-protocol
         '[::ffff:108.44.38.183]:1032': 4
     }
 ```
+
+The client exposes the methods that can be found here: https://github.com/clemahieu/raiblocks/wiki/RPC-protocol
 
 At the moment the client replicates the RPC API which means there are some
 instances where the same method will return different types eg:
