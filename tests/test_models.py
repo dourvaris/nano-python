@@ -1,6 +1,6 @@
 import pytest
 
-from raiblocks.models import Account, Wallet
+from raiblocks.models import Account, Hash
 
 
 class TestAccount(object):
@@ -32,20 +32,20 @@ class TestAccount(object):
             Account(value)
 
 
-class TestWallet(object):
+class TestHash(object):
     @pytest.mark.parametrize('value', [
         '000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F',
         '000d1baec8ec208142c99059b393051bac8380f9b5a2e6b2489a277d81789f3f',
         '1BAEC8EC208142C99059B393051BAC8380000DF9B5A2E6B2489A277D81789F3F',
     ])
     def test_valid_wallet(self, value):
-        assert Wallet(value) == value
+        assert Hash(value) == value
 
     @pytest.mark.parametrize('value', [
         '',
-        ' ' * 64,
+        ' ' * Hash.size,
         'ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ',
     ])
-    def test_invalid_wallet(self, value):
+    def test_invalid_hash(self, value):
         with pytest.raises(ValueError):
-            Wallet(value)
+            Hash(value)
