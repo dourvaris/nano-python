@@ -836,6 +836,36 @@ class Client(object):
 
         return 'success' in resp
 
+    def chain(self, block, count):
+        """
+        Returns a list of block hashes in the account chain starting at
+        **block** up to **count**
+
+        :type block: str
+        :type count: int
+
+        >>> rpc.chain(
+        ...     block="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+        ...     count=1
+        ... )
+        [
+            "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        ]
+
+        """
+
+        block = preprocess_block(block)
+        count = preprocess_int(count)
+
+        payload = {
+            "block": block,
+            "count": count,
+        }
+
+        resp = self.call('chain', payload)
+
+        return resp.get('blocks') or []
+
     def version(self):
         """
         Returns the node's RPC version
