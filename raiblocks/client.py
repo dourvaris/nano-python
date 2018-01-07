@@ -88,6 +88,47 @@ class Client(object):
             k: int(v) for k, v in resp.items()
         }
 
+    def accounts_balances(self, accounts):
+        """
+        Returns how many RAW is owned and how many have not yet been received
+        by **accounts list**
+
+        :type accounts: list
+
+        >>> rpc.accounts_balances(
+        ...     accounts=[
+        ...         "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+        ...         "xrb_3i1aq1cchnmbn9x5rsbap8b15akfh7wj7pwskuzi7ahz8oq6cobd99d4r3b7"
+        ...      ]
+        ... )
+        {
+            "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000": {
+                "balance": 10000,
+                "pending": 10000
+            },
+            "xrb_3i1aq1cchnmbn9x5rsbap8b15akfh7wj7pwskuzi7ahz8oq6cobd99d4r3b7": {
+                "balance": 10000000,
+                "pending": 0
+            }
+        }
+
+        """
+
+        accounts = preprocess_list(accounts)
+
+        payload = {
+            "accounts": accounts,
+        }
+
+        resp = self.call('accounts_balances', payload)
+        accounts_balances = resp.get('balances') or {}
+
+        for account, balances in accounts_balances.items():
+            for k in balances:
+                balances[k] = int(balances[k])
+
+        return accounts_balances
+
     def account_block_count(self, account):
         """
         Get number of blocks for a specific **account**
@@ -108,6 +149,72 @@ class Client(object):
         resp = self.call('account_block_count', payload)
 
         return int(resp['block_count'])
+
+    def accounts_create(self, wallet, count):
+        """
+        Creates new accounts, insert next deterministic keys in **wallet** up
+        to **count**
+
+        :type wallet: str
+        :type count: int
+
+        .. enable_control required
+        .. version 8.0 required
+
+        >>> rpc.accounts_create(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+        ...     count=2
+        ... )
+        [
+            "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+            "xrb_1e5aqegc1jb7qe964u4adzmcezyo6o146zb8hm6dft8tkp79za3s00000000"
+        ]
+
+        """
+
+        wallet = preprocess_wallet(wallet)
+        count = preprocess_int(count)
+
+        payload = {
+            "wallet": wallet,
+            "count": count,
+        }
+
+        resp = self.call('accounts_create', payload)
+
+        return resp.get('accounts') or []
+
+    def accounts_frontiers(self, accounts):
+        """
+        Returns a list of pairs of account and block hash representing the
+        head block for **accounts list**
+
+        :type accounts: list
+
+        >>> rpc.accounts_frontiers(
+        ...     accounts=[
+        ...         "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3",
+        ...         "xrb_3i1aq1cchnmbn9x5rsbap8b15akfh7wj7pwskuzi7ahz8oq6cobd99d4r3b7"
+        ...     ]
+        ... )
+        {
+            "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3":
+                "791AF413173EEE674A6FCF633B5DFC0F3C33F397F0DA08E987D9E0741D40D81A",
+            "xrb_3i1aq1cchnmbn9x5rsbap8b15akfh7wj7pwskuzi7ahz8oq6cobd99d4r3b7":
+                "6A32397F4E95AF025DE29D9BF1ACE864D5404362258E06489FABDBA9DCCC046F"
+        }
+
+        """
+
+        accounts = preprocess_list(accounts)
+
+        payload = {
+            "accounts": accounts,
+        }
+
+        resp = self.call('accounts_frontiers', payload)
+
+        return resp['frontiers']
 
     def account_info(self, account, representative=False, weight=False,
                      pending=False):
@@ -324,6 +431,114 @@ class Client(object):
         resp = self.call('account_key', payload)
 
         return resp['key']
+
+    def account_remove(self, wallet, account):
+        """
+        Remove **account** from **wallet**
+
+        :type wallet: str
+        :type account: str
+
+        .. enable_control required
+
+        >>> rpc.account_remove(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+        ...     account="xrb_39a73oy5ungrhxy5z5oao1xso4zo7dmgpjd4u74xcrx3r1w6rtazuouw6qfi"
+        ... )
+        True
+
+        """
+
+        wallet = preprocess_wallet(wallet)
+        account = preprocess_account(account)
+
+        payload = {
+            "wallet": wallet,
+            "account": account,
+        }
+
+        resp = self.call('account_remove', payload)
+
+        return resp['removed'] == '1'
+
+    def account_representative(self, account):
+        """
+        Returns the representative for **account**
+
+        :type account: str
+
+        >>> rpc.account_representative(
+        ...     account="xrb_39a73oy5ungrhxy5z5oao1xso4zo7dmgpjd4u74xcrx3r1w6rtazuouw6qfi"
+        )
+        "xrb_16u1uufyoig8777y6r8iqjtrw8sg8maqrm36zzcm95jmbd9i9aj5i8abr8u5"
+
+        """
+
+        account = preprocess_account(account)
+
+        payload = {
+            "account": account,
+        }
+
+        resp = self.call('account_representative', payload)
+
+        return resp['representative']
+
+    def account_representative_set(self, wallet, account, representative):
+        """
+        Sets the representative for **account** in **wallet**
+
+        :type wallet: str
+        :type account: str
+        :type representative: str
+
+        .. enable_control required
+
+        >>> rpc.account_representative_set(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+        ...     account="xrb_39a73oy5ungrhxy5z5oao1xso4zo7dmgpjd4u74xcrx3r1w6rtazuouw6qfi",
+        ...     representative="xrb_16u1uufyoig8777y6r8iqjtrw8sg8maqrm36zzcm95jmbd9i9aj5i8abr8u5"
+        ... )
+        "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+
+        """
+
+        wallet = preprocess_wallet(wallet)
+        account = preprocess_account(account)
+        representative = preprocess_account(representative)
+
+        payload = {
+            "wallet": wallet,
+            "account": account,
+            "representative": representative,
+        }
+
+        resp = self.call('account_representative_set', payload)
+
+        return resp['block']
+
+    def account_weight(self, account):
+        """
+        Returns the voting weight for **account**
+
+        :type account: str
+
+        >>> rpc.account_weight(
+        ...     account="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
+        ... )
+        10000
+
+        """
+
+        account = preprocess_account(account)
+
+        payload = {
+            "account": account,
+        }
+
+        resp = self.call('account_weight', payload)
+
+        return int(resp['weight'])
 
     def version(self):
         """
