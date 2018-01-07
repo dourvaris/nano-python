@@ -1453,7 +1453,7 @@ class Client(object):
 
         def _preprocess_json_dict(value):
             if isinstance(value, dict):
-                return json.dumps(value)
+                return json.dumps(value, sort_keys=True)
             return value
 
 
