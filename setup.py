@@ -21,6 +21,7 @@ INSTALL_REQUIRES = [
 ]
 TESTS_REQUIRE = [
     'pytest',
+    'pytest-cov',
     'pytest-runner',
     'requests_mock',
 ]
