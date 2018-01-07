@@ -14,7 +14,16 @@ def client(mock_rpc_session):
     return Client(host='mock://localhost:7076', session=mock_rpc_session)
 
 
+
 class TestClient(object):
+
+    @pytest.mark.parametrize('args', [
+        {},
+        {'host': 'http://localhost:7076/'},
+        {'host': 'http://localhost:7076'},
+    ])
+    def test_create(self, args):
+        assert Client(**args)
 
     def test_call_valid_action(self, client):
         assert client.call('version') == {

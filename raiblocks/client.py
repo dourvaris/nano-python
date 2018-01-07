@@ -11,15 +11,12 @@ class Client(object):
 
     def __init__(self, host=None, session=None):
         if not host:
-            host = 'http://localhost:7076/'
-
-        if not host.endswith('/'):
-            host = host + '/'
+            host = 'http://localhost:7076'
 
         if not session:
             session = requests.Session()
 
-        self.session = session
+        self._session = session
         self.host = host
 
     def call(self, action, params=None):
@@ -28,7 +25,7 @@ class Client(object):
         params['action'] = action
 
         try:
-            resp = self.session.post(self.host, json=params)
+            resp = self._session.post(self.host, json=params)
         except Exception:
             raise
 
