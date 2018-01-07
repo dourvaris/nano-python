@@ -34,6 +34,11 @@ def preprocess_list(value):
     return value
 
 
+def preprocess_ipaddr(ipaddr):
+    # TODO: validate the ip address format
+    return ipaddr
+
+
 class Client(object):
     """ RaiBlocks node RPC client """
 
@@ -732,6 +737,104 @@ class Client(object):
                     data[key] = int(data[key])
 
         return blocks
+
+    def block_account(self, hash):
+        """
+        Returns the account containing block
+
+        :type hash: str
+
+        >>> rpc.block_account(
+        ...     hash="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        ... )
+        "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
+
+        """
+
+        hash = preprocess_block(hash)
+
+        payload = {
+            "hash": hash,
+        }
+
+        resp = self.call('block_account', payload)
+
+        return resp['account']
+
+    def block_count(self):
+        """
+        Reports the number of blocks in the ledger and unchecked synchronizing
+        blocks
+
+        >>> rpc.block_count()
+        {
+          "count": 1000,
+          "unchecked": 10
+        }
+
+        """
+
+        resp = self.call('block_count')
+
+        return {
+            k: int(v) for k, v in resp.items()
+        }
+
+    def block_count_type(self):
+        """
+        Reports the number of blocks in the ledger by type (send, receive,
+        open, change)
+
+        >>> rpc.block_count_type()
+        {
+          "send": 1000,
+          "receive": 900,
+          "open": 100,
+          "change": 50
+        }
+
+        """
+
+        resp = self.call('block_count_type')
+
+        return {
+            k: int(v) for k, v in resp.items()
+        }
+
+    def bootstrap(self, address, port):
+        """
+        Initialize bootstrap to specific **IP address** and **port**
+
+        :type address: str
+        :type port: int
+
+        >>> rpc.bootstrap(address="::ffff:138.201.94.249", port="7075")
+        True
+        """
+
+        address = preprocess_ipaddr(address)
+        port = preprocess_int(port)
+
+        payload = {
+            "address": address,
+            "port": port,
+        }
+
+        resp = self.call('bootstrap', payload)
+
+        return 'success' in resp
+
+    def bootstrap_any(self):
+        """
+        Initialize multi-connection bootstrap to random peers
+
+        >>> rpc.bootstrap_any()
+        True
+        """
+
+        resp = self.call('bootstrap_any')
+
+        return 'success' in resp
 
     def version(self):
         """
