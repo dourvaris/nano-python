@@ -2085,6 +2085,33 @@ class Client(object):
         resp = self.call('work_peers_clear')
         return 'success' in resp
 
+    def work_validate(self, work, hash):
+        """
+        Check whether **work** is valid for block
+
+        :type work: str
+        :type hash: str
+
+        >>> rpc.work_validate(
+        ...     work="2bf29ef00786a6bc",
+        ...     hash="718CC2121C3E641059BC1C2CFC45666C99E8AE922F7A807B7D07B62C995D79E2"
+        ... )
+        True
+
+        """
+
+        work = preprocess_work(work)
+        hash = preprocess_block(hash)
+
+        payload = {
+            "work": work,
+            "hash": hash,
+        }
+
+        resp = self.call('work_validate', payload)
+
+        return resp['valid'] == '1'
+
     def version(self):
         """
         Returns the node's RPC version

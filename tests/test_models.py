@@ -13,7 +13,7 @@ class TestAccount(object):
         'xrb_CAPITALS111pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi11111111',
     ])
     def test_valid_account(self, value):
-        assert Account(value) == value.lower()
+        assert Account(value) == value
 
     @pytest.mark.parametrize('value', [
         # TODO(dan): add tests for validity of the string based on hash
@@ -39,7 +39,7 @@ class TestWallet(object):
         '1BAEC8EC208142C99059B393051BAC8380000DF9B5A2E6B2489A277D81789F3F',
     ])
     def test_valid_wallet(self, value):
-        assert Wallet(value) == value.upper()
+        assert Wallet(value) == value
 
     @pytest.mark.parametrize('value', [
         '',
