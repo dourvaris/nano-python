@@ -10,6 +10,12 @@ class Client(object):
     """ RaiBlocks node RPC client """
 
     def __init__(self, host=None, session=None):
+        """
+        Initialize the RaiBlocks RPC client
+
+        :param host: location of the RPC server eg. http://localhost:7076
+        :param session: optional `requests` session to use for this client
+        """
         if not host:
             host = 'http://localhost:7076'
 
