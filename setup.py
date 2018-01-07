@@ -17,6 +17,7 @@ URL = 'https://github.com/dourvaris/raiblocks'
 EMAIL = 'dourvaris@gmail.com'
 AUTHOR = 'Daniel Dourvaris'
 INSTALL_REQUIRES = [
+    'six',
     'requests',
 ]
 TESTS_REQUIRE = [

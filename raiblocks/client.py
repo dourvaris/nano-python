@@ -1,3 +1,4 @@
+import six
 import requests
 from raiblocks.models import Account, Wallet, PublicKey
 
@@ -408,6 +409,64 @@ class Client(object):
         resp = self.call('account_move', payload)
 
         return resp['moved'] == '1'
+
+    def accounts_pending(self, accounts, count=None, threshold=None, source=None):
+        """
+        Returns a list of block hashes which have not yet been received by
+        these **accounts**
+
+        :type accounts: list
+        :type count: int
+        :type threshold: int
+        :type source: bool
+
+        >>> rpc.accounts_pending(
+        ...     accounts=[
+        ...         "xrb_1111111111111111111111111111111111111111111111111117353trpda",
+        ...         "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3"
+        ...     ],
+        ...     count=1
+        ... )
+        {
+            "xrb_1111111111111111111111111111111111111111111111111117353trpda": [
+                "142A538F36833D1CC78B94E11C766F75818F8B940771335C6C1B8AB880C5BB1D"
+            ],
+            "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3": [
+                "4C1FEEF0BEA7F50BE35489A1233FE002B212DEA554B55B1B470D78BD8F210C74"
+            ]
+        }
+
+        """
+
+        payload = {
+            "accounts": accounts,
+        }
+
+        accounts = preprocess_list(accounts)
+        if count is not None:
+            payload['count'] = preprocess_int(count)
+
+        if threshold is not None:
+            payload['threshold'] = preprocess_int(threshold)
+
+        if source is not None:
+            payload['source'] = preprocess_strbool(source)
+
+        resp = self.call('accounts_pending', payload)
+
+        blocks = resp.get('blocks') or {}
+        for account, data in blocks.items():
+            if isinstance(data, list):  # list of block hashes
+                continue
+            for key, value in data.items():
+                if isinstance(value, six.string_types):  # amount
+                    data[key] = int(value)
+                elif isinstance(value, dict):  # dict with "amount" and "source"
+                    for key in ('amount',):
+                        if key in value:
+                            value[key] = int(value[key])
+
+        return resp['blocks'] or {}
 
     def account_key(self, account):
         """

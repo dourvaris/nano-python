@@ -57,4 +57,6 @@ class TestClient(object):
             with pytest.raises(eval(functest['exception'])):
                 method(**args)
         elif 'result' in functest:
-            assert method(**args) == functest['result']
+            result = method(**args)
+            expected = functest['result']
+            assert result == expected
