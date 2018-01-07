@@ -1774,7 +1774,7 @@ class Client(object):
 
         return resp['set'] == '1'
 
-    def wallet_add(self, wallet, key):
+    def wallet_add(self, wallet, key, work=True):
         """
         Add an adhoc private key **key** to **wallet**
 
@@ -1798,6 +1798,9 @@ class Client(object):
             "wallet": wallet,
             "key": key,
         }
+
+        if not work:
+            payload['work'] = preprocess_strbool(work)
 
         resp = self.call('wallet_add', payload)
 
