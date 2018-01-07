@@ -1727,6 +1727,23 @@
       }
     }
   ],
+  "peers": [
+    {
+      "request": {
+        "action": "peers"
+      },
+      "response": {
+        "peers": {
+          "[::ffff:172.17.0.1]:32841": "3"
+        }
+      },
+      "func": {
+        "result": {
+          "[::ffff:172.17.0.1]:32841": 3
+        }
+      }
+    }
+  ],
   "pending": [
     {
       "request": {

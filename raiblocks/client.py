@@ -2227,6 +2227,24 @@ class Client(object):
 
         return resp['valid'] == '1'
 
+    def peers(self):
+        """
+        Returns a list of pairs of peer IPv6:port and its node network version
+
+        >>> rpc.peers()
+        {
+            "[::ffff:172.17.0.1]:32841": 3
+        }
+        """
+
+        resp = self.call('peers')
+
+        return {
+            host: int(version)
+            for host, version
+            in resp['peers'].items()
+        }
+
     def pending(self, account, count=None, threshold=None, source=False):
         """
         Returns a list of pending block hashes with amount more or equal to

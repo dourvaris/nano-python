@@ -46,6 +46,7 @@ class TestClient(object):
         try:
             method = getattr(client, action)
         except AttributeError:
+            raise Exception("`%s` not yet implemented" % action)
             pytest.xfail("`%s` not yet implemented" % action)
 
         if 'func' not in test:
