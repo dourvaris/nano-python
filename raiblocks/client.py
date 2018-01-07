@@ -236,6 +236,31 @@ class Client(object):
 
         return history
 
+    def account_list(self, wallet):
+        """
+        Lists all the accounts inside **wallet**
+
+        :type wallet: str
+
+        >>> rpc.account_list(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        ... )
+        [
+            "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
+        ]
+
+        """
+
+        wallet = preprocess_wallet(wallet)
+
+        payload = {
+            "wallet": wallet,
+        }
+
+        resp = self.call('account_list', payload)
+
+        return resp.get('accounts') or []
+
     def version(self):
         """
         Returns the node's RPC version
