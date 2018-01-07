@@ -1,9 +1,14 @@
 import requests
-from raiblocks.models import Account
+from raiblocks.models import Account, Wallet
 
 
 def preprocess_account(account_string):
     return Account(account_string)
+
+
+def preprocess_wallet(wallet_string):
+    return Wallet(wallet_string)
+
 
 def preprocess_strbool(value):
     return value and 'true' or 'false'
@@ -136,6 +141,31 @@ class Client(object):
                 resp[key] = int(resp[key])
 
         return resp
+
+    def account_create(self, wallet):
+        """
+        Creates a new account, insert next deterministic key in **wallet**
+
+        :type wallet: str
+
+        .. enable_control required
+
+        >>> rpc.account_create(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        ... )
+        "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
+
+        """
+
+        wallet = preprocess_wallet(wallet)
+
+        payload = {
+            "wallet": wallet,
+        }
+
+        resp = self.call('account_create', payload)
+
+        return resp['account']
 
     def version(self):
         """

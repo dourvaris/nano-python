@@ -1,6 +1,8 @@
+"Models for raiblocks"
 
 
 class Account(str):
+
     def __new__(cls, value):
         # FIXME(dan): this is not perfect yet - still need to check by hash
 
@@ -19,3 +21,18 @@ class Account(str):
                 raise ValueError('invalid character in account: %r' % char)
 
         return super(Account, cls).__new__(cls, value)
+
+
+class Wallet(str):
+
+    def __new__(cls, value):
+        value = value.upper()
+
+        if not len(value) == 64:
+            raise ValueError('invalid wallet id, not 64 characters')
+
+        for char in value:
+            if char not in '0123456789ABCDEF':
+                raise ValueError('invalid character in wallet id: %r' % char)
+
+        return super(Wallet, cls).__new__(cls, value)
