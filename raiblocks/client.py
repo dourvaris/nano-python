@@ -1217,6 +1217,31 @@ class Client(object):
 
         return resp
 
+    def keepalive(self, address, port):
+        """
+        Tells the node to send a keepalive packet to **address**:**port**
+
+        :type address: str
+        :type port: int
+
+        .. enable_control required
+
+        >>> rpc.keepalive(address="::ffff:192.168.1.1", port=1024)
+        True
+        """
+
+        address = preprocess_ipaddr(address)
+        port = preprocess_int(port)
+
+        payload = {
+            "address": address,
+            "port": port,
+        }
+
+        resp = self.call('keepalive', payload)
+
+        return resp == {}
+
     def ledger(self, account, count=None, representative=False, weight=False,
                pending=False):
         """
@@ -1659,6 +1684,28 @@ class Client(object):
             entry['contents'] = json.loads(entry['contents'])
 
         return unchecked
+
+    def validate_account_number(self, account):
+        """
+        Check whether **account** is a valid account number
+
+        :type account: str
+
+        >>> rpc.validate_account_number(
+        ...     account="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
+        ... )
+        True
+        """
+
+        account = preprocess_account(account)
+
+        payload = {
+            "account": account,
+        }
+
+        resp = self.call('validate_account_number', payload)
+
+        return resp['valid'] == '1'
 
     def wallet_representative(self, wallet):
         """
@@ -2441,6 +2488,169 @@ class Client(object):
 
         return resp['valid'] == '1'
 
+    def republish(self, hash, count=None, sources=None, destinations=None):
+        """
+        Rebroadcast blocks starting at **hash** to the network
+
+        :type hash: str
+        :type count: int
+        :type sources: int
+        :type destinations: int
+
+        >>> rpc.republish(
+        ...     hash="991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948"
+        ... )
+        [
+            "991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948",
+            "A170D51B94E00371ACE76E35AC81DC9405D5D04D4CEBC399AEACE07AE05DD293"
+        ]
+
+        """
+
+        hash = preprocess_block(hash)
+
+        payload = {
+            "hash": hash,
+        }
+
+        if count is not None:
+            payload['count'] = preprocess_int(count)
+
+        if sources is not None:
+            payload['sources'] = preprocess_int(sources)
+
+        if destinations is not None:
+            payload['destinations'] = preprocess_int(destinations)
+
+        resp = self.call('republish', payload)
+
+        return resp.get('blocks') or []
+
+    def search_pending(self, wallet):
+        """
+        Tells the node to look for pending blocks for any account in
+        **wallet**
+
+        :type wallet: str
+
+        .. enable_control required
+
+        >>> rpc.search_pending(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        ... )
+        True
+
+        """
+
+        wallet = preprocess_wallet(wallet)
+
+        payload = {
+            "wallet": wallet,
+        }
+
+        resp = self.call('search_pending', payload)
+
+        return resp['started'] == '1'
+
+    def search_pending_all(self):
+        """
+        Tells the node to look for pending blocks for any account in all
+        available wallets
+
+        .. enable_control required
+        .. version 8.0 required
+
+        >>> rpc.search_pending_all()
+        True
+
+        """
+
+        resp = self.call('search_pending_all')
+
+        return 'success' in resp
+
+    def send(self, wallet, source, destination, amount):
+        """
+        Send **amount** from **source** in **wallet** to **destination**
+
+        :type wallet: str
+        :type source: str
+        :type destination: str
+        :type amount: int
+
+        .. enable_control required
+
+        >>> rpc.send(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+        ...     source="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+        ...     destination="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+        ...     amount=1000000
+        ... )
+        "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+
+        """
+
+        wallet = preprocess_wallet(wallet)
+        source = preprocess_account(source)
+        destination = preprocess_account(destination)
+        amount = preprocess_int(amount)
+
+        payload = {
+            "wallet": wallet,
+            "source": source,
+            "destination": destination,
+            "amount": amount,
+        }
+
+        resp = self.call('send', payload)
+
+        return resp['block']
+
+    def successors(self, block, count):
+        """
+        Returns a list of block hashes in the account chain ending at
+        **block** up to **count**
+
+        :type block: str
+        :type count: int
+
+        >>> rpc.successors(
+        ...     block="991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948",
+        ...     count=1
+        ... )
+        [
+            "A170D51B94E00371ACE76E35AC81DC9405D5D04D4CEBC399AEACE07AE05DD293"
+        ]
+
+        """
+
+        block = preprocess_block(block)
+        count = preprocess_int(count)
+
+        payload = {
+            "block": block,
+            "count": count,
+        }
+
+        resp = self.call('successors', payload)
+
+        return resp.get('blocks') or []
+
+    def stop(self):
+        """
+        Stop the node
+
+        .. enable_control required
+
+        >>> rpc.stop()
+        True
+
+        """
+
+        resp = self.call('stop')
+
+        return 'success' in resp
+
     def version(self):
         """
         Returns the node's RPC version
@@ -2460,18 +2670,3 @@ class Client(object):
             resp[key] = int(resp[key])
 
         return resp
-
-    def stop(self):
-        """
-        Stop the node
-
-        .. enable_control required
-
-        >>> rpc.stop()
-        True
-
-        """
-
-        resp = self.call('stop')
-
-        return 'success' in resp

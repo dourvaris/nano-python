@@ -1063,7 +1063,14 @@
         "address": "::ffff:192.168.1.1",
         "port": "1024"
       },
-      "response": {}
+      "response": {},
+      "func": {
+        "args": {
+          "address": "::ffff:192.168.1.1",
+          "port": "1024"
+        },
+        "result": true
+      }
     }
   ],
   "key_create": [
@@ -1422,6 +1429,15 @@
           "991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948",
           "A170D51B94E00371ACE76E35AC81DC9405D5D04D4CEBC399AEACE07AE05DD293"
         ]
+      },
+      "func": {
+        "args": {
+          "hash": "991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948"
+        },
+        "result": [
+          "991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948",
+          "A170D51B94E00371ACE76E35AC81DC9405D5D04D4CEBC399AEACE07AE05DD293"
+        ]
       }
     },
     {
@@ -1433,6 +1449,18 @@
       },
       "response": {
         "blocks": [
+          "991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948",
+          "A170D51B94E00371ACE76E35AC81DC9405D5D04D4CEBC399AEACE07AE05DD293",
+          "90D0C16AC92DD35814E84BFBCC739A039615D0A42A76EF44ADAEF1D99E9F8A35"
+        ]
+      },
+      "func": {
+        "args": {
+          "hash": "90D0C16AC92DD35814E84BFBCC739A039615D0A42A76EF44ADAEF1D99E9F8A35",
+          "count": 1,
+          "sources": 2
+        },
+        "result": [
           "991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948",
           "A170D51B94E00371ACE76E35AC81DC9405D5D04D4CEBC399AEACE07AE05DD293",
           "90D0C16AC92DD35814E84BFBCC739A039615D0A42A76EF44ADAEF1D99E9F8A35"
@@ -1452,6 +1480,18 @@
           "90D0C16AC92DD35814E84BFBCC739A039615D0A42A76EF44ADAEF1D99E9F8A35",
           "18563C814A54535B7C12BF76A0E23291BA3769536634AB90AD0305776A533E8E"
         ]
+      },
+      "func": {
+        "args": {
+          "hash": "A170D51B94E00371ACE76E35AC81DC9405D5D04D4CEBC399AEACE07AE05DD293",
+          "count": 1,
+          "destinations": 2
+        },
+        "result": [
+          "A170D51B94E00371ACE76E35AC81DC9405D5D04D4CEBC399AEACE07AE05DD293",
+          "90D0C16AC92DD35814E84BFBCC739A039615D0A42A76EF44ADAEF1D99E9F8A35",
+          "18563C814A54535B7C12BF76A0E23291BA3769536634AB90AD0305776A533E8E"
+        ]
       }
     }
   ],
@@ -1463,6 +1503,12 @@
       },
       "response": {
         "started": "1"
+      },
+      "func": {
+        "args": {
+          "wallet": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        },
+        "result": true
       }
     }
   ],
@@ -1473,6 +1519,9 @@
       },
       "response": {
         "success": ""
+      },
+      "func": {
+        "result": true
       }
     }
   ],
@@ -1487,6 +1536,15 @@
       },
       "response": {
         "block": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+      },
+      "func": {
+        "args": {
+          "wallet": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+          "source": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+          "destination": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+          "amount": 1000000
+        },
+        "result": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
       }
     }
   ],
@@ -1511,6 +1569,12 @@
       },
       "response": {
         "valid": "1"
+      },
+      "func": {
+        "args": {
+          "account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
+        },
+        "result": true
       }
     }
   ],
@@ -1523,6 +1587,15 @@
       },
       "response": {
         "blocks": [
+          "A170D51B94E00371ACE76E35AC81DC9405D5D04D4CEBC399AEACE07AE05DD293"
+        ]
+      },
+      "func": {
+        "args": {
+          "block": "991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948",
+          "count": "1"
+        },
+        "result": [
           "A170D51B94E00371ACE76E35AC81DC9405D5D04D4CEBC399AEACE07AE05DD293"
         ]
       }
