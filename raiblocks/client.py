@@ -66,6 +66,27 @@ class Client(object):
             k: int(v) for k, v in resp.items()
         }
 
+    def account_block_count(self, account):
+        """
+        Get number of blocks for a specific **account**
+
+        :type account: str
+
+        >>> rpc.account_block_count(account="xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3")
+        19
+
+        """
+
+        account = preprocess_account(account)
+
+        payload = {
+            "account": account,
+        }
+
+        resp = self.call('account_block_count', payload)
+
+        return int(resp['block_count'])
+
     def version(self):
         """
         Returns the node's RPC version

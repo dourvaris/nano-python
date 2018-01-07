@@ -28,6 +28,12 @@
       },
       "response": {
         "block_count": "19"
+      },
+      "func": {
+        "args": {
+          "account": "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3"
+        },
+        "result": 19
       }
     }
   ],
