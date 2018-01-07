@@ -3,6 +3,7 @@ import pytest
 import requests
 import requests_mock
 
+from raiblocks.client import RPCException
 from raiblocks.client import Client
 from conftest import MockRPCMatchException, load_mock_rpc_tests
 

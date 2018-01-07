@@ -18,6 +18,21 @@
           "pending": 10000
         }
       }
+    },
+    {
+      "request": {
+        "action": "account_balance",
+        "account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi99999999"
+      },
+      "response": {
+        "error": "Bad account number"
+      },
+      "func": {
+        "args": {
+          "account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi99999999"
+        },
+        "exception": "RPCException"
+      }
     }
   ],
   "account_block_count": [

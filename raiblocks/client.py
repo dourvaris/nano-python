@@ -7,6 +7,10 @@ from .models import (
 )
 
 
+class RPCException(Exception):
+    """ Base class for RPC errors """
+
+
 def preprocess_account(account_string):
     return Account(account_string)
 
@@ -81,9 +85,15 @@ class Client(object):
         try:
             resp = self.session.post(self.host, json=params)
         except Exception:
+            # TODO: dan: handle timeouts/backoff
             raise
 
-        return resp.json()
+        result = resp.json()
+
+        if 'error' in result:
+            raise RPCException(result['error'])
+
+        return result
 
     def account_balance(self, account):
         """
