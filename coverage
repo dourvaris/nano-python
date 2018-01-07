@@ -1,1 +1,1 @@
-py.test $1 --cov-report term-missing --cov=raiblocks tests
+py.test $@ --cov-report term-missing --cov=raiblocks tests

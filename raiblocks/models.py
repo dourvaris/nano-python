@@ -45,3 +45,7 @@ class Wallet(Hash):
 class PublicKey(Hash):
     pass
 
+
+class Block(Hash):
+    pass
+

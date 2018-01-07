@@ -21,6 +21,7 @@ def mock_rpc_session():
     adapter = requests_mock.Adapter()
     session = requests.Session()
     session.mount('mock', adapter)
+    session.adapter = adapter
 
     responses = {}
 

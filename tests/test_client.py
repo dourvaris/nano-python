@@ -1,3 +1,4 @@
+import json
 import pytest
 import requests
 import requests_mock
@@ -53,10 +54,19 @@ class TestClient(object):
         functest = test['func']
         args = functest.get('args') or {}
 
+
         if 'exception' in functest:
             with pytest.raises(eval(functest['exception'])):
                 method(**args)
-        elif 'result' in functest:
+
+        if 'result' in functest:
             result = method(**args)
+            assert client.session.adapter.last_request.json() == test['request']
+
             expected = functest['result']
+            if result != expected:
+                print('result:')
+                print(json.dumps(result, indent=2, sort_keys=True))
+                print('expected:')
+                print(json.dumps(expected, indent=2, sort_keys=True))
             assert result == expected

@@ -1,6 +1,7 @@
 import six
+import json
 import requests
-from raiblocks.models import Account, Wallet, PublicKey
+from raiblocks.models import Account, Wallet, PublicKey, Block
 
 
 def preprocess_account(account_string):
@@ -9,6 +10,10 @@ def preprocess_account(account_string):
 
 def preprocess_wallet(wallet_string):
     return Wallet(wallet_string)
+
+
+def preprocess_block(block_string):
+    return Block(block_string)
 
 
 def preprocess_public_key(public_key_string):
@@ -45,7 +50,7 @@ class Client(object):
         if not session:
             session = requests.Session()
 
-        self._session = session
+        self.session = session
         self.host = host
 
     def call(self, action, params=None):
@@ -54,7 +59,7 @@ class Client(object):
         params['action'] = action
 
         try:
-            resp = self._session.post(self.host, json=params)
+            resp = self.session.post(self.host, json=params)
         except Exception:
             raise
 
@@ -410,7 +415,7 @@ class Client(object):
 
         return resp['moved'] == '1'
 
-    def accounts_pending(self, accounts, count=None, threshold=None, source=None):
+    def accounts_pending(self, accounts, count=None, threshold=None, source=False):
         """
         Returns a list of block hashes which have not yet been received by
         these **accounts**
@@ -449,7 +454,7 @@ class Client(object):
         if threshold is not None:
             payload['threshold'] = preprocess_int(threshold)
 
-        if source is not None:
+        if source:
             payload['source'] = preprocess_strbool(source)
 
         resp = self.call('accounts_pending', payload)
@@ -598,6 +603,135 @@ class Client(object):
         resp = self.call('account_weight', payload)
 
         return int(resp['weight'])
+
+    def available_supply(self):
+        """
+        Returns how many rai are in the public supply
+
+        >>> rpc.available_supply()
+        10000
+
+        """
+
+        resp = self.call('available_supply')
+
+        return int(resp['available'])
+
+    def block(self, hash):
+        """
+        Retrieves a json representation of **block**
+
+        :type hash: str
+
+        >>> rpc.block(
+        ...     hash="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        ... )
+        {
+            "account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+            "work": "0000000000000000",
+            "source": "FA5B51D063BADDF345EFD7EF0D3C5FB115C85B1EF4CDE89D8B7DF3EAF60A04A4",
+            "representative": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+            "signature": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+            "type": "open"
+        }
+
+        """
+
+        hash = preprocess_block(hash)
+
+        payload = {
+            "hash": hash,
+        }
+
+        resp = self.call('block', payload)
+
+        return json.loads(resp['contents'])
+
+    def blocks(self, hashes):
+        """
+        Retrieves a json representations of **blocks**
+
+        :type hashes: list
+
+        >>> rpc.blocks(
+        ...     hashes=["000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"]
+        ... )
+        {
+            "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F": {
+                "account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+                "work": "0000000000000000",
+                "source": "FA5B51D063BADDF345EFD7EF0D3C5FB115C85B1EF4CDE89D8B7DF3EAF60A04A4",
+                "representative": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+                "signature": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                "type": "open"
+            }
+        }
+
+        """
+
+        hashes = preprocess_list(hashes)
+
+        payload = {
+            "hashes": hashes,
+        }
+
+        resp = self.call('blocks', payload)
+        blocks = resp['blocks'] or {}
+
+        return {
+            k: json.loads(v) for k, v in blocks.items()
+        }
+
+    def blocks_info(self, hashes, pending=False, source=False):
+        """
+        Retrieves a json representations of **blocks** with transaction
+        **amount** & block **account**
+
+        :type hashes: list
+        :type pending: bool
+        :type source: bool
+
+        >>> rpc.blocks_info(hashes=["000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"])
+        {
+            "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F": {
+                "block_account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+                "amount": "1000000000000000000000000000000",
+                "contents": {
+                    "account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+                    "work": "0000000000000000",
+                    "source": "FA5B51D063BADDF345EFD7EF0D3C5FB115C85B1EF4CDE89D8B7DF3EAF60A04A4",
+                    "representative": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+                    "signature": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                    "type": "open"
+                }
+            }
+        }
+
+        """
+
+        hashes = preprocess_list(hashes)
+
+        payload = {
+            "hashes": hashes,
+        }
+
+        if pending:
+            payload['pending'] = preprocess_strbool(pending)
+        if source:
+            payload['source'] = preprocess_strbool(source)
+
+
+        resp = self.call('blocks_info', payload)
+
+        blocks = resp.get('blocks') or {}
+
+        for block, data in blocks.items():
+            data['contents'] = json.loads(data['contents'])
+            for key in ('amount', 'pending'):
+                if key in data:
+                    data[key] = int(data[key])
+
+        return blocks
 
     def version(self):
         """
