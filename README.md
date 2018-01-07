@@ -1,5 +1,6 @@
 # RaiBlocks Python RPC client for rai_node
 
+[![Build Status](https://travis-ci.org/dourvaris/raiblocks-py.svg?branch=master)](https://travis-ci.org/dourvaris/raiblocks-py)
 
 ## Install
 
