@@ -2268,6 +2268,13 @@ class Client(object):
         .. version 8.0 required
 
         >>> rpc.pending(
+        ...     account="xrb_1111111111111111111111111111111111111111111111111117353trpda"
+        ... )
+        [
+            "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        ]
+
+        >>> rpc.pending(
         ...     account="xrb_1111111111111111111111111111111111111111111111111117353trpda",
         ...     count=1,
         ...     threshold=1000000000000000000000000
@@ -2295,7 +2302,10 @@ class Client(object):
 
         resp = self.call('pending', payload)
 
-        blocks = resp['blocks'] or {}
+        blocks = resp.get('blocks') or {}
+
+        if isinstance(blocks, list):
+            return blocks
 
         for block, value in blocks.items():
             if isinstance(value, six.string_types):  # amount
