@@ -24,7 +24,7 @@ class TestAccount(object):
         'xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi000000001',
         'xrb_' + 60 * '!',
         'xrb_' + 60 * '$',
-        'xrb_' + 60 * u'\xb4',
+        'xrb_' + u'\xb4' + 59 * u'1',
         'xrb_' + 60 * '$',
     ])
     def test_invalid_account(self, value):
@@ -43,14 +43,8 @@ class TestWallet(object):
 
     @pytest.mark.parametrize('value', [
         '',
-        ' ' * 60,
-        'xrp_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000',
-        'xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi0000000',
-        'xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi000000001',
-        'xrb_' + 60 * '!',
-        'xrb_' + 60 * '$',
-        'xrb_' + 60 * u'\xb4',
-        'xrb_' + 60 * '$',
+        ' ' * 64,
+        'ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ',
     ])
     def test_invalid_wallet(self, value):
         with pytest.raises(ValueError):
