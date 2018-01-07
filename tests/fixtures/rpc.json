@@ -755,10 +755,12 @@
         "change": "50"
       },
       "func": {
-        "send": 1000,
-        "receive": 900,
-        "open": 100,
-        "change": 50
+        "result": {
+          "send": 1000,
+          "receive": 900,
+          "open": 100,
+          "change": 50
+        }
       }
     }
   ],
@@ -869,6 +871,17 @@
         "private": "9F0E444C69F77A49BD0BE89DB92C38FE713E0963165CCA12FAF5712D7657120F",
         "public": "C008B814A7D269A1FA3C6528B19201A24D797912DB9996FF02A1FF356E45552B",
         "account": "xrb_3i1aq1cchnmbn9x5rsbap8b15akfh7wj7pwskuzi7ahz8oq6cobd99d4r3b7"
+      },
+      "func": {
+        "args": {
+          "seed": "0000000000000000000000000000000000000000000000000000000000000000",
+          "index": 0
+        },
+        "result": {
+          "private": "9F0E444C69F77A49BD0BE89DB92C38FE713E0963165CCA12FAF5712D7657120F",
+          "public": "C008B814A7D269A1FA3C6528B19201A24D797912DB9996FF02A1FF356E45552B",
+          "account": "xrb_3i1aq1cchnmbn9x5rsbap8b15akfh7wj7pwskuzi7ahz8oq6cobd99d4r3b7"
+        }
       }
     }
   ],
@@ -883,6 +896,15 @@
         "frontiers": {
           "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
         }
+      },
+      "func": {
+        "args": {
+          "account": "xrb_1111111111111111111111111111111111111111111111111111hifc8npp",
+          "count": 1
+        },
+        "result": {
+          "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        }
       }
     }
   ],
@@ -893,6 +915,9 @@
       },
       "response": {
         "count": "1000"
+      },
+      "func": {
+        "result": 1000
       }
     }
   ],
@@ -910,6 +935,20 @@
             "type": "receive",
             "account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
             "amount": "100000000000000000000000000000000"
+          }
+        ]
+      },
+      "func": {
+        "args": {
+          "hash": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+          "count": 1
+        },
+        "result": [
+          {
+            "hash": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+            "type": "receive",
+            "account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+            "amount": 100000000000000000000000000000000
           }
         ]
       }

@@ -54,12 +54,10 @@ class TestClient(object):
         functest = test['func']
         args = functest.get('args') or {}
 
-
         if 'exception' in functest:
             with pytest.raises(eval(functest['exception'])):
                 method(**args)
-
-        if 'result' in functest:
+        elif 'result' in functest:
             result = method(**args)
             assert client.session.adapter.last_request.json() == test['request']
 
@@ -70,3 +68,14 @@ class TestClient(object):
                 print('expected:')
                 print(json.dumps(expected, indent=2, sort_keys=True))
             assert result == expected
+        else:
+            # valid formats:
+            # {
+            #     "args": {"x": 10, "y": 5},
+            #     "result": 2
+            # }
+            # {
+            #     "args": {"x": 1, "y": 0},
+            #     "exception": "ZeroDivisionError"
+            # }
+            raise Exception("invalid test format: %s" % json.dumps(functest))

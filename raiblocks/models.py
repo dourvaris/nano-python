@@ -49,3 +49,7 @@ class PublicKey(Hash):
 class Block(Hash):
     pass
 
+
+class Seed(Hash):
+    pass
+

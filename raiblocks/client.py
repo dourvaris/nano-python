@@ -1,7 +1,7 @@
 import six
 import json
 import requests
-from raiblocks.models import Account, Wallet, PublicKey, Block
+from raiblocks.models import Account, Wallet, PublicKey, Block, Seed
 
 
 def preprocess_account(account_string):
@@ -14,6 +14,10 @@ def preprocess_wallet(wallet_string):
 
 def preprocess_block(block_string):
     return Block(block_string)
+
+
+def preprocess_seed(seed_string):
+    return Seed(seed_string)
 
 
 def preprocess_public_key(public_key_string):
@@ -921,6 +925,118 @@ class Client(object):
         resp = self.call('delegators_count', payload)
 
         return int(resp['count'])
+
+    def deterministic_key(self, seed, index):
+        """
+        Derive deterministic keypair from **seed** based on **index**
+
+        :type seed: str
+        :type index: int
+
+        >>> rpc.deterministic_key(
+        ...     seed="0000000000000000000000000000000000000000000000000000000000000000",
+        ...     index=0
+        ... )
+        {
+          "private": "9F0E444C69F77A49BD0BE89DB92C38FE713E0963165CCA12FAF5712D7657120F",
+          "public": "C008B814A7D269A1FA3C6528B19201A24D797912DB9996FF02A1FF356E45552B",
+          "account": "xrb_3i1aq1cchnmbn9x5rsbap8b15akfh7wj7pwskuzi7ahz8oq6cobd99d4r3b7"
+        }
+
+        """
+
+        seed = preprocess_seed(seed)
+        index = preprocess_int(index)
+
+        payload = {
+            "seed": seed,
+            "index": index,
+        }
+
+        resp = self.call('deterministic_key', payload)
+
+        return resp
+
+    def frontiers(self, account, count):
+        """
+        Returns a list of pairs of account and block hash representing the
+        head block starting at **account** up to **count**
+
+        :type account: str
+        :type count: int
+
+        >>> rpc.frontiers(
+        ...     account="xrb_1111111111111111111111111111111111111111111111111111hifc8npp",
+        ...     count=1
+        ... )
+        {
+            "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000":
+                "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        }
+
+        """
+
+        account = preprocess_account(account)
+        count = preprocess_int(count)
+
+        payload = {
+            "account": account,
+            "count": count,
+        }
+
+        resp = self.call('frontiers', payload)
+
+        return resp.get('frontiers') or {}
+
+    def frontier_count(self):
+        """
+        Reports the number of accounts in the ledger
+
+        >>> rpc.frontier_count()
+        1000
+
+        """
+
+        resp = self.call('frontier_count')
+
+        return int(resp['count'])
+
+    def history(self, hash, count):
+        """
+        Reports send/receive information for a chain of blocks
+
+        :type hash: str
+        :type count: int
+
+        >>> rpc.history(
+        ...     hash="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+        ...     count=1
+        ... )
+        [
+            {
+              "hash": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+              "type": "receive",
+              "account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+              "amount": "100000000000000000000000000000000"
+            }
+        ]
+
+        """
+
+        hash = preprocess_block(hash)
+        count = preprocess_int(count)
+
+        payload = {
+            "hash": hash,
+            "count": count,
+        }
+
+        resp = self.call('history', payload)
+
+        for entry in resp['history']:
+            entry['amount'] = int(entry['amount'])
+
+        return resp['history']
 
     def version(self):
         """
