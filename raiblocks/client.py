@@ -18,6 +18,10 @@ def preprocess_strbool(value):
     return value and 'true' or 'false'
 
 
+def preprocess_int(integer_string):
+    return str(int(integer_string))
+
+
 class Client(object):
     """ RaiBlocks node RPC client """
 
@@ -193,6 +197,44 @@ class Client(object):
         resp = self.call('account_get', payload)
 
         return resp['account']
+
+    def account_history(self, account, count):
+        """
+        Reports send/receive information for a **account**
+
+        :type account: str
+        :type count: int
+
+        >>> rpc.account_history(
+        ...     account="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+        ...     count=1
+        ... )
+        [
+            {
+              "hash": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+              "type": "receive",
+              "account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+              "amount": 100000000000000000000000000000000
+            }
+        ]
+
+        """
+
+        account = preprocess_account(account)
+        count = preprocess_int(count)
+
+        payload = {
+            "account": account,
+            "count": count,
+        }
+
+        resp = self.call('account_history', payload)
+        history = resp.get('history') or []
+
+        for entry in history:
+            entry['amount'] = int(entry['amount'])
+
+        return history
 
     def version(self):
         """
