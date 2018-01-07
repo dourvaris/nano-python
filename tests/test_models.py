@@ -8,14 +8,18 @@ class TestAccount(object):
         'xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000',
         'xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi11111111',
         'xrb_25355tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi11111111',
+        'XRB_25355tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi11111111',
+        'XRB_CAPITALS111pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi11111111',
+        'xrb_CAPITALS111pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi11111111',
     ])
     def test_valid_account(self, value):
-        assert Account(value) == value
+        assert Account(value) == value.lower()
 
     @pytest.mark.parametrize('value', [
         # TODO(dan): add tests for validity of the string based on hash
         '',
         ' ' * 60,
+        'xrp_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000',
         'xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi0000000',
         'xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi000000001',
         'xrb_' + 60 * '!',

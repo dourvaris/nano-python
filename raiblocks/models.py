@@ -2,9 +2,9 @@
 
 class Account(str):
     def __new__(cls, value):
-        value = value.lower()
-
         # FIXME(dan): this is not perfect yet - still need to check by hash
+
+        value = value.lower()
 
         if not len(value) == 64:
             raise ValueError('invalid account, not 64 characters')
