@@ -3,16 +3,15 @@ import requests
 import requests_mock
 
 from raiblocks.client import Client
-from conftest import MockRPCMatchException, load_mock_rpc_fixtures
+from conftest import MockRPCMatchException, load_mock_rpc_tests
 
 
-mock_rpc_fixtures = load_mock_rpc_fixtures()
+mock_rpc_tests = load_mock_rpc_tests()
 
 
 @pytest.fixture
 def client(mock_rpc_session):
     return Client(host='mock://localhost:7076', session=mock_rpc_session)
-
 
 
 class TestClient(object):
@@ -37,23 +36,25 @@ class TestClient(object):
         with pytest.raises(MockRPCMatchException):
             assert client.call('versions')
 
-    @pytest.mark.parametrize('action,functest', [
-        (
-            action,
-            call.get('func', {})
-        )
-        for action, calls in mock_rpc_fixtures.items()
-        for call in calls
+    @pytest.mark.parametrize('action,test', [
+        (action, test)
+        for action, tests in mock_rpc_tests.items()
+        for test in tests
     ])
-    def test_rpc_methods(self, client, action, functest):
+    def test_rpc_methods(self, client, action, test):
         try:
             method = getattr(client, action)
         except AttributeError:
             pytest.xfail("`%s` not yet implemented" % action)
 
-        if 'result' not in functest:
-            pytest.skip("missing python result to compare")
+        if 'func' not in test:
+            pytest.skip("missing functional test")
 
+        functest = test['func']
         args = functest.get('args') or {}
 
-        assert method(**args) == functest['result']
+        if 'exception' in functest:
+            with pytest.raises(eval(functest['exception'])):
+                method(**args)
+        elif 'result' in functest:
+            assert method(**args) == functest['result']

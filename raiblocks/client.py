@@ -22,6 +22,12 @@ def preprocess_int(integer_string):
     return str(int(integer_string))
 
 
+def preprocess_list(value):
+    if not isinstance(value, list):
+        raise ValueError("must be a list")
+    return value
+
+
 class Client(object):
     """ RaiBlocks node RPC client """
 
@@ -260,6 +266,41 @@ class Client(object):
         resp = self.call('account_list', payload)
 
         return resp.get('accounts') or []
+
+    def account_move(self, source, wallet, accounts):
+        """
+        Moves **accounts** from **source** to **wallet**
+
+        :type wallet: str
+        :type source: str
+        :type accounts: list
+
+        .. enable_control required
+
+        >>> rpc.account_move(
+        ...     source="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+        ...     accounts=[
+        ...         "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
+        ...     ]
+        ... )
+        True
+
+        """
+
+        wallet = preprocess_wallet(wallet)
+        source = preprocess_wallet(source)
+        accounts = preprocess_list(accounts)
+
+        payload = {
+            "wallet": wallet,
+            "source": source,
+            "accounts": accounts,
+        }
+
+        resp = self.call('account_move', payload)
+
+        return resp['moved'] == '1'
 
     def version(self):
         """
