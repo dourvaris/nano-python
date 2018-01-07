@@ -1313,7 +1313,7 @@ class Client(object):
             payload['count'] = preprocess_int(count)
 
         if sorting:
-            payload['sorting'] = preprocess_strbool(sort)
+            payload['sorting'] = preprocess_strbool(sorting)
 
         if representative:
             payload['representative'] = preprocess_strbool(representative)
@@ -1586,9 +1586,10 @@ class Client(object):
             payload['count'] = preprocess_int(count)
 
         if sorting:
-            payload['sorting'] = preprocess_strbool(sort)
+            payload['sorting'] = preprocess_strbool(sorting)
 
-        resp = self.call('representatives')
+        resp = self.call('representatives', payload)
+
         representatives = resp.get('representatives') or {}
 
         for k, v in representatives.items():

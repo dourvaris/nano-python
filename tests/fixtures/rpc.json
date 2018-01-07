@@ -1236,7 +1236,8 @@
         "count": "1",
         "representative": "true",
         "weight": "true",
-        "pending": "true"
+        "pending": "true",
+        "sorting": "true"
       },
       "response": {
         "accounts": {
@@ -1259,7 +1260,8 @@
           "count": 1,
           "representative": true,
           "weight": true,
-          "pending": true
+          "pending": true,
+          "sorting": true
         },
         "result": {
           "xrb_11119gbh8hb4hj1duf7fdtfyf5s75okzxdgupgpgm1bj78ex3kgy7frt3s9n": {
@@ -1473,6 +1475,31 @@
         }
       },
       "func": {
+        "result": {
+          "xrb_1111111111111111111111111111111111111111111111111117353trpda": 3822372327060170000000000000000000000,
+          "xrb_1111111111111111111111111111111111111111111111111awsq94gtecn": 30999999999999999999999999000000,
+          "xrb_114nk4rwjctu6n6tr6g6ps61g1w3hdpjxfas4xj1tq6i8jyomc5d858xr1xi": 0
+        }
+      }
+    },
+    {
+      "request": {
+        "action": "representatives",
+        "count": "1",
+        "sorting": "true"
+      },
+      "response": {
+        "representatives": {
+          "xrb_1111111111111111111111111111111111111111111111111117353trpda": "3822372327060170000000000000000000000",
+          "xrb_1111111111111111111111111111111111111111111111111awsq94gtecn": "30999999999999999999999999000000",
+          "xrb_114nk4rwjctu6n6tr6g6ps61g1w3hdpjxfas4xj1tq6i8jyomc5d858xr1xi": "0"
+        }
+      },
+      "func": {
+        "args": {
+          "count": 1,
+          "sorting": true
+        },
         "result": {
           "xrb_1111111111111111111111111111111111111111111111111117353trpda": 3822372327060170000000000000000000000,
           "xrb_1111111111111111111111111111111111111111111111111awsq94gtecn": 30999999999999999999999999000000,
