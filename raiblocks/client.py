@@ -110,9 +110,10 @@ class Client(object):
 
         resp = self.call('account_balance', payload)
 
-        return {
-            k: int(v) for k, v in resp.items()
-        }
+        for k, v in resp.items():
+            resp[k] = int(v)
+
+        return resp
 
     def accounts_balances(self, accounts):
         """
@@ -708,9 +709,10 @@ class Client(object):
         resp = self.call('blocks', payload)
         blocks = resp['blocks'] or {}
 
-        return {
-            k: json.loads(v) for k, v in blocks.items()
-        }
+        for k, v in blocks.items():
+            blocks[k] = json.loads(v)
+
+        return blocks
 
     def blocks_info(self, hashes, pending=False, source=False):
         """
@@ -801,9 +803,10 @@ class Client(object):
 
         resp = self.call('block_count')
 
-        return {
-            k: int(v) for k, v in resp.items()
-        }
+        for k, v in resp.items():
+            resp[k] = int(v)
+
+        return resp
 
     def block_count_type(self):
         """
@@ -822,9 +825,10 @@ class Client(object):
 
         resp = self.call('block_count_type')
 
-        return {
-            k: int(v) for k, v in resp.items()
-        }
+        for k, v in resp.items():
+            resp[k] = int(v)
+
+        return resp
 
     def bootstrap(self, address, port):
         """
@@ -1563,9 +1567,10 @@ class Client(object):
         resp = self.call('representatives')
         representatives = resp.get('representatives') or {}
 
-        return {
-            k: int(v) for k, v in representatives.items()
-        }
+        for k, v in representatives.items():
+            representatives[k] = int(v)
+
+        return representatives
 
     def unchecked(self, count=None):
         """
@@ -1831,9 +1836,10 @@ class Client(object):
 
         resp = self.call('wallet_balance_total', payload)
 
-        return {
-            k: int(v) for k, v in resp.items()
-        }
+        for k, v in resp.items():
+            resp[k] = int(v)
+
+        return resp
 
     def wallet_balances(self, wallet):
         """
@@ -1863,9 +1869,8 @@ class Client(object):
         resp = self.call('wallet_balances', payload)
         balances = resp.get('balances') or {}
         for account, balance in balances.items():
-            balances[account] = {
-                k: int(v) for k, v in balances[account].items()
-            }
+            for k, v in balances[account].items():
+                balances[account][k] = int(v)
 
         return balances
 
