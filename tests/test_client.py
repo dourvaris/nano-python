@@ -28,18 +28,23 @@ class TestClient(object):
         with pytest.raises(MockRPCMatchException):
             assert client.call('versions')
 
-    @pytest.mark.parametrize('action,args,expected', [
-        (action, call.get('args'), call.get('result'))
+    @pytest.mark.parametrize('action,functest', [
+        (
+            action,
+            call.get('func', {})
+        )
         for action, calls in mock_rpc_fixtures.items()
         for call in calls
     ])
-    def test_rpc_methods(self, client, action, args, expected):
+    def test_rpc_methods(self, client, action, functest):
         try:
             method = getattr(client, action)
         except AttributeError:
             pytest.xfail("`%s` not yet implemented" % action)
 
-        if expected is None:
+        if 'result' not in functest:
             pytest.skip("missing python result to compare")
 
-        assert method(**args) == expected
+        args = functest.get('args') or {}
+
+        assert method(**args) == functest['result']

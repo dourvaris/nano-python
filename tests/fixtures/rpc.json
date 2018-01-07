@@ -8,6 +8,15 @@
       "response": {
         "balance": "10000",
         "pending": "10000"
+      },
+      "func": {
+        "args": {
+          "account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
+        },
+        "result": {
+          "balance": 10000,
+          "pending": 10000
+        }
       }
     }
   ],
@@ -900,8 +909,9 @@
       "response": {
         "success": ""
       },
-      "args": {},
-      "result": true
+      "func": {
+        "result": true
+      }
     }
   ],
   "validate_account_number": [
@@ -939,11 +949,12 @@
         "store_version": "10",
         "node_vendor": "RaiBlocks 9.0"
       },
-      "args": {},
-      "result": {
-        "rpc_version": 1,
-        "store_version": 10,
-        "node_vendor": "RaiBlocks 9.0"
+      "func": {
+        "result": {
+          "rpc_version": 1,
+          "store_version": 10,
+          "node_vendor": "RaiBlocks 9.0"
+        }
       }
     }
   ],

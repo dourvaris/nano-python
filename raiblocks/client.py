@@ -1,4 +1,10 @@
 import requests
+from raiblocks.models import Account
+
+
+def preprocess_account(account_string):
+    return Account(account_string)
+
 
 class Client(object):
     """ RaiBlocks node RPC client """
@@ -27,6 +33,35 @@ class Client(object):
             raise
 
         return resp.json()
+
+    def account_balance(self, account):
+        """
+        Returns how many RAW is owned and how many have not yet been received
+        by **account**
+
+        :type account: str
+
+        >>> rpc.account_balance(
+        ...     account="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
+        ... )
+        {
+          "balance": 10000,
+          "pending": 10000
+        }
+
+        """
+
+        account = preprocess_account(account)
+
+        payload = {
+            "account": account,
+        }
+
+        resp = self.call('account_balance', payload)
+
+        return {
+            k: int(v) for k, v in resp.items()
+        }
 
     def version(self):
         """
