@@ -1038,6 +1038,131 @@ class Client(object):
 
         return resp['history']
 
+    def mrai_from_raw(self, amount):
+        """
+        Divide a raw amount down by the Mrai ratio.
+
+        :type amount: int
+
+        >>> rpc.mrai_from_raw(amount=1000000000000000000000000000000)
+        1
+
+        """
+
+        amount = preprocess_int(amount)
+
+        payload = {
+            "amount": amount,
+        }
+
+        resp = self.call('mrai_from_raw', payload)
+
+        return int(resp['amount'])
+
+    def mrai_to_raw(self, amount):
+        """
+        Multiply an Mrai amount by the Mrai ratio.
+
+        :type amount: int
+
+        >>> rpc.mrai_to_raw(amount=1)
+        1000000000000000000000000000000
+
+        """
+
+        amount = preprocess_int(amount)
+
+        payload = {
+            "amount": amount,
+        }
+
+        resp = self.call('mrai_to_raw', payload)
+
+        return int(resp['amount'])
+
+    def krai_from_raw(self, amount):
+        """
+        Divide a raw amount down by the krai ratio.
+
+        :type amount: int
+
+        >>> rpc.krai_from_raw(amount=1000000000000000000000000000)
+        1
+        """
+
+        amount = preprocess_int(amount)
+
+        payload = {
+            "amount": amount,
+        }
+
+        resp = self.call('krai_from_raw', payload)
+
+        return int(resp['amount'])
+
+    def krai_to_raw(self, amount):
+        """
+        Multiply an krai amount by the krai ratio.
+
+        :type amount: int
+
+        >>> rpc.krai_to_raw(amount=1)
+        1000000000000000000000000000
+
+        """
+
+        amount = preprocess_int(amount)
+
+        payload = {
+            "amount": amount,
+        }
+
+        resp = self.call('krai_to_raw', payload)
+
+        return int(resp['amount'])
+
+    def rai_from_raw(self, amount):
+        """
+        Divide a raw amount down by the rai ratio.
+
+        :type amount: int
+
+        >>> rpc.rai_from_raw(amount=1000000000000000000000000)
+        1
+
+        """
+
+        amount = preprocess_int(amount)
+
+        payload = {
+            "amount": amount,
+        }
+
+        resp = self.call('rai_from_raw', payload)
+
+        return int(resp['amount'])
+
+    def rai_to_raw(self, amount):
+        """
+        Multiply an rai amount by the rai ratio.
+
+        :type amount: int
+
+        >>> rpc.rai_to_raw(amount=1)
+        1000000000000000000000000
+
+        """
+
+        amount = preprocess_int(amount)
+
+        payload = {
+            "amount": amount,
+        }
+
+        resp = self.call('rai_to_raw', payload)
+
+        return int(resp['amount'])
+
     def version(self):
         """
         Returns the node's RPC version
