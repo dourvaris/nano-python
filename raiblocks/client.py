@@ -184,6 +184,7 @@ class Client(object):
 
         :type wallet: str
         :type count: int
+        :type work: bool
 
         .. enable_control required
         .. version 8.0 required
@@ -298,6 +299,7 @@ class Client(object):
         Creates a new account, insert next deterministic key in **wallet**
 
         :type wallet: str
+        :type work: bool
 
         .. enable_control required
 
@@ -1786,6 +1788,7 @@ class Client(object):
 
         :type wallet: str
         :type key: str
+        :type work: bool
 
         .. enable_control required
 
@@ -2426,7 +2429,7 @@ class Client(object):
 
         :type wallet: str
         :type account: str
-        :type work: int
+        :type work: str
 
         .. enable_control required
         .. version 8.0 required
