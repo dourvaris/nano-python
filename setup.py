@@ -16,8 +16,13 @@ DESCRIPTION = 'RaiBlocks Python RPC client for rai_node'
 URL = 'https://github.com/dourvaris/raiblocks'
 EMAIL = 'dourvaris@gmail.com'
 AUTHOR = 'Daniel Dourvaris'
-REQUIRED = [
+INSTALL_REQUIRES = [
     'requests',
+]
+TESTS_REQUIRE = [
+    'pytest',
+    'pytest-runner',
+    'requests_mock',
 ]
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -77,7 +82,9 @@ setup(
     # entry_points={
     #     'console_scripts': ['mycli=mymodule:cli'],
     # },
-    install_requires=REQUIRED,
+    install_requires=INSTALL_REQUIRES,
+    tests_require=TESTS_REQUIRE,
+    setup_requires=['pytest-runner'],
     include_package_data=True,
     license='MIT',
     classifiers=[
