@@ -47,3 +47,18 @@ class Client(object):
             resp[key] = int(resp[key])
 
         return resp
+
+    def stop(self):
+        """
+        Stop the node
+
+        .. enable_control required
+
+        >>> rpc.stop()
+        True
+
+        """
+
+        resp = self.call('stop')
+
+        return 'success' in resp
