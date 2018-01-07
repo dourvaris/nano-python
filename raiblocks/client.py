@@ -288,7 +288,7 @@ class Client(object):
 
         return resp
 
-    def account_create(self, wallet):
+    def account_create(self, wallet, work=True):
         """
         Creates a new account, insert next deterministic key in **wallet**
 
@@ -308,6 +308,9 @@ class Client(object):
         payload = {
             "wallet": wallet,
         }
+
+        if not work:
+            payload['work'] = preprocess_strbool(work)
 
         resp = self.call('account_create', payload)
 
