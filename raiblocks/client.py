@@ -866,6 +866,37 @@ class Client(object):
 
         return resp.get('blocks') or []
 
+    def delegators(self, account):
+        """
+        Returns a list of pairs of delegator names given **account** a
+        representative and its balance
+
+        :type account: str
+
+        .. version 8.0 required
+
+        >>> rpc.delegators(
+        ...     account="xrb_1111111111111111111111111111111111111111111111111117353trpda"
+        ... )
+        {
+            "xrb_13bqhi1cdqq8yb9szneoc38qk899d58i5rcrgdk5mkdm86hekpoez3zxw5sd":
+                "500000000000000000000000000000000000",
+            "xrb_17k6ug685154an8gri9whhe5kb5z1mf5w6y39gokc1657sh95fegm8ht1zpn":
+                "961647970820730000000000000000000000"
+        }
+
+        """
+
+        account = preprocess_account(account)
+
+        payload = {
+            "account": account,
+        }
+
+        resp = self.call('delegators', payload)
+
+        return resp.get('delegators') or {}
+
     def version(self):
         """
         Returns the node's RPC version
