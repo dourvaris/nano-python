@@ -15,7 +15,7 @@ def rpc(mock_rpc_session):
     return RPCClient(host='mock://localhost:7076', session=mock_rpc_session)
 
 
-class TestClient(object):
+class TestRPCClient(object):
 
     @pytest.mark.parametrize('args', [
         {},
