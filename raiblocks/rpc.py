@@ -217,7 +217,7 @@ class RPCClient(object):
 
         resp = self.call('accounts_frontiers', payload)
 
-        return resp['frontiers']
+        return resp.get('frontiers') or {}
 
     def account_info(self, account, representative=False, weight=False,
                      pending=False):
@@ -472,7 +472,7 @@ class RPCClient(object):
                         if key in value:
                             value[key] = int(value[key])
 
-        return resp['blocks'] or {}
+        return blocks
 
     def account_key(self, account):
         """
@@ -681,7 +681,7 @@ class RPCClient(object):
         }
 
         resp = self.call('blocks', payload)
-        blocks = resp['blocks'] or {}
+        blocks = resp.get('blocks') or {}
 
         for k, v in blocks.items():
             blocks[k] = json.loads(v)
@@ -1032,10 +1032,12 @@ class RPCClient(object):
 
         resp = self.call('history', payload)
 
-        for entry in resp['history']:
+        history = resp.get('history') or []
+
+        for entry in history:
             entry['amount'] = int(entry['amount'])
 
-        return resp['history']
+        return history
 
     def mrai_from_raw(self, amount):
         """
@@ -1996,7 +1998,7 @@ class RPCClient(object):
 
         resp = self.call('wallet_frontiers', payload)
 
-        return resp['frontiers']
+        return resp.get('frontiers') or {}
 
     def wallet_locked(self, wallet):
         """
@@ -2077,7 +2079,7 @@ class RPCClient(object):
                         if key in value:
                             value[key] = int(value[key])
 
-        return resp['blocks'] or {}
+        return blocks or {}
 
     def wallet_republish(self, wallet, count):
         """
@@ -2232,8 +2234,9 @@ class RPCClient(object):
         resp = self.call('peers')
 
         result = {}
+        peers = resp.get('peers') or {}
 
-        for host, version in resp['peers'].items():
+        for host, version in peers.items():
             result[host] = int(version)
 
         return result
@@ -2480,7 +2483,7 @@ class RPCClient(object):
 
         resp = self.call('work_peers')
 
-        return resp['work_peers']
+        return resp.get('work_peers') or []
 
     def work_peers_clear(self):
         """
