@@ -2,63 +2,12 @@ import six
 import json
 import requests
 
-from .models import (
-    Account, Wallet, PublicKey, Work, PrivateKey, Block, Seed
-)
-
 
 class RPCException(Exception):
     """ Base class for RPC errors """
 
 
-def preprocess_account(account_string):
-    return Account(account_string)
-
-
-def preprocess_wallet(wallet_string):
-    return Wallet(wallet_string)
-
-
-def preprocess_block(block_string):
-    return Block(block_string)
-
-
-def preprocess_seed(seed_string):
-    return Seed(seed_string)
-
-
-def preprocess_public_key(public_key_string):
-    return PublicKey(public_key_string)
-
-
-def preprocess_private_key(private_key_string):
-    return PublicKey(private_key_string)
-
-
-def preprocess_strbool(value):
-    return value and 'true' or 'false'
-
-
-def preprocess_work(work_string):
-    return Work(work_string)
-
-
-def preprocess_int(integer_string):
-    return str(int(integer_string))
-
-
-def preprocess_list(value):
-    if not isinstance(value, list):
-        raise ValueError("must be a list")
-    return value
-
-
-def preprocess_ipaddr(ipaddr):
-    # TODO: validate the ip address format
-    return ipaddr
-
-
-class Client(object):
+class RPCClient(object):
     """ RaiBlocks node RPC client """
 
     def __init__(self, host=None, session=None):
@@ -95,6 +44,19 @@ class Client(object):
 
         return result
 
+    def _process_value(self, value, type):
+        """
+        Process a value that will be sent to backend
+
+        :param value: the value to return
+        :param type: hint for what sort of value this is
+        :type type: str
+        """
+
+        if not isinstance(value, six.string_types + (list,)):
+            value = json.dumps(value)
+        return value
+
     def account_balance(self, account):
         """
         Returns how many RAW is owned and how many have not yet been received
@@ -112,7 +74,7 @@ class Client(object):
 
         """
 
-        account = preprocess_account(account)
+        account = self._process_value(account, 'account')
 
         payload = {
             "account": account,
@@ -151,7 +113,7 @@ class Client(object):
 
         """
 
-        accounts = preprocess_list(accounts)
+        accounts = self._process_value(accounts, 'list')
 
         payload = {
             "accounts": accounts,
@@ -177,7 +139,7 @@ class Client(object):
 
         """
 
-        account = preprocess_account(account)
+        account = self._process_value(account, 'account')
 
         payload = {
             "account": account,
@@ -210,8 +172,8 @@ class Client(object):
 
         """
 
-        wallet = preprocess_wallet(wallet)
-        count = preprocess_int(count)
+        wallet = self._process_value(wallet, 'wallet')
+        count = self._process_value(count, 'int')
 
         payload = {
             "wallet": wallet,
@@ -219,7 +181,7 @@ class Client(object):
         }
 
         if not work:
-            payload['work'] = preprocess_strbool(work)
+            payload['work'] = self._process_value(work, 'strbool')
 
         resp = self.call('accounts_create', payload)
 
@@ -247,7 +209,7 @@ class Client(object):
 
         """
 
-        accounts = preprocess_list(accounts)
+        accounts = self._process_value(accounts, 'list')
 
         payload = {
             "accounts": accounts,
@@ -283,18 +245,18 @@ class Client(object):
 
         """
 
-        account = preprocess_account(account)
+        account = self._process_value(account, 'account')
 
         payload = {
             "account": account,
         }
 
         if representative:
-            payload['representative'] = preprocess_strbool(representative)
+            payload['representative'] = self._process_value(representative, 'strbool')
         if weight:
-            payload['weight'] = preprocess_strbool(weight)
+            payload['weight'] = self._process_value(weight, 'strbool')
         if pending:
-            payload['pending'] = preprocess_strbool(pending)
+            payload['pending'] = self._process_value(pending, 'strbool')
 
         resp = self.call('account_info', payload)
 
@@ -320,14 +282,14 @@ class Client(object):
 
         """
 
-        wallet = preprocess_wallet(wallet)
+        wallet = self._process_value(wallet, 'wallet')
 
         payload = {
             "wallet": wallet,
         }
 
         if not work:
-            payload['work'] = preprocess_strbool(work)
+            payload['work'] = self._process_value(work, 'strbool')
 
         resp = self.call('account_create', payload)
 
@@ -346,7 +308,7 @@ class Client(object):
 
         """
 
-        key = preprocess_public_key(key)
+        key = self._process_value(key, 'public_key')
 
         payload = {
             "key": key,
@@ -378,8 +340,8 @@ class Client(object):
 
         """
 
-        account = preprocess_account(account)
-        count = preprocess_int(count)
+        account = self._process_value(account, 'account')
+        count = self._process_value(count, 'int')
 
         payload = {
             "account": account,
@@ -409,7 +371,7 @@ class Client(object):
 
         """
 
-        wallet = preprocess_wallet(wallet)
+        wallet = self._process_value(wallet, 'wallet')
 
         payload = {
             "wallet": wallet,
@@ -440,9 +402,9 @@ class Client(object):
 
         """
 
-        wallet = preprocess_wallet(wallet)
-        source = preprocess_wallet(source)
-        accounts = preprocess_list(accounts)
+        wallet = self._process_value(wallet, 'wallet')
+        source = self._process_value(source, 'wallet')
+        accounts = self._process_value(accounts, 'list')
 
         payload = {
             "wallet": wallet,
@@ -486,15 +448,15 @@ class Client(object):
             "accounts": accounts,
         }
 
-        accounts = preprocess_list(accounts)
+        accounts = self._process_value(accounts, 'list')
         if count is not None:
-            payload['count'] = preprocess_int(count)
+            payload['count'] = self._process_value(count, 'int')
 
         if threshold is not None:
-            payload['threshold'] = preprocess_int(threshold)
+            payload['threshold'] = self._process_value(threshold, 'int')
 
         if source:
-            payload['source'] = preprocess_strbool(source)
+            payload['source'] = self._process_value(source, 'strbool')
 
         resp = self.call('accounts_pending', payload)
 
@@ -525,7 +487,7 @@ class Client(object):
 
         """
 
-        account = preprocess_account(account)
+        account = self._process_value(account, 'account')
 
         payload = {
             "account": account,
@@ -552,8 +514,8 @@ class Client(object):
 
         """
 
-        wallet = preprocess_wallet(wallet)
-        account = preprocess_account(account)
+        wallet = self._process_value(wallet, 'wallet')
+        account = self._process_value(account, 'account')
 
         payload = {
             "wallet": wallet,
@@ -577,7 +539,7 @@ class Client(object):
 
         """
 
-        account = preprocess_account(account)
+        account = self._process_value(account, 'account')
 
         payload = {
             "account": account,
@@ -607,9 +569,9 @@ class Client(object):
 
         """
 
-        wallet = preprocess_wallet(wallet)
-        account = preprocess_account(account)
-        representative = preprocess_account(representative)
+        wallet = self._process_value(wallet, 'wallet')
+        account = self._process_value(account, 'account')
+        representative = self._process_value(representative, 'account')
 
         payload = {
             "wallet": wallet,
@@ -618,7 +580,7 @@ class Client(object):
         }
 
         if work is not None:
-            payload['work'] = preprocess_work(work)
+            payload['work'] = self._process_value(work, 'work')
 
         resp = self.call('account_representative_set', payload)
 
@@ -637,7 +599,7 @@ class Client(object):
 
         """
 
-        account = preprocess_account(account)
+        account = self._process_value(account, 'account')
 
         payload = {
             "account": account,
@@ -680,7 +642,7 @@ class Client(object):
 
         """
 
-        hash = preprocess_block(hash)
+        hash = self._process_value(hash, 'block')
 
         payload = {
             "hash": hash,
@@ -712,7 +674,7 @@ class Client(object):
 
         """
 
-        hashes = preprocess_list(hashes)
+        hashes = self._process_value(hashes, 'list')
 
         payload = {
             "hashes": hashes,
@@ -753,16 +715,16 @@ class Client(object):
 
         """
 
-        hashes = preprocess_list(hashes)
+        hashes = self._process_value(hashes, 'list')
 
         payload = {
             "hashes": hashes,
         }
 
         if pending:
-            payload['pending'] = preprocess_strbool(pending)
+            payload['pending'] = self._process_value(pending, 'strbool')
         if source:
-            payload['source'] = preprocess_strbool(source)
+            payload['source'] = self._process_value(source, 'strbool')
 
 
         resp = self.call('blocks_info', payload)
@@ -790,7 +752,7 @@ class Client(object):
 
         """
 
-        hash = preprocess_block(hash)
+        hash = self._process_value(hash, 'block')
 
         payload = {
             "hash": hash,
@@ -853,8 +815,8 @@ class Client(object):
         True
         """
 
-        address = preprocess_ipaddr(address)
-        port = preprocess_int(port)
+        address = self._process_value(address, 'ipaddr')
+        port = self._process_value(port, 'int')
 
         payload = {
             "address": address,
@@ -895,8 +857,8 @@ class Client(object):
 
         """
 
-        block = preprocess_block(block)
-        count = preprocess_int(count)
+        block = self._process_value(block, 'block')
+        count = self._process_value(count, 'int')
 
         payload = {
             "block": block,
@@ -928,7 +890,7 @@ class Client(object):
 
         """
 
-        account = preprocess_account(account)
+        account = self._process_value(account, 'account')
 
         payload = {
             "account": account,
@@ -953,7 +915,7 @@ class Client(object):
 
         """
 
-        account = preprocess_account(account)
+        account = self._process_value(account, 'account')
 
         payload = {
             "account": account,
@@ -982,8 +944,8 @@ class Client(object):
 
         """
 
-        seed = preprocess_seed(seed)
-        index = preprocess_int(index)
+        seed = self._process_value(seed, 'seed')
+        index = self._process_value(index, 'int')
 
         payload = {
             "seed": seed,
@@ -1013,8 +975,8 @@ class Client(object):
 
         """
 
-        account = preprocess_account(account)
-        count = preprocess_int(count)
+        account = self._process_value(account, 'account')
+        count = self._process_value(count, 'int')
 
         payload = {
             "account": account,
@@ -1060,8 +1022,8 @@ class Client(object):
 
         """
 
-        hash = preprocess_block(hash)
-        count = preprocess_int(count)
+        hash = self._process_value(hash, 'block')
+        count = self._process_value(count, 'int')
 
         payload = {
             "hash": hash,
@@ -1086,7 +1048,7 @@ class Client(object):
 
         """
 
-        amount = preprocess_int(amount)
+        amount = self._process_value(amount, 'int')
 
         payload = {
             "amount": amount,
@@ -1107,7 +1069,7 @@ class Client(object):
 
         """
 
-        amount = preprocess_int(amount)
+        amount = self._process_value(amount, 'int')
 
         payload = {
             "amount": amount,
@@ -1127,7 +1089,7 @@ class Client(object):
         1
         """
 
-        amount = preprocess_int(amount)
+        amount = self._process_value(amount, 'int')
 
         payload = {
             "amount": amount,
@@ -1148,7 +1110,7 @@ class Client(object):
 
         """
 
-        amount = preprocess_int(amount)
+        amount = self._process_value(amount, 'int')
 
         payload = {
             "amount": amount,
@@ -1169,7 +1131,7 @@ class Client(object):
 
         """
 
-        amount = preprocess_int(amount)
+        amount = self._process_value(amount, 'int')
 
         payload = {
             "amount": amount,
@@ -1190,7 +1152,7 @@ class Client(object):
 
         """
 
-        amount = preprocess_int(amount)
+        amount = self._process_value(amount, 'int')
 
         payload = {
             "amount": amount,
@@ -1234,7 +1196,7 @@ class Client(object):
 
         """
 
-        key = preprocess_private_key(key)
+        key = self._process_value(key, 'private_key')
 
         payload = {
             "key": key,
@@ -1257,8 +1219,8 @@ class Client(object):
         True
         """
 
-        address = preprocess_ipaddr(address)
-        port = preprocess_int(port)
+        address = self._process_value(address, 'ipaddr')
+        port = self._process_value(port, 'int')
 
         payload = {
             "address": address,
@@ -1303,26 +1265,26 @@ class Client(object):
 
         """
 
-        account = preprocess_account(account)
+        account = self._process_value(account, 'account')
 
         payload = {
             "account": account,
         }
 
         if count is not None:
-            payload['count'] = preprocess_int(count)
+            payload['count'] = self._process_value(count, 'int')
 
         if sorting:
-            payload['sorting'] = preprocess_strbool(sorting)
+            payload['sorting'] = self._process_value(sorting, 'strbool')
 
         if representative:
-            payload['representative'] = preprocess_strbool(representative)
+            payload['representative'] = self._process_value(representative, 'strbool')
 
         if weight:
-            payload['weight'] = preprocess_strbool(weight)
+            payload['weight'] = self._process_value(weight, 'strbool')
 
         if pending:
-            payload['pending'] = preprocess_strbool(pending)
+            payload['pending'] = self._process_value(pending, 'strbool')
 
         resp = self.call('ledger', payload)
         accounts = resp.get('accounts') or {}
@@ -1353,7 +1315,7 @@ class Client(object):
 
         """
 
-        wallet = preprocess_wallet(wallet)
+        wallet = self._process_value(wallet, 'wallet')
 
         payload = {
             "wallet": wallet,
@@ -1379,7 +1341,7 @@ class Client(object):
         True
         """
 
-        wallet = preprocess_wallet(wallet)
+        wallet = self._process_value(wallet, 'wallet')
 
         payload = {
             "wallet": wallet,
@@ -1404,8 +1366,8 @@ class Client(object):
         True
         """
 
-        account = preprocess_account(account)
-        wallet = preprocess_wallet(wallet)
+        account = self._process_value(account, 'account')
+        wallet = self._process_value(wallet, 'wallet')
 
         payload = {
             "account": account,
@@ -1434,9 +1396,9 @@ class Client(object):
 
         """
 
-        account = preprocess_account(account)
-        amount = preprocess_int(amount)
-        timeout = preprocess_int(timeout)
+        account = self._process_value(account, 'account')
+        amount = self._process_value(amount, 'int')
+        timeout = self._process_value(timeout, 'int')
 
         payload = {
             "account": account,
@@ -1471,13 +1433,8 @@ class Client(object):
 
         """
 
-        def _preprocess_json_dict(value):
-            if isinstance(value, dict):
-                return json.dumps(value, sort_keys=True)
-            return value
-
-
-        block = _preprocess_json_dict(block)
+        if isinstance(block, dict):
+            block = json.dumps(block, sort_keys=True)
 
         payload = {
             "block": block,
@@ -1508,9 +1465,9 @@ class Client(object):
 
         """
 
-        wallet = preprocess_wallet(wallet)
-        account = preprocess_account(account)
-        block = preprocess_block(block)
+        wallet = self._process_value(wallet, 'wallet')
+        account = self._process_value(account, 'account')
+        block = self._process_value(block, 'block')
 
         payload = {
             "wallet": wallet,
@@ -1519,7 +1476,7 @@ class Client(object):
         }
 
         if work:
-            payload['work'] = preprocess_work(work)
+            payload['work'] = self._process_value(work, 'work')
 
         resp = self.call('receive', payload)
 
@@ -1554,7 +1511,7 @@ class Client(object):
         True
         """
 
-        amount = preprocess_int(amount)
+        amount = self._process_value(amount, 'int')
 
         payload = {
             "amount": amount,
@@ -1583,10 +1540,10 @@ class Client(object):
         payload = {}
 
         if count is not None:
-            payload['count'] = preprocess_int(count)
+            payload['count'] = self._process_value(count, 'int')
 
         if sorting:
-            payload['sorting'] = preprocess_strbool(sorting)
+            payload['sorting'] = self._process_value(sorting, 'strbool')
 
         resp = self.call('representatives', payload)
 
@@ -1623,7 +1580,7 @@ class Client(object):
         payload = {}
 
         if count is not None:
-            payload["count"] = preprocess_int(count)
+            payload["count"] = self._process_value(count, 'int')
 
         resp = self.call('unchecked', payload)
 
@@ -1672,7 +1629,7 @@ class Client(object):
 
         """
 
-        hash = preprocess_block(hash)
+        hash = self._process_value(hash, 'block')
 
         payload = {
             "hash": hash,
@@ -1714,14 +1671,14 @@ class Client(object):
 
         """
 
-        key = preprocess_public_key(key)
+        key = self._process_value(key, 'public_key')
 
         payload = {
             "key": key,
         }
 
         if count is not None:
-            payload['count'] = preprocess_int(count)
+            payload['count'] = self._process_value(count, 'int')
 
         resp = self.call('unchecked_keys', payload)
         unchecked = resp.get('unchecked') or []
@@ -1743,7 +1700,7 @@ class Client(object):
         True
         """
 
-        account = preprocess_account(account)
+        account = self._process_value(account, 'account')
 
         payload = {
             "account": account,
@@ -1766,7 +1723,7 @@ class Client(object):
 
         """
 
-        wallet = preprocess_wallet(wallet)
+        wallet = self._process_value(wallet, 'wallet')
 
         payload = {
             "wallet": wallet,
@@ -1793,8 +1750,8 @@ class Client(object):
 
         """
 
-        wallet = preprocess_wallet(wallet)
-        representative = preprocess_account(representative)
+        wallet = self._process_value(wallet, 'wallet')
+        representative = self._process_value(representative, 'account')
 
         payload = {
             "wallet": wallet,
@@ -1823,8 +1780,8 @@ class Client(object):
 
         """
 
-        wallet = preprocess_wallet(wallet)
-        key = preprocess_private_key(key)
+        wallet = self._process_value(wallet, 'wallet')
+        key = self._process_value(key, 'private_key')
 
         payload = {
             "wallet": wallet,
@@ -1832,7 +1789,7 @@ class Client(object):
         }
 
         if not work:
-            payload['work'] = preprocess_strbool(work)
+            payload['work'] = self._process_value(work, 'strbool')
 
         resp = self.call('wallet_add', payload)
 
@@ -1854,7 +1811,7 @@ class Client(object):
 
         """
 
-        wallet = preprocess_wallet(wallet)
+        wallet = self._process_value(wallet, 'wallet')
 
         payload = {
             "wallet": wallet,
@@ -1886,7 +1843,7 @@ class Client(object):
 
         """
 
-        wallet = preprocess_wallet(wallet)
+        wallet = self._process_value(wallet, 'wallet')
 
         payload = {
             "wallet": wallet,
@@ -1916,8 +1873,8 @@ class Client(object):
         True
         """
 
-        wallet = preprocess_wallet(wallet)
-        seed = preprocess_seed(seed)
+        wallet = self._process_value(wallet, 'wallet')
+        seed = self._process_value(seed, 'seed')
 
         payload = {
             "wallet": wallet,
@@ -1942,8 +1899,8 @@ class Client(object):
         True
         """
 
-        wallet = preprocess_wallet(wallet)
-        account = preprocess_account(account)
+        wallet = self._process_value(wallet, 'wallet')
+        account = self._process_value(account, 'account')
 
         payload = {
             "wallet": wallet,
@@ -1983,7 +1940,7 @@ class Client(object):
         True
         """
 
-        wallet = preprocess_wallet(wallet)
+        wallet = self._process_value(wallet, 'wallet')
 
         payload = {
             "wallet": wallet,
@@ -2005,7 +1962,7 @@ class Client(object):
         }
         """
 
-        wallet = preprocess_wallet(wallet)
+        wallet = self._process_value(wallet, 'wallet')
 
         payload = {
             "wallet": wallet,
@@ -2031,7 +1988,7 @@ class Client(object):
 
         """
 
-        wallet = preprocess_wallet(wallet)
+        wallet = self._process_value(wallet, 'wallet')
 
         payload = {
             "wallet": wallet,
@@ -2053,7 +2010,7 @@ class Client(object):
         False
         """
 
-        wallet = preprocess_wallet(wallet)
+        wallet = self._process_value(wallet, 'wallet')
 
         payload = {
             "wallet": wallet,
@@ -2091,20 +2048,20 @@ class Client(object):
 
         """
 
-        wallet = preprocess_wallet(wallet)
+        wallet = self._process_value(wallet, 'wallet')
 
         payload = {
             "wallet": wallet,
         }
 
         if count is not None:
-            payload['count'] = preprocess_int(count)
+            payload['count'] = self._process_value(count, 'int')
 
         if threshold is not None:
-            payload['threshold'] = preprocess_int(threshold)
+            payload['threshold'] = self._process_value(threshold, 'int')
 
         if source:
-            payload['source'] = preprocess_strbool(source)
+            payload['source'] = self._process_value(source, 'strbool')
 
         resp = self.call('wallet_pending', payload)
 
@@ -2145,8 +2102,8 @@ class Client(object):
 
         """
 
-        wallet = preprocess_wallet(wallet)
-        count = preprocess_int(count)
+        wallet = self._process_value(wallet, 'wallet')
+        count = self._process_value(count, 'int')
 
         payload = {
             "wallet": wallet,
@@ -2176,7 +2133,7 @@ class Client(object):
 
         """
 
-        wallet = preprocess_wallet(wallet)
+        wallet = self._process_value(wallet, 'wallet')
 
         payload = {
             "wallet": wallet,
@@ -2202,7 +2159,7 @@ class Client(object):
         True
         """
 
-        wallet = preprocess_wallet(wallet)
+        wallet = self._process_value(wallet, 'wallet')
 
         payload = {
             "wallet": wallet,
@@ -2228,7 +2185,7 @@ class Client(object):
 
         """
 
-        wallet = preprocess_wallet(wallet)
+        wallet = self._process_value(wallet, 'wallet')
 
         payload = {
             "wallet": wallet,
@@ -2252,7 +2209,7 @@ class Client(object):
 
         """
 
-        wallet = preprocess_wallet(wallet)
+        wallet = self._process_value(wallet, 'wallet')
 
         payload = {
             "wallet": wallet,
@@ -2311,20 +2268,20 @@ class Client(object):
 
         """
 
-        account = preprocess_account(account)
+        account = self._process_value(account, 'account')
 
         payload = {
             "account": account,
         }
 
         if count is not None:
-            payload['count'] = preprocess_int(count)
+            payload['count'] = self._process_value(count, 'int')
 
         if threshold is not None:
-            payload['threshold'] = preprocess_int(threshold)
+            payload['threshold'] = self._process_value(threshold, 'int')
 
         if source:
-            payload['source'] = preprocess_strbool(source)
+            payload['source'] = self._process_value(source, 'strbool')
 
         resp = self.call('pending', payload)
 
@@ -2357,7 +2314,7 @@ class Client(object):
         True
         """
 
-        hash = preprocess_block(hash)
+        hash = self._process_value(hash, 'block')
 
         payload = {
             "hash": hash,
@@ -2382,7 +2339,7 @@ class Client(object):
 
         """
 
-        hash = preprocess_block(hash)
+        hash = self._process_value(hash, 'block')
 
         payload = {
             "hash": hash,
@@ -2406,7 +2363,7 @@ class Client(object):
 
         """
 
-        hash = preprocess_block(hash)
+        hash = self._process_value(hash, 'block')
 
         payload = {
             "hash": hash,
@@ -2434,8 +2391,8 @@ class Client(object):
 
         """
 
-        wallet = preprocess_wallet(wallet)
-        account = preprocess_account(account)
+        wallet = self._process_value(wallet, 'wallet')
+        account = self._process_value(account, 'account')
 
         payload = {
             "wallet": wallet,
@@ -2465,9 +2422,9 @@ class Client(object):
         True
         """
 
-        wallet = preprocess_wallet(wallet)
-        account = preprocess_account(account)
-        work = preprocess_work(work)
+        wallet = self._process_value(wallet, 'wallet')
+        account = self._process_value(account, 'account')
+        work = self._process_value(work, 'work')
 
         payload = {
             "wallet": wallet,
@@ -2495,8 +2452,8 @@ class Client(object):
 
         """
 
-        address = preprocess_ipaddr(address)
-        port = preprocess_int(port)
+        address = self._process_value(address, 'ipaddr')
+        port = self._process_value(port, 'int')
 
         payload = {
             "address": address,
@@ -2555,8 +2512,8 @@ class Client(object):
 
         """
 
-        work = preprocess_work(work)
-        hash = preprocess_block(hash)
+        work = self._process_value(work, 'work')
+        hash = self._process_value(hash, 'block')
 
         payload = {
             "work": work,
@@ -2586,20 +2543,20 @@ class Client(object):
 
         """
 
-        hash = preprocess_block(hash)
+        hash = self._process_value(hash, 'block')
 
         payload = {
             "hash": hash,
         }
 
         if count is not None:
-            payload['count'] = preprocess_int(count)
+            payload['count'] = self._process_value(count, 'int')
 
         if sources is not None:
-            payload['sources'] = preprocess_int(sources)
+            payload['sources'] = self._process_value(sources, 'int')
 
         if destinations is not None:
-            payload['destinations'] = preprocess_int(destinations)
+            payload['destinations'] = self._process_value(destinations, 'int')
 
         resp = self.call('republish', payload)
 
@@ -2621,7 +2578,7 @@ class Client(object):
 
         """
 
-        wallet = preprocess_wallet(wallet)
+        wallet = self._process_value(wallet, 'wallet')
 
         payload = {
             "wallet": wallet,
@@ -2671,10 +2628,10 @@ class Client(object):
 
         """
 
-        wallet = preprocess_wallet(wallet)
-        source = preprocess_account(source)
-        destination = preprocess_account(destination)
-        amount = preprocess_int(amount)
+        wallet = self._process_value(wallet, 'wallet')
+        source = self._process_value(source, 'account')
+        destination = self._process_value(destination, 'account')
+        amount = self._process_value(amount, 'int')
 
         payload = {
             "wallet": wallet,
@@ -2684,7 +2641,7 @@ class Client(object):
         }
 
         if work is not None:
-            payload['work'] = preprocess_work(work)
+            payload['work'] = self._process_value(work, 'work')
 
         resp = self.call('send', payload)
 
@@ -2708,8 +2665,8 @@ class Client(object):
 
         """
 
-        block = preprocess_block(block)
-        count = preprocess_int(count)
+        block = self._process_value(block, 'block')
+        count = self._process_value(count, 'int')
 
         payload = {
             "block": block,

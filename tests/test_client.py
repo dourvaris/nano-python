@@ -3,8 +3,7 @@ import pytest
 import requests
 import requests_mock
 
-from raiblocks.client import RPCException
-from raiblocks.client import Client
+from raiblocks.rpc import RPCClient, RPCException
 from conftest import MockRPCMatchException, load_mock_rpc_tests
 
 
@@ -12,8 +11,8 @@ mock_rpc_tests = load_mock_rpc_tests()
 
 
 @pytest.fixture
-def client(mock_rpc_session):
-    return Client(host='mock://localhost:7076', session=mock_rpc_session)
+def rpc(mock_rpc_session):
+    return RPCClient(host='mock://localhost:7076', session=mock_rpc_session)
 
 
 class TestClient(object):
@@ -24,26 +23,26 @@ class TestClient(object):
         {'host': 'http://localhost:7076'},
     ])
     def test_create(self, args):
-        assert Client(**args)
+        assert RPCClient(**args)
 
-    def test_call_valid_action(self, client):
-        assert client.call('version') == {
+    def test_call_valid_action(self, rpc):
+        assert rpc.call('version') == {
             "rpc_version": "1",
             "store_version": "10",
             "node_vendor": "RaiBlocks 9.0"
         }
 
-    def test_call_invalid_action(self, client):
+    def test_call_invalid_action(self, rpc):
 
         with pytest.raises(MockRPCMatchException):
-            assert client.call('versions')
+            assert rpc.call('versions')
 
     @pytest.mark.parametrize('action,test', [
         (action, test)
         for action, tests in mock_rpc_tests.items()
         for test in tests
     ])
-    def test_rpc_methods(self, client, action, test):
+    def test_rpc_methods(self, rpc, action, test):
         """
         Tests should be in the format:
 
@@ -65,7 +64,7 @@ class TestClient(object):
         """
 
         try:
-            method = getattr(client, action)
+            method = getattr(rpc, action)
         except AttributeError:
             raise Exception("`%s` not yet implemented" % action)
             pytest.xfail("`%s` not yet implemented" % action)
@@ -85,7 +84,7 @@ class TestClient(object):
             return
 
         result = method(**args)
-        request_made = client.session.adapter.last_request.json()
+        request_made = rpc.session.adapter.last_request.json()
 
         assert request_made == request
 
