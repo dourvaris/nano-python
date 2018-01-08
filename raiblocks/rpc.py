@@ -64,7 +64,7 @@ class RPCClient(object):
 
         :type account: str
 
-        >>> client.account_balance(
+        >>> rpc.account_balance(
         ...     account="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
         ... )
         {
@@ -94,7 +94,7 @@ class RPCClient(object):
 
         :type accounts: list
 
-        >>> client.accounts_balances(
+        >>> rpc.accounts_balances(
         ...     accounts=[
         ...         "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
         ...         "xrb_3i1aq1cchnmbn9x5rsbap8b15akfh7wj7pwskuzi7ahz8oq6cobd99d4r3b7"
@@ -134,7 +134,7 @@ class RPCClient(object):
 
         :type account: str
 
-        >>> client.account_block_count(account="xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3")
+        >>> rpc.account_block_count(account="xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3")
         19
 
         """
@@ -161,7 +161,7 @@ class RPCClient(object):
         .. enable_control required
         .. version 8.0 required
 
-        >>> client.accounts_create(
+        >>> rpc.accounts_create(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
         ...     count=2
         ... )
@@ -194,7 +194,7 @@ class RPCClient(object):
 
         :type accounts: list
 
-        >>> client.accounts_frontiers(
+        >>> rpc.accounts_frontiers(
         ...     accounts=[
         ...         "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3",
         ...         "xrb_3i1aq1cchnmbn9x5rsbap8b15akfh7wj7pwskuzi7ahz8oq6cobd99d4r3b7"
@@ -231,7 +231,7 @@ class RPCClient(object):
         :type weight: bool
         :type pending: bool
 
-        >>> client.account_info(
+        >>> rpc.account_info(
         ...     account="xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3"
         ... )
         {
@@ -275,7 +275,7 @@ class RPCClient(object):
 
         .. enable_control required
 
-        >>> client.account_create(
+        >>> rpc.account_create(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
         ... )
         "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
@@ -301,7 +301,7 @@ class RPCClient(object):
 
         :type key: str
 
-        >>> client.account_get(
+        >>> rpc.account_get(
         ...    key="3068BB1CA04525BB0E416C485FE6A67FD52540227D267CC8B6E8DA958A7FA039"
         ... )
         "xrb_1e5aqegc1jb7qe964u4adzmcezyo6o146zb8hm6dft8tkp79za3sxwjym5rx"
@@ -325,7 +325,7 @@ class RPCClient(object):
         :type account: str
         :type count: int
 
-        >>> client.account_history(
+        >>> rpc.account_history(
         ...     account="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
         ...     count=1
         ... )
@@ -362,7 +362,7 @@ class RPCClient(object):
 
         :type wallet: str
 
-        >>> client.account_list(
+        >>> rpc.account_list(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
         ... )
         [
@@ -391,7 +391,7 @@ class RPCClient(object):
 
         .. enable_control required
 
-        >>> client.account_move(
+        >>> rpc.account_move(
         ...     source="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
         ...     accounts=[
@@ -426,7 +426,7 @@ class RPCClient(object):
         :type threshold: int
         :type source: bool
 
-        >>> client.accounts_pending(
+        >>> rpc.accounts_pending(
         ...     accounts=[
         ...         "xrb_1111111111111111111111111111111111111111111111111117353trpda",
         ...         "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3"
@@ -480,7 +480,7 @@ class RPCClient(object):
 
         :type account: str
 
-        >>> client.account_key(
+        >>> rpc.account_key(
         ...     account="xrb_1e5aqegc1jb7qe964u4adzmcezyo6o146zb8hm6dft8tkp79za3sxwjym5rx"
         ... )
         "3068BB1CA04525BB0E416C485FE6A67FD52540227D267CC8B6E8DA958A7FA039"
@@ -506,7 +506,7 @@ class RPCClient(object):
 
         .. enable_control required
 
-        >>> client.account_remove(
+        >>> rpc.account_remove(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
         ...     account="xrb_39a73oy5ungrhxy5z5oao1xso4zo7dmgpjd4u74xcrx3r1w6rtazuouw6qfi"
         ... )
@@ -532,7 +532,7 @@ class RPCClient(object):
 
         :type account: str
 
-        >>> client.account_representative(
+        >>> rpc.account_representative(
         ...     account="xrb_39a73oy5ungrhxy5z5oao1xso4zo7dmgpjd4u74xcrx3r1w6rtazuouw6qfi"
         )
         "xrb_16u1uufyoig8777y6r8iqjtrw8sg8maqrm36zzcm95jmbd9i9aj5i8abr8u5"
@@ -560,7 +560,7 @@ class RPCClient(object):
 
         .. enable_control required
 
-        >>> client.account_representative_set(
+        >>> rpc.account_representative_set(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
         ...     account="xrb_39a73oy5ungrhxy5z5oao1xso4zo7dmgpjd4u74xcrx3r1w6rtazuouw6qfi",
         ...     representative="xrb_16u1uufyoig8777y6r8iqjtrw8sg8maqrm36zzcm95jmbd9i9aj5i8abr8u5"
@@ -592,7 +592,7 @@ class RPCClient(object):
 
         :type account: str
 
-        >>> client.account_weight(
+        >>> rpc.account_weight(
         ...     account="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
         ... )
         10000
@@ -613,7 +613,7 @@ class RPCClient(object):
         """
         Returns how many rai are in the public supply
 
-        >>> client.available_supply()
+        >>> rpc.available_supply()
         10000
 
         """
@@ -628,7 +628,7 @@ class RPCClient(object):
 
         :type hash: str
 
-        >>> client.block(
+        >>> rpc.block(
         ...     hash="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
         ... )
         {
@@ -658,7 +658,7 @@ class RPCClient(object):
 
         :type hashes: list
 
-        >>> client.blocks(
+        >>> rpc.blocks(
         ...     hashes=["000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"]
         ... )
         {
@@ -697,7 +697,7 @@ class RPCClient(object):
         :type pending: bool
         :type source: bool
 
-        >>> client.blocks_info(hashes=["000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"])
+        >>> rpc.blocks_info(hashes=["000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"])
         {
             "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F": {
                 "block_account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
@@ -745,7 +745,7 @@ class RPCClient(object):
 
         :type hash: str
 
-        >>> client.block_account(
+        >>> rpc.block_account(
         ...     hash="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
         ... )
         "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
@@ -767,7 +767,7 @@ class RPCClient(object):
         Reports the number of blocks in the ledger and unchecked synchronizing
         blocks
 
-        >>> client.block_count()
+        >>> rpc.block_count()
         {
           "count": 1000,
           "unchecked": 10
@@ -787,7 +787,7 @@ class RPCClient(object):
         Reports the number of blocks in the ledger by type (send, receive,
         open, change)
 
-        >>> client.block_count_type()
+        >>> rpc.block_count_type()
         {
           "send": 1000,
           "receive": 900,
@@ -811,7 +811,7 @@ class RPCClient(object):
         :type address: str
         :type port: int
 
-        >>> client.bootstrap(address="::ffff:138.201.94.249", port="7075")
+        >>> rpc.bootstrap(address="::ffff:138.201.94.249", port="7075")
         True
         """
 
@@ -831,7 +831,7 @@ class RPCClient(object):
         """
         Initialize multi-connection bootstrap to random peers
 
-        >>> client.bootstrap_any()
+        >>> rpc.bootstrap_any()
         True
         """
 
@@ -847,7 +847,7 @@ class RPCClient(object):
         :type block: str
         :type count: int
 
-        >>> client.chain(
+        >>> rpc.chain(
         ...     block="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
         ...     count=1
         ... )
@@ -878,7 +878,7 @@ class RPCClient(object):
 
         .. version 8.0 required
 
-        >>> client.delegators(
+        >>> rpc.delegators(
         ...     account="xrb_1111111111111111111111111111111111111111111111111117353trpda"
         ... )
         {
@@ -908,7 +908,7 @@ class RPCClient(object):
 
         .. version 8.0 required
 
-        >>> client.delegators_count(
+        >>> rpc.delegators_count(
         ...     account="xrb_1111111111111111111111111111111111111111111111111117353trpda"
         ... )
         2
@@ -932,7 +932,7 @@ class RPCClient(object):
         :type seed: str
         :type index: int
 
-        >>> client.deterministic_key(
+        >>> rpc.deterministic_key(
         ...     seed="0000000000000000000000000000000000000000000000000000000000000000",
         ...     index=0
         ... )
@@ -964,7 +964,7 @@ class RPCClient(object):
         :type account: str
         :type count: int
 
-        >>> client.frontiers(
+        >>> rpc.frontiers(
         ...     account="xrb_1111111111111111111111111111111111111111111111111111hifc8npp",
         ...     count=1
         ... )
@@ -991,7 +991,7 @@ class RPCClient(object):
         """
         Reports the number of accounts in the ledger
 
-        >>> client.frontier_count()
+        >>> rpc.frontier_count()
         1000
 
         """
@@ -1007,7 +1007,7 @@ class RPCClient(object):
         :type hash: str
         :type count: int
 
-        >>> client.history(
+        >>> rpc.history(
         ...     hash="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
         ...     count=1
         ... )
@@ -1043,7 +1043,7 @@ class RPCClient(object):
 
         :type amount: int
 
-        >>> client.mrai_from_raw(amount=1000000000000000000000000000000)
+        >>> rpc.mrai_from_raw(amount=1000000000000000000000000000000)
         1
 
         """
@@ -1064,7 +1064,7 @@ class RPCClient(object):
 
         :type amount: int
 
-        >>> client.mrai_to_raw(amount=1)
+        >>> rpc.mrai_to_raw(amount=1)
         1000000000000000000000000000000
 
         """
@@ -1085,7 +1085,7 @@ class RPCClient(object):
 
         :type amount: int
 
-        >>> client.krai_from_raw(amount=1000000000000000000000000000)
+        >>> rpc.krai_from_raw(amount=1000000000000000000000000000)
         1
         """
 
@@ -1105,7 +1105,7 @@ class RPCClient(object):
 
         :type amount: int
 
-        >>> client.krai_to_raw(amount=1)
+        >>> rpc.krai_to_raw(amount=1)
         1000000000000000000000000000
 
         """
@@ -1126,7 +1126,7 @@ class RPCClient(object):
 
         :type amount: int
 
-        >>> client.rai_from_raw(amount=1000000000000000000000000)
+        >>> rpc.rai_from_raw(amount=1000000000000000000000000)
         1
 
         """
@@ -1147,7 +1147,7 @@ class RPCClient(object):
 
         :type amount: int
 
-        >>> client.rai_to_raw(amount=1)
+        >>> rpc.rai_to_raw(amount=1)
         1000000000000000000000000
 
         """
@@ -1166,7 +1166,7 @@ class RPCClient(object):
         """
         Generates an **adhoc random keypair**
 
-        >>> client.key_create()
+        >>> rpc.key_create()
         {
           "private": "781186FB9EF17DB6E3D1056550D9FAE5D5BBADA6A6BC370E4CBB938B1DC71DA3",
           "public": "3068BB1CA04525BB0E416C485FE6A67FD52540227D267CC8B6E8DA958A7FA039",
@@ -1185,7 +1185,7 @@ class RPCClient(object):
 
         :type key: str
 
-        >>> client.key_expand(
+        >>> rpc.key_expand(
             key="781186FB9EF17DB6E3D1056550D9FAE5D5BBADA6A6BC370E4CBB938B1DC71DA3"
         )
         {
@@ -1215,7 +1215,7 @@ class RPCClient(object):
 
         .. enable_control required
 
-        >>> client.keepalive(address="::ffff:192.168.1.1", port=1024)
+        >>> rpc.keepalive(address="::ffff:192.168.1.1", port=1024)
         True
         """
 
@@ -1248,7 +1248,7 @@ class RPCClient(object):
         .. enable_control required
         .. version 8.0 required
 
-        >>> client.ledger(
+        >>> rpc.ledger(
         ...     account="xrb_1111111111111111111111111111111111111111111111111111hifc8npp",
         ...     count=1
         ... )
@@ -1308,7 +1308,7 @@ class RPCClient(object):
 
         :type wallet: str
 
-        >>> client.payment_begin(
+        >>> rpc.payment_begin(
         ... wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
         ... )
         "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
@@ -1335,7 +1335,7 @@ class RPCClient(object):
 
         :type wallet: str
 
-        >>> client.payment_init(
+        >>> rpc.payment_init(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
         ... )
         True
@@ -1359,7 +1359,7 @@ class RPCClient(object):
         :type account: str
         :type wallet: str
 
-        >>> client.payment_end(
+        >>> rpc.payment_end(
         ...     account="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
         ...     wallet="FFFD1BAEC8EC20814BBB9059B393051AAA8380F9B5A2E6B2489A277D81789EEE"
         ... )
@@ -1387,7 +1387,7 @@ class RPCClient(object):
         :type amount: int
         :type timeout: int
 
-        >>> client.payment_wait(
+        >>> rpc.payment_wait(
         ...     account="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
         ...     amount=1,
         ...     timeout=1000
@@ -1425,10 +1425,10 @@ class RPCClient(object):
             "type": "open"
         }
 
-        >>> client.process(block=block)
+        >>> rpc.process(block=block)
         "42A723D2B60462BF7C9A003FE9A70057D3A6355CA5F1D0A57581000000000000"
 
-        >>> client.process(json.dumps(block))
+        >>> rpc.process(json.dumps(block))
         "42A723D2B60462BF7C9A003FE9A70057D3A6355CA5F1D0A57581000000000000"
 
         """
@@ -1455,7 +1455,7 @@ class RPCClient(object):
 
         .. enable_control required
 
-        >>> client.receive(
+        >>> rpc.receive(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
         ...     account="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
         ...     block="53EAA25CE28FA0E6D55EA9704B32604A736966255948594D55CBB05267CECD48",
@@ -1489,7 +1489,7 @@ class RPCClient(object):
         .. enable_control required
         .. version 8.0 required
 
-        >>> client.receive_minimum()
+        >>> rpc.receive_minimum()
         1000000000000000000000000
 
         """
@@ -1507,7 +1507,7 @@ class RPCClient(object):
         .. enable_control required
         .. version 8.0 required
 
-        >>> client.receive_minimum_set(amount=1000000000000000000000000000000)
+        >>> rpc.receive_minimum_set(amount=1000000000000000000000000000000)
         True
         """
 
@@ -1525,7 +1525,7 @@ class RPCClient(object):
         """
         Returns a list of pairs of representative and its voting weight
 
-        >>> client.representatives()
+        >>> rpc.representatives()
         {
             "xrb_1111111111111111111111111111111111111111111111111117353trpda":
                 3822372327060170000000000000000000000,
@@ -1563,7 +1563,7 @@ class RPCClient(object):
 
         .. version 8.0 required
 
-        >>> client.unchecked(count=1)
+        >>> rpc.unchecked(count=1)
         {
             "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F": {
                 "account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
@@ -1597,7 +1597,7 @@ class RPCClient(object):
         .. enable_control required
         .. version 8.0 required
 
-        >>> client.unchecked_clear()
+        >>> rpc.unchecked_clear()
         True
 
         """
@@ -1615,7 +1615,7 @@ class RPCClient(object):
 
         .. version 8.0 required
 
-        >>> client.unchecked_get(
+        >>> rpc.unchecked_get(
         ...     hash="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
         ... )
         {
@@ -1650,7 +1650,7 @@ class RPCClient(object):
 
         .. version 8.0 required
 
-        >>> client.unchecked_keys(
+        >>> rpc.unchecked_keys(
         ...     key="FA5B51D063BADDF345EFD7EF0D3C5FB115C85B1EF4CDE89D8B7DF3EAF60A04A4",
         ...     count=1
         ... )
@@ -1694,7 +1694,7 @@ class RPCClient(object):
 
         :type account: str
 
-        >>> client.validate_account_number(
+        >>> rpc.validate_account_number(
         ...     account="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
         ... )
         True
@@ -1716,7 +1716,7 @@ class RPCClient(object):
 
         :type wallet: str
 
-        >>> client.wallet_representative(
+        >>> rpc.wallet_representative(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
         ... )
         "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
@@ -1742,7 +1742,7 @@ class RPCClient(object):
 
         .. enable_control required
 
-        >>> client.wallet_representative_set(
+        >>> rpc.wallet_representative_set(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
         ...     representative="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
         ... )
@@ -1772,7 +1772,7 @@ class RPCClient(object):
 
         .. enable_control required
 
-        >>> client.wallet_add(
+        >>> rpc.wallet_add(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
         ...     key="34F0A37AAD20F4A260F0A5B3CB3D7FB50673212263E58A380BC10474BB039CE4"
         ... )
@@ -1801,7 +1801,7 @@ class RPCClient(object):
 
         :type wallet: str
 
-        >>> client.wallet_balance_total(
+        >>> rpc.wallet_balance_total(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
         ... )
         {
@@ -1831,7 +1831,7 @@ class RPCClient(object):
 
         :type wallet: str
 
-        >>> client.wallet_balances(
+        >>> rpc.wallet_balances(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
         ... )
         {
@@ -1866,7 +1866,7 @@ class RPCClient(object):
 
         .. enable_control required
 
-        >>> client.wallet_change_seed(
+        >>> rpc.wallet_change_seed(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
         ...     seed="74F2B37AAD20F4A260F0A5B3CB3D7FB51673212263E58A380BC10474BB039CEE"
         ... )
@@ -1892,7 +1892,7 @@ class RPCClient(object):
         :type wallet: str
         :type account: str
 
-        >>> client.wallet_contains(
+        >>> rpc.wallet_contains(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
         ...     account="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
         ... )
@@ -1917,7 +1917,7 @@ class RPCClient(object):
 
         .. enable_control required
 
-        >>> client.wallet_create()
+        >>> rpc.wallet_create()
         "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
 
         """
@@ -1934,7 +1934,7 @@ class RPCClient(object):
 
         .. enable_control required
 
-        >>> client.wallet_destroy(
+        >>> rpc.wallet_destroy(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
         ... )
         True
@@ -1956,7 +1956,7 @@ class RPCClient(object):
 
         :type wallet: str
 
-        >>> client.wallet_export(wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F")
+        >>> rpc.wallet_export(wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F")
         {
             "0000000000000000000000000000000000000000000000000000000000000000": "0000000000000000000000000000000000000000000000000000000000000001"
         }
@@ -1979,7 +1979,7 @@ class RPCClient(object):
 
         :type wallet: str
 
-        >>> client.wallet_frontiers(
+        >>> rpc.wallet_frontiers(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
         ... )
         {
@@ -2004,7 +2004,7 @@ class RPCClient(object):
 
         :type wallet: str
 
-        >>> client.wallet_locked(
+        >>> rpc.wallet_locked(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
         ... )
         False
@@ -2033,7 +2033,7 @@ class RPCClient(object):
         .. enable_control required
         .. version 8.0 required
 
-        >>> client.wallet_pending(
+        >>> rpc.wallet_pending(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
         ...     count=1
         ... )
@@ -2090,7 +2090,7 @@ class RPCClient(object):
         .. enable_control required
         .. version 8.0 required
 
-        >>> client.wallet_republish(
+        >>> rpc.wallet_republish(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
         ...     count=2
         ... )
@@ -2123,7 +2123,7 @@ class RPCClient(object):
         .. enable_control required
         .. version 8.0 required
 
-        >>> client.wallet_work_get(
+        >>> rpc.wallet_work_get(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
         ... )
         {
@@ -2152,7 +2152,7 @@ class RPCClient(object):
 
         .. enable_control required
 
-        >>> client.password_change(
+        >>> rpc.password_change(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
         ...     password="test"
         ... )
@@ -2177,7 +2177,7 @@ class RPCClient(object):
         :type wallet: str
         :type password: str
 
-        >>> client.password_enter(
+        >>> rpc.password_enter(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
         ...     password="test"
         ... )
@@ -2202,7 +2202,7 @@ class RPCClient(object):
 
         :type wallet: str
 
-        >>> client.password_valid(
+        >>> rpc.password_valid(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
         ... )
         True
@@ -2223,7 +2223,7 @@ class RPCClient(object):
         """
         Returns a list of pairs of peer IPv6:port and its node network version
 
-        >>> client.peers()
+        >>> rpc.peers()
         {
             "[::ffff:172.17.0.1]:32841": 3
         }
@@ -2250,14 +2250,14 @@ class RPCClient(object):
 
         .. version 8.0 required
 
-        >>> client.pending(
+        >>> rpc.pending(
         ...     account="xrb_1111111111111111111111111111111111111111111111111117353trpda"
         ... )
         [
             "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
         ]
 
-        >>> client.pending(
+        >>> rpc.pending(
         ...     account="xrb_1111111111111111111111111111111111111111111111111117353trpda",
         ...     count=1,
         ...     threshold=1000000000000000000000000
@@ -2308,7 +2308,7 @@ class RPCClient(object):
 
         .. version 8.0 required
 
-        >>> client.pending_exists(
+        >>> rpc.pending_exists(
             hash="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
         )
         True
@@ -2332,7 +2332,7 @@ class RPCClient(object):
 
         .. enable_control required
 
-        >>> client.work_cancel(
+        >>> rpc.work_cancel(
         ...     hash="718CC2121C3E641059BC1C2CFC45666C99E8AE922F7A807B7D07B62C995D79E2"
         ... )
         True
@@ -2356,7 +2356,7 @@ class RPCClient(object):
 
         .. enable_control required
 
-        >>> client.work_generate(
+        >>> rpc.work_generate(
         ...     hash="718CC2121C3E641059BC1C2CFC45666C99E8AE922F7A807B7D07B62C995D79E2"
         ... )
         "2bf29ef00786a6bc"
@@ -2383,7 +2383,7 @@ class RPCClient(object):
         .. enable_control required
         .. version 8.0 required
 
-        >>> client.work_get(
+        >>> rpc.work_get(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
         ...     account="xrb_1111111111111111111111111111111111111111111111111111hifc8npp"
         ... )
@@ -2414,7 +2414,7 @@ class RPCClient(object):
         .. enable_control required
         .. version 8.0 required
 
-        >>> client.work_set(
+        >>> rpc.work_set(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
         ...     account="xrb_1111111111111111111111111111111111111111111111111111hifc8npp",
         ...     work="0000000000000000"
@@ -2447,7 +2447,7 @@ class RPCClient(object):
         .. enable_control required
         .. version 8.0 required
 
-        >>> client.work_peer_add(address="::ffff:172.17.0.1", port="7076")
+        >>> rpc.work_peer_add(address="::ffff:172.17.0.1", port="7076")
         True
 
         """
@@ -2471,7 +2471,7 @@ class RPCClient(object):
         .. enable_control required
         .. version 8.0 required
 
-        >>> client.work_peers()
+        >>> rpc.work_peers()
         [
             "::ffff:172.17.0.1:7076"
         ]
@@ -2489,7 +2489,7 @@ class RPCClient(object):
         .. enable_control required
         .. version 8.0 required
 
-        >>> client.work_peers_clear()
+        >>> rpc.work_peers_clear()
         True
 
         """
@@ -2504,7 +2504,7 @@ class RPCClient(object):
         :type work: str
         :type hash: str
 
-        >>> client.work_validate(
+        >>> rpc.work_validate(
         ...     work="2bf29ef00786a6bc",
         ...     hash="718CC2121C3E641059BC1C2CFC45666C99E8AE922F7A807B7D07B62C995D79E2"
         ... )
@@ -2533,7 +2533,7 @@ class RPCClient(object):
         :type sources: int
         :type destinations: int
 
-        >>> client.republish(
+        >>> rpc.republish(
         ...     hash="991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948"
         ... )
         [
@@ -2571,7 +2571,7 @@ class RPCClient(object):
 
         .. enable_control required
 
-        >>> client.search_pending(
+        >>> rpc.search_pending(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
         ... )
         True
@@ -2596,7 +2596,7 @@ class RPCClient(object):
         .. enable_control required
         .. version 8.0 required
 
-        >>> client.search_pending_all()
+        >>> rpc.search_pending_all()
         True
 
         """
@@ -2617,7 +2617,7 @@ class RPCClient(object):
 
         .. enable_control required
 
-        >>> client.send(
+        >>> rpc.send(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
         ...     source="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
         ...     destination="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
@@ -2655,7 +2655,7 @@ class RPCClient(object):
         :type block: str
         :type count: int
 
-        >>> client.successors(
+        >>> rpc.successors(
         ...     block="991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948",
         ...     count=1
         ... )
@@ -2683,7 +2683,7 @@ class RPCClient(object):
 
         .. enable_control required
 
-        >>> client.stop()
+        >>> rpc.stop()
         True
 
         """
@@ -2696,7 +2696,7 @@ class RPCClient(object):
         """
         Returns the node's RPC version
 
-        >>> client.version()
+        >>> rpc.version()
         {
             "rpc_version": 1,
             "store_version": 10,
