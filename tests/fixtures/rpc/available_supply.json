@@ -1,0 +1,11 @@
+[
+  {
+    "expected": 10000, 
+    "request": {
+      "action": "available_supply"
+    }, 
+    "response": {
+      "available": "10000"
+    }
+  }
+]

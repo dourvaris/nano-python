@@ -1,0 +1,15 @@
+[
+  {
+    "args": {
+      "amount": 1000000000000000000000000000000
+    }, 
+    "expected": true, 
+    "request": {
+      "action": "receive_minimum_set", 
+      "amount": "1000000000000000000000000000000"
+    }, 
+    "response": {
+      "success": ""
+    }
+  }
+]

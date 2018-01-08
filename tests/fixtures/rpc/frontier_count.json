@@ -1,0 +1,11 @@
+[
+  {
+    "expected": 1000, 
+    "request": {
+      "action": "frontier_count"
+    }, 
+    "response": {
+      "count": "1000"
+    }
+  }
+]

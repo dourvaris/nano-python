@@ -1,0 +1,19 @@
+[
+  {
+    "expected": {
+      "change": 50, 
+      "open": 100, 
+      "receive": 900, 
+      "send": 1000
+    }, 
+    "request": {
+      "action": "block_count_type"
+    }, 
+    "response": {
+      "change": "50", 
+      "open": "100", 
+      "receive": "900", 
+      "send": "1000"
+    }
+  }
+]

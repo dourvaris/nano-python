@@ -1,0 +1,39 @@
+[
+  {
+    "args": {
+      "accounts": [
+        "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000", 
+        "xrb_3i1aq1cchnmbn9x5rsbap8b15akfh7wj7pwskuzi7ahz8oq6cobd99d4r3b7"
+      ]
+    }, 
+    "expected": {
+      "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000": {
+        "balance": 10000, 
+        "pending": 10000
+      }, 
+      "xrb_3i1aq1cchnmbn9x5rsbap8b15akfh7wj7pwskuzi7ahz8oq6cobd99d4r3b7": {
+        "balance": 10000000, 
+        "pending": 0
+      }
+    }, 
+    "request": {
+      "accounts": [
+        "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000", 
+        "xrb_3i1aq1cchnmbn9x5rsbap8b15akfh7wj7pwskuzi7ahz8oq6cobd99d4r3b7"
+      ], 
+      "action": "accounts_balances"
+    }, 
+    "response": {
+      "balances": {
+        "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000": {
+          "balance": "10000", 
+          "pending": "10000"
+        }, 
+        "xrb_3i1aq1cchnmbn9x5rsbap8b15akfh7wj7pwskuzi7ahz8oq6cobd99d4r3b7": {
+          "balance": "10000000", 
+          "pending": "0"
+        }
+      }
+    }
+  }
+]

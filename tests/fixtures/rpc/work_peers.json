@@ -1,0 +1,15 @@
+[
+  {
+    "expected": [
+      "::ffff:172.17.0.1:7076"
+    ], 
+    "request": {
+      "action": "work_peers"
+    }, 
+    "response": {
+      "work_peers": [
+        "::ffff:172.17.0.1:7076"
+      ]
+    }
+  }
+]

@@ -44,40 +44,55 @@ class TestClient(object):
         for test in tests
     ])
     def test_rpc_methods(self, client, action, test):
+        """
+        Tests should be in the format:
+
+        {
+            "args": {"values": [3, 2]},
+            "expected": 5,
+            "request": {
+                "add": [3, 2]
+            },
+            "response": "5"
+        }
+
+        Assuming we want to test a function add(values=[3, 2]) which sends
+        a request to the backend with {"add": [3, 2]} and gets a response
+        with string "5" and the function returns int 5
+
+        If the response contains an "error" key, it is assumed the function
+        must raise an `RPCException` and "expected" is ignored
+        """
+
         try:
             method = getattr(client, action)
         except AttributeError:
             raise Exception("`%s` not yet implemented" % action)
             pytest.xfail("`%s` not yet implemented" % action)
 
-        if 'func' not in test:
-            pytest.skip("missing functional test")
+        try:
+            args = test.get('args') or {}
+            expected = test['expected']
+            request = test['request']
+            response = test['response']
+        except KeyError:
+            raise Exception(
+                'invalid test for %s: %s' % (action, json.dumps(test, indent=2)))
 
-        functest = test['func']
-        args = functest.get('args') or {}
+        if "error" in response:
+            with pytest.raises(RPCException):
+                result = method(**args)
+            return
 
-        if 'exception' in functest:
-            with pytest.raises(eval(functest['exception'])):
-                method(**args)
-        elif 'result' in functest:
-            result = method(**args)
-            assert client.session.adapter.last_request.json() == test['request']
+        result = method(**args)
+        request_made = client.session.adapter.last_request.json()
 
-            expected = functest['result']
-            if result != expected:
-                print('result:')
-                print(json.dumps(result, indent=2, sort_keys=True))
-                print('expected:')
-                print(json.dumps(expected, indent=2, sort_keys=True))
-            assert result == expected
-        else:
-            # valid formats:
-            # {
-            #     "args": {"x": 10, "y": 5},
-            #     "result": 2
-            # }
-            # {
-            #     "args": {"x": 1, "y": 0},
-            #     "exception": "ZeroDivisionError"
-            # }
-            raise Exception("invalid test format: %s" % json.dumps(functest))
+        assert request_made == request
+
+        if result != expected:
+            print('result:')
+            print(json.dumps(result, indent=2, sort_keys=True))
+            print('expected:')
+            print(json.dumps(expected, indent=2, sort_keys=True))
+
+        assert result == expected

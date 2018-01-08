@@ -2,6 +2,7 @@ import os
 import json
 import pytest
 import requests
+import collections
 import requests_mock
 
 
@@ -10,10 +11,16 @@ class MockRPCMatchException(Exception):
 
 
 def load_mock_rpc_tests():
-    mocks_path = os.path.join(
-        os.path.dirname(os.path.realpath(__file__)), 'fixtures', 'rpc.json'
-    )
-    return json.loads(open(mocks_path, 'r').read())
+    jsons_directory = os.path.join(os.path.dirname(
+        os.path.realpath(__file__)), 'fixtures', 'rpc')
+
+    result = collections.OrderedDict()
+    for filename in os.listdir(jsons_directory):
+        if filename.endswith('.json'):
+            action = filename[:-len('.json')]
+            tests = json.load(open(os.path.join(jsons_directory, filename)))
+            result[action] = tests
+    return result
 
 
 @pytest.fixture

@@ -1,0 +1,15 @@
+[
+  {
+    "args": {
+      "amount": 1000000000000000000000000000000
+    }, 
+    "expected": 1, 
+    "request": {
+      "action": "mrai_from_raw", 
+      "amount": "1000000000000000000000000000000"
+    }, 
+    "response": {
+      "amount": "1"
+    }
+  }
+]

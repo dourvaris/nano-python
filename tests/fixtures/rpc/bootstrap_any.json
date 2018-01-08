@@ -1,0 +1,11 @@
+[
+  {
+    "expected": true, 
+    "request": {
+      "action": "bootstrap_any"
+    }, 
+    "response": {
+      "success": ""
+    }
+  }
+]

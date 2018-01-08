@@ -1,0 +1,15 @@
+[
+  {
+    "args": {
+      "account": "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3"
+    }, 
+    "expected": 19, 
+    "request": {
+      "account": "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3", 
+      "action": "account_block_count"
+    }, 
+    "response": {
+      "block_count": "19"
+    }
+  }
+]

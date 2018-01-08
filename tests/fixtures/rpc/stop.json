@@ -1,0 +1,11 @@
+[
+  {
+    "expected": true, 
+    "request": {
+      "action": "stop"
+    }, 
+    "response": {
+      "success": ""
+    }
+  }
+]

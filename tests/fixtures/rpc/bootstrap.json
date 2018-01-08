@@ -1,0 +1,17 @@
+[
+  {
+    "args": {
+      "address": "::ffff:138.201.94.249", 
+      "port": "7075"
+    }, 
+    "expected": true, 
+    "request": {
+      "action": "bootstrap", 
+      "address": "::ffff:138.201.94.249", 
+      "port": "7075"
+    }, 
+    "response": {
+      "success": ""
+    }
+  }
+]

@@ -1,0 +1,15 @@
+[
+  {
+    "args": {
+      "address": "::ffff:192.168.1.1", 
+      "port": "1024"
+    }, 
+    "expected": true, 
+    "request": {
+      "action": "keepalive", 
+      "address": "::ffff:192.168.1.1", 
+      "port": "1024"
+    }, 
+    "response": {}
+  }
+]

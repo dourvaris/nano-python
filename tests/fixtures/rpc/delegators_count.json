@@ -1,0 +1,15 @@
+[
+  {
+    "args": {
+      "account": "xrb_1111111111111111111111111111111111111111111111111117353trpda"
+    }, 
+    "expected": 2, 
+    "request": {
+      "account": "xrb_1111111111111111111111111111111111111111111111111117353trpda", 
+      "action": "delegators_count"
+    }, 
+    "response": {
+      "count": "2"
+    }
+  }
+]
