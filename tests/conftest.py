@@ -2,8 +2,12 @@ import os
 import json
 import pytest
 import requests
-import collections
 import requests_mock
+
+try:
+    from collections import OrderedDict
+except ImportError:
+    from ordereddict import OrderedDict
 
 
 class MockRPCMatchException(Exception):
@@ -14,7 +18,7 @@ def load_mock_rpc_tests():
     jsons_directory = os.path.join(os.path.dirname(
         os.path.realpath(__file__)), 'fixtures', 'rpc')
 
-    result = collections.OrderedDict()
+    result = OrderedDict()
     for filename in os.listdir(jsons_directory):
         if filename.endswith('.json'):
             action = filename[:-len('.json')]
