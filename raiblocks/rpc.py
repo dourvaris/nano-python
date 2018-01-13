@@ -2400,6 +2400,30 @@ class RPCClient(object):
         return resp.get('frontiers') or {}
 
     @doc_metadata(categories=['wallet'])
+    def wallet_key_valid(self, wallet):
+        """
+        Returns if a **wallet** key is valid
+
+        :param wallet: Wallet to check key is valid
+        :type wallet: str
+
+        >>> rpc.wallet_key_valid(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        ... )
+        True
+        """
+
+        wallet = self._process_value(wallet, 'wallet')
+
+        payload = {
+            "wallet": wallet,
+        }
+
+        resp = self.call('wallet_key_valid', payload)
+
+        return resp['valid'] == '1'
+
+    @doc_metadata(categories=['wallet'])
     def wallet_lock(self, wallet):
         """
         Locks a **wallet**
