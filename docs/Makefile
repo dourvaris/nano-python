@@ -4,7 +4,7 @@
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
-SPHINXPROJ    = raiblocks-py
+SPHINXPROJ    = raiblocks-python
 SOURCEDIR     = .
 BUILDDIR      = _build
 

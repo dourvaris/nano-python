@@ -1,10 +1,10 @@
 RaiBlocks Python Library
 ========================
 
-.. image:: https://travis-ci.org/dourvaris/raiblocks-py.svg?branch=1.0.0rc1
-    :target: https://travis-ci.org/dourvaris/raiblocks-py
+.. image:: https://travis-ci.org/dourvaris/raiblocks-python.svg?branch=1.0.0rc1
+    :target: https://travis-ci.org/dourvaris/raiblocks-python
 
-.. image:: https://github.com/dourvaris/raiblocks-py/raw/master/coverage.svg?sanitize=true
+.. image:: https://github.com/dourvaris/raiblocks-python/raw/master/coverage.svg?sanitize=true
 
 .. image:: https://img.shields.io/pypi/pyversions/raiblocks.svg?style=flat-square
 
