@@ -17,6 +17,9 @@ pip install raiblocks
 
 ## Usage
 
+
+### RPC Client
+
 ```python
     >>> from raiblocks import RPCClient
     >>> rpc = RPCClient('http://localhost:7076')
@@ -34,7 +37,7 @@ The client exposes the methods that can be found here: https://github.com/clemah
 At the moment the client replicates the RPC API which means there are some
 instances where the same method will return different types eg:
 
-```
+```python
     # Returns a list
     >>> rpc.pending(
     ...     "xrb_1111111111111111111111111111111111111111111111111117353trpda")
@@ -45,7 +48,7 @@ instances where the same method will return different types eg:
     ]
 ```
 
-```
+```python
     # Returns a dict
     >>> rpc.pending(
     ...     "xrb_1111111111111111111111111111111111111111111111111117353trpda",
@@ -55,6 +58,35 @@ instances where the same method will return different types eg:
         '1AAE335A94C5DA1E4E1D0B45C3B100CCA241CC5BC557E24BB367C779D55E3A0C': 95000000000000000000000000000000,
         '20D5D6EA5CA355B11A0E3C11A74FBB4E91D126F4B3FD97232945D451A621E6F7': 36968007000000000000000000000000
     }
+```
+
+### Conversion tools
+
+There are functions for all conversions such as `raw_to_krai`, `XRB_to_raw` etc. as well as a general case `converter` function:
+
+```python
+>>> from raiblocks import UNITS_TO_RAW, converter, XRB_to_raw, raw_to_XRB
+>>> converter(12, from_unit='XRB', to_unit='raw')
+Decimal('1.2E+31')
+>>> XRB_to_raw(12)
+Decimal('1.2E+31')
+>>> raw_to_XRB(25000000000000000000000000)
+Decimal('0.000025')
+>>> UNITS_TO_RAW
+{'Grai': Decimal('1000000000000000000000000000000000'),
+ 'Gxrb': Decimal('1000000000000000000000000000000000'),
+ 'Mrai': Decimal('1000000000000000000000000000000'),
+ 'Mxrb': Decimal('1000000000000000000000000000000'),
+ 'XRB': Decimal('1000000000000000000000000000000'),
+ 'krai': Decimal('1000000000000000000000000000'),
+ 'kxrb': Decimal('1000000000000000000000000000'),
+ 'mrai': Decimal('1000000000000000000000'),
+ 'mxrb': Decimal('1000000000000000000000'),
+ 'rai': Decimal('1000000000000000000000000'),
+ 'raw': 1,
+ 'urai': Decimal('1000000000000000000'),
+ 'uxrb': Decimal('1000000000000000000'),
+ 'xrb': Decimal('1000000000000000000000000')}
 ```
 
 ## Development
