@@ -1,6 +1,9 @@
 RaiBlocks Python Library
 ========================
 
+.. image:: https://img.shields.io/pypi/l/raiblocks.svg
+    :target: https://github.com/dourvaris/raiblocks-python/blob/master/LICENSE
+
 .. image:: https://travis-ci.org/dourvaris/raiblocks-python.svg?branch=1.0.0rc1
     :target: https://travis-ci.org/dourvaris/raiblocks-python
 
@@ -10,8 +13,8 @@ RaiBlocks Python Library
 .. image:: https://img.shields.io/pypi/pyversions/raiblocks.svg?style=flat-square
     :target: https://pypi.python.org/pypi/raiblocks
 
-.. image:: https://img.shields.io/pypi/l/raiblocks.svg
-    :target: https://github.com/dourvaris/raiblocks-python/blob/master/LICENSE
+.. image:: https://img.shields.io/pypi/v/raiblocks.svg
+    :target: https://pypi.python.org/pypi/raiblocks
 
 This library contains a python wrapper for the RaiBlocks RPC server
 which tries to make it a little easier to work with by converting RPC responses
@@ -119,4 +122,9 @@ Docs
 .. code-block:: text
 
     cd docs
+
+    # generate once
     make html
+
+    # live building
+    make live
