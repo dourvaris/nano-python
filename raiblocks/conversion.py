@@ -26,7 +26,7 @@ Mrai are XRB
 BASE_UNIT = 'raw'
 UNIT_NAMES = ['xrb', 'rai']
 UNITS_TO_RAW = {
-    BASE_UNIT: 1
+    BASE_UNIT: Decimal(1)
 }
 
 
