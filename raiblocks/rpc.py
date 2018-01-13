@@ -2400,6 +2400,32 @@ class RPCClient(object):
         return resp.get('frontiers') or {}
 
     @doc_metadata(categories=['wallet'])
+    def wallet_lock(self, wallet):
+        """
+        Locks a **wallet**
+
+        :param wallet: Wallet to lock
+        :type wallet: str
+
+        :raises: :py:exc:`raiblocks.rpc.RPCException`
+
+        >>> rpc.wallet_lock(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+        ... )
+        True
+        """
+
+        wallet = self._process_value(wallet, 'wallet')
+
+        payload = {
+            "wallet": wallet,
+        }
+
+        resp = self.call('wallet_lock', payload)
+
+        return resp['locked'] == '1'
+
+    @doc_metadata(categories=['wallet'])
     def wallet_locked(self, wallet):
         """
         Checks whether **wallet** is locked
@@ -2424,6 +2450,38 @@ class RPCClient(object):
         resp = self.call('wallet_locked', payload)
 
         return resp['locked'] == '1'
+
+    @doc_metadata(categories=['wallet'])
+    def wallet_unlock(self, wallet, password):
+        """
+        Unlocks **wallet** using **password**
+
+        :param wallet: Wallet to unlock
+        :type wallet: str
+
+        :param password: Password to enter
+        :type password: str
+
+        :raises: :py:exc:`raiblocks.rpc.RPCException`
+
+        >>> rpc.wallet_unlock(
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+        ...     password="test"
+        ... )
+        True
+
+        """
+
+        wallet = self._process_value(wallet, 'wallet')
+
+        payload = {
+            "wallet": wallet,
+            "password": password,
+        }
+
+        resp = self.call('wallet_unlock', payload)
+
+        return resp['valid'] == '1'
 
     @doc_metadata(categories=['wallet'])
     def wallet_pending(self, wallet, count=None, threshold=None, source=False):
@@ -2632,7 +2690,6 @@ class RPCClient(object):
         resp = self.call('password_enter', payload)
 
         return resp['valid'] == '1'
-    wallet_unlock = password_enter
 
     @doc_metadata(categories=['wallet'])
     def password_valid(self, wallet):

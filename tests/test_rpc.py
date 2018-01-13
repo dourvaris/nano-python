@@ -67,7 +67,6 @@ class TestRPCClient(object):
             method = getattr(rpc, action)
         except AttributeError:
             raise Exception("`%s` not yet implemented" % action)
-            pytest.xfail("`%s` not yet implemented" % action)
 
         try:
             args = test.get('args') or {}
@@ -95,3 +94,13 @@ class TestRPCClient(object):
             print(json.dumps(expected, indent=2, sort_keys=True))
 
         assert result == expected
+
+
+    def test_all_rpc_methods_are_tested(self):
+        for attr in RPCClient.__dict__:
+            if attr.startswith('_'):
+                continue
+            if attr in ('call',):
+                continue
+            if attr not in mock_rpc_tests:
+                raise Exception('`%s` rpc method has no test' % attr)
