@@ -1,3 +1,4 @@
+from textwrap import dedent
 from decimal import Decimal
 from functools import partial
 from itertools import permutations
@@ -27,7 +28,6 @@ UNIT_NAMES = ['xrb', 'rai']
 UNITS_TO_RAW = {
     BASE_UNIT: 1
 }
-CONVERTERS = {}
 
 
 def _populate_units():
@@ -42,23 +42,28 @@ def _populate_units():
     UNITS_TO_RAW['XRB'] = UNITS_TO_RAW['Mxrb']
 
 
-def converter(value, from_unit, to_unit):
+def convert(value, from_unit, to_unit):
     """
     Converts a value from `from_unit` units to `to_unit` units
 
     :param value: value to convert
+    :type value: int or str or decimal.Decimal
+
     :param from_unit: unit to convert from
+    :type from_unit: str
+
     :param to_unit: unit to convert to
+    :type to_unit: str
 
-    >>> converter(value='1.5', from_unit='xrb', to_unit='krai')
-
+    >>> convert(value='1.5', from_unit='xrb', to_unit='krai')
+    Decimal('0.0015')
     """
 
     if isinstance(value, float):
         raise ValueError(
             "float values can lead to unexpected precision loss, please use a"
             " Decimal or string eg."
-            " converter('%s', %r, %r)" % (value, from_unit, to_unit)
+            " convert('%s', %r, %r)" % (value, from_unit, to_unit)
         )
 
     if from_unit not in UNITS_TO_RAW:
@@ -79,38 +84,4 @@ def converter(value, from_unit, to_unit):
 
     return result.normalize()
 
-
-def _register_converter_functions():
-    """ Builds and registers functions for all conversions possible """
-
-    for from_unit, to_unit in permutations(UNITS_TO_RAW, 2):
-        func_name = '%s_to_%s' % (from_unit, to_unit)
-
-        converter_func = partial(
-            converter, from_unit=from_unit, to_unit=to_unit)
-
-        example_value = '123456'
-        if to_unit == 'raw':
-            example_value = '0.00000123456'
-        if from_unit == 'raw':
-            example_value = '12345678900000000000000000'
-
-        docstring = '''
-            Convert {from_unit} to {to_unit}
-
-            >>> {func_name}({value})
-            {result}
-            '''.format(
-                from_unit=from_unit,
-                to_unit=to_unit,
-                func_name=func_name,
-                value=example_value,
-                result=repr(converter_func(example_value))
-            )
-        converter_func.__doc__ = docstring
-        converter_func.__name__ = func_name
-        globals()[func_name] = converter_func
-
-
 _populate_units()
-_register_converter_functions()

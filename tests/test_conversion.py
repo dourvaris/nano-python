@@ -1,15 +1,7 @@
 import pytest
 from decimal import Decimal
 import raiblocks.conversion
-from raiblocks.conversion import converter
-from raiblocks.conversion import (
-    XRB_to_Grai, XRB_to_Gxrb, XRB_to_Mrai, XRB_to_Mxrb, XRB_to_krai,
-    XRB_to_kxrb, XRB_to_mrai, XRB_to_mxrb, XRB_to_rai, XRB_to_raw, XRB_to_urai,
-    XRB_to_uxrb, XRB_to_xrb,
-    raw_to_Grai, raw_to_Gxrb, raw_to_Mrai, raw_to_Mxrb, raw_to_XRB, raw_to_krai,
-    raw_to_kxrb, raw_to_mrai, raw_to_mxrb, raw_to_rai, raw_to_urai, raw_to_uxrb,
-    raw_to_xrb,
-)
+from raiblocks.conversion import convert
 
 @pytest.mark.parametrize('value,from_unit,expected,to_unit', [
 (
@@ -70,16 +62,8 @@ from raiblocks.conversion import (
 ),
 ])
 def test_convert(value, from_unit, expected, to_unit):
-    result = converter(value, from_unit, to_unit)
+    result = convert(value, from_unit, to_unit)
     assert result == expected
-
-    # test the dynamically generated function here
-    func_name = '%s_to_%s' % (from_unit, to_unit)
-    if from_unit == to_unit:
-        with pytest.raises(AttributeError):
-            getattr(raiblocks.conversion, func_name)
-    else:
-        assert getattr(raiblocks.conversion, func_name)(value) == expected
 
 
 @pytest.mark.parametrize('value,from_unit,to_unit', [
@@ -90,5 +74,4 @@ def test_convert(value, from_unit, expected, to_unit):
 ])
 def test_invalid_convert(value, from_unit, to_unit):
     with pytest.raises(ValueError):
-        converter(value, from_unit=from_unit, to_unit=to_unit)
-
+        convert(value, from_unit=from_unit, to_unit=to_unit)

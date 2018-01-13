@@ -1,3 +1,18 @@
+"""
+Accounts module
+
+``raiblocks.accounts.KNOWN_ACCOUNT_IDS``: dict of account ids => names eg.
+
+>>> KNOWN_ACCOUNT_IDS['xrb_1ipx847tk8o46pwxt5qjdbncjqcbwcc1rrmqnkztrfjy5k7z4imsrata9est']
+'Developer Fund'
+
+``raiblocks.accounts.KNOWN_ACCOUNT_NAMES``: dict of names => account ids
+
+>>> KNOWN_ACCOUNT_NAMES['Burn']
+'xrb_1111111111111111111111111111111111111111111111111111hifc8npp'
+
+"""
+
 KNOWN_ACCOUNT_IDS = {
     'xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3': 'Genesis',
     'xrb_13ezf4od79h1tgj9aiu4djzcmmguendtjfuhwfukhuucboua8cpoihmh8byo': 'Landing',
@@ -21,4 +36,5 @@ KNOWN_ACCOUNT_IDS = {
     'xrb_369dmjiipkuwar1zxxiuixaqq1kfmyp9rwsttksxdbf8zi3qwit1kxiujpdo': 'RaiBlocks Community',
     'xrb_1niabkx3gbxit5j5yyqcpas71dkffggbr6zpd3heui8rpoocm5xqbdwq44oh': 'KuCoin Representative',
 }
+
 KNOWN_ACCOUNT_NAMES = dict((name, account) for account, name in KNOWN_ACCOUNT_IDS.items())
