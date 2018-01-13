@@ -65,6 +65,7 @@ Derive public key and account number from **private key**
 ..    
    Derive public key and account number from **private key**
    
+   :param key: Private key to generate account and public key of
    :type key: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -90,6 +91,7 @@ Divide a raw amount down by the krai ratio.
 ..    
    Divide a raw amount down by the krai ratio.
    
+   :param amount: Amount in raw to convert to krai
    :type amount: int
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -108,6 +110,7 @@ Multiply an krai amount by the krai ratio.
 ..    
    Multiply an krai amount by the krai ratio.
    
+   :param amount: Amount in krai to convert to raw
    :type amount: int
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -127,6 +130,7 @@ Divide a raw amount down by the Mrai ratio.
 ..    
    Divide a raw amount down by the Mrai ratio.
    
+   :param amount: Amount in raw to convert to Mrai
    :type amount: int
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -146,6 +150,7 @@ Multiply an Mrai amount by the Mrai ratio.
 ..    
    Multiply an Mrai amount by the Mrai ratio.
    
+   :param amount: Amount in Mrai to convert to raw
    :type amount: int
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -165,6 +170,7 @@ Divide a raw amount down by the rai ratio.
 ..    
    Divide a raw amount down by the rai ratio.
    
+   :param amount: Amount in raw to convert to rai
    :type amount: int
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -184,6 +190,7 @@ Multiply an rai amount by the rai ratio.
 ..    
    Multiply an rai amount by the rai ratio.
    
+   :param amount: Amount in rai to convert to raw
    :type amount: int
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`

@@ -57,24 +57,24 @@ Lists all the accounts inside **wallet**
 account_move
 ------------
 
-Moves **accounts** from **source_wallet** to **destination_wallet** 
-:py:func:`raiblocks.rpc.RPCClient.account_move(source_wallet, destination_wallet, accounts) <raiblocks.rpc.RPCClient.account_move>`
+Moves **accounts** from **source** to **wallet** 
+:py:func:`raiblocks.rpc.RPCClient.account_move(source, wallet, accounts) <raiblocks.rpc.RPCClient.account_move>`
 
-.. .. py:function:: raiblocks.rpc.RPCClient.account_move(source_wallet, destination_wallet, accounts)
+.. .. py:function:: raiblocks.rpc.RPCClient.account_move(source, wallet, accounts)
 
 ..    
-   Moves **accounts** from **source_wallet** to **destination_wallet**
+   Moves **accounts** from **source** to **wallet**
    
    .. enable_control required
    
-   :param source_wallet: wallet to move accounts from
-   :type source_wallet: str
+   :param source: wallet to move accounts from
+   :type source: str
    
-   :param destination_wallet: wallet to move accounts to
-   :type destination_wallet: str
+   :param wallet: wallet to move accounts to
+   :type wallet: str
    
    :param accounts: accounts to move
-   :type accounts: list
+   :type accounts: list of str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
    
@@ -200,7 +200,10 @@ Changes the password for **wallet** to **password**
    
    .. enable_control required
    
+   :param wallet: Wallet to change password for
    :type wallet: str
+   
+   :param password: Password to set
    :type password: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -222,7 +225,10 @@ Enters the **password** in to **wallet**
 ..    
    Enters the **password** in to **wallet**
    
+   :param wallet: Wallet to enter password for
    :type wallet: str
+   
+   :param password: Password to enter
    :type password: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -245,6 +251,7 @@ Checks whether the password entered for **wallet** is valid
 ..    
    Checks whether the password entered for **wallet** is valid
    
+   :param wallet: Wallet to check password for
    :type wallet: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -269,6 +276,7 @@ Begin a new payment session. Searches wallet for an account that's marked as ava
    number is returned and is marked as unavailable. If no account is
    found, a new account is created, placed in the wallet, and returned.
    
+   :param wallet: Wallet to begin payment in
    :type wallet: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -291,7 +299,10 @@ End a payment session.  Marks the account as available for use in a payment sess
    End a payment session.  Marks the account as available for use in a
    payment session.
    
+   :param account: Account to mark available
    :type account: str
+   
+   :param wallet: Wallet to end payment session for
    :type wallet: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -314,6 +325,7 @@ Marks all accounts in wallet as available for being used as a payment session.
    Marks all accounts in wallet as available for being used as a payment
    session.
    
+   :param wallet: Wallet to init payment in
    :type wallet: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -336,9 +348,16 @@ Receive pending **block** for **account** in **wallet**
    
    .. enable_control required
    
+   :param wallet: Wallet of account to receive block for
    :type wallet: str
+   
+   :param account: Account to receive block for
    :type account: str
+   
+   :param block: Block hash to receive
    :type block: str
+   
+   :param work: If set, uses this work for the receive block
    :type work: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -366,6 +385,7 @@ Tells the node to look for pending blocks for any account in **wallet**
    
    .. enable_control required
    
+   :param wallet: Wallet to search for pending blocks
    :type wallet: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -389,10 +409,19 @@ Send **amount** from **source** in **wallet** to **destination**
    
    .. enable_control required
    
+   :param wallet: Wallet of account used to send funds
    :type wallet: str
+   
+   :param source: Account to send funds from
    :type source: str
+   
+   :param destination: Account to send funds to
    :type destination: str
+   
+   :param amount: Amount in raw to send
    :type amount: int
+   
+   :param work: If set, uses this work for the block
    :type work: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -420,8 +449,13 @@ Add an adhoc private key **key** to **wallet**
    
    .. enable_control required
    
+   :param wallet: Wallet to add private key to
    :type wallet: str
+   
+   :param key: Private key to add
    :type key: str
+   
+   :param work: If false, disables work generation
    :type work: bool
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -444,6 +478,7 @@ Returns the sum of all accounts balances in **wallet**
 ..    
    Returns the sum of all accounts balances in **wallet**
    
+   :param wallet: Wallet to return sum of balances for
    :type wallet: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -469,6 +504,7 @@ Returns how many rai is owned and how many have not yet been received by all acc
    Returns how many rai is owned and how many have not yet been received
    by all accounts in **wallet**
    
+   :param wallet: Wallet to return balances for
    :type wallet: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -497,7 +533,10 @@ Changes seed for **wallet** to **seed**
    
    .. enable_control required
    
+   :param wallet: Wallet to change seed for
    :type wallet: str
+   
+   :param seed: Seed to change wallet to
    :type seed: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -519,7 +558,10 @@ Check whether **wallet** contains **account**
 ..    
    Check whether **wallet** contains **account**
    
+   :param wallet: Wallet to check contains **account**
    :type wallet: str
+   
+   :param account: Account to check exists in **wallet**
    :type account: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -562,6 +604,7 @@ Destroys **wallet** and all contained accounts
    
    .. enable_control required
    
+   :param wallet: Wallet to destroy
    :type wallet: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -582,6 +625,7 @@ Return a json representation of **wallet**
 ..    
    Return a json representation of **wallet**
    
+   :param wallet: Wallet to export
    :type wallet: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -603,6 +647,7 @@ Returns a list of pairs of account and block hash representing the head block st
    Returns a list of pairs of account and block hash representing the
    head block starting for accounts from **wallet**
    
+   :param wallet: Wallet to return frontiers for
    :type wallet: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -615,6 +660,46 @@ Returns a list of pairs of account and block hash representing the head block st
    }
    
 
+wallet_key_valid
+----------------
+
+Returns if a **wallet** key is valid 
+:py:func:`raiblocks.rpc.RPCClient.wallet_key_valid(wallet) <raiblocks.rpc.RPCClient.wallet_key_valid>`
+
+.. .. py:function:: raiblocks.rpc.RPCClient.wallet_key_valid(wallet)
+
+..    
+   Returns if a **wallet** key is valid
+   
+   :param wallet: Wallet to check key is valid
+   :type wallet: str
+   
+   >>> rpc.wallet_key_valid(
+   ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+   ... )
+   True
+
+wallet_lock
+-----------
+
+Locks a **wallet** 
+:py:func:`raiblocks.rpc.RPCClient.wallet_lock(wallet) <raiblocks.rpc.RPCClient.wallet_lock>`
+
+.. .. py:function:: raiblocks.rpc.RPCClient.wallet_lock(wallet)
+
+..    
+   Locks a **wallet**
+   
+   :param wallet: Wallet to lock
+   :type wallet: str
+   
+   :raises: :py:exc:`raiblocks.rpc.RPCException`
+   
+   >>> rpc.wallet_lock(
+   ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
+   ... )
+   True
+
 wallet_locked
 -------------
 
@@ -626,6 +711,7 @@ Checks whether **wallet** is locked
 ..    
    Checks whether **wallet** is locked
    
+   :param wallet: Wallet to check if locked
    :type wallet: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -650,9 +736,16 @@ Returns a list of block hashes which have not yet been received by accounts in t
    .. enable_control required
    .. version 8.0 required
    
+   :param wallet: Wallet to get list of pending block hashes for
    :type wallet: str
+   
+   :param count: Max amount of blocks to return
    :type count: int
+   
+   :param threshold: Minimum amount in raw per block
    :type threshold: int
+   
+   :param source: If true, returns source account as well
    :type source: bool
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -682,6 +775,7 @@ Returns the default representative for **wallet**
 ..    
    Returns the default representative for **wallet**
    
+   :param wallet: Wallet to get default representative account for
    :type wallet: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -705,7 +799,10 @@ Sets the default **representative** for **wallet**
    
    .. enable_control required
    
+   :param wallet: Wallet to set default representative account for
    :type wallet: str
+   
+   :param representative: Representative account to set for **wallet**
    :type representative: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -732,7 +829,10 @@ Rebroadcast blocks for accounts from **wallet** starting at frontier down to **c
    .. enable_control required
    .. version 8.0 required
    
+   :param wallet: Wallet to rebroadcast blocks for
    :type wallet: str
+   
+   :param count: Max amount of blocks to rebroadcast since frontier block
    :type count: int
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -748,23 +848,26 @@ Rebroadcast blocks for accounts from **wallet** starting at frontier down to **c
    ]
    
 
-password_enter
---------------
+wallet_unlock
+-------------
 
-Enters the **password** in to **wallet** 
-:py:func:`raiblocks.rpc.RPCClient.password_enter(wallet, password) <raiblocks.rpc.RPCClient.password_enter>`
+Unlocks **wallet** using **password** 
+:py:func:`raiblocks.rpc.RPCClient.wallet_unlock(wallet, password) <raiblocks.rpc.RPCClient.wallet_unlock>`
 
-.. .. py:function:: raiblocks.rpc.RPCClient.password_enter(wallet, password)
+.. .. py:function:: raiblocks.rpc.RPCClient.wallet_unlock(wallet, password)
 
 ..    
-   Enters the **password** in to **wallet**
+   Unlocks **wallet** using **password**
    
+   :param wallet: Wallet to unlock
    :type wallet: str
+   
+   :param password: Password to enter
    :type password: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
    
-   >>> rpc.password_enter(
+   >>> rpc.wallet_unlock(
    ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
    ...     password="test"
    ... )

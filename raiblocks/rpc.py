@@ -402,7 +402,7 @@ class RPCClient(object):
 
         """
 
-        key = self._process_value(key, 'public_key')
+        key = self._process_value(key, 'publickey')
 
         payload = {
             "key": key,
@@ -855,7 +855,7 @@ class RPCClient(object):
         Retrieves a json representations of **blocks** with transaction
         **amount** & block **account**
 
-        :param hashes: list of block hashes to return info for
+        :param hashes: List of block hashes to return info for
         :type hashes: list of str
 
         :param pending: If true, returns pending amount as well
@@ -980,6 +980,179 @@ class RPCClient(object):
 
         for k, v in resp.items():
             resp[k] = int(v)
+
+        return resp
+
+    @doc_metadata(categories=['block'])
+    def block_create(self,
+            type,
+            account,
+            wallet=None,
+            representative=None,
+            key=None,
+            destination=None,
+            amount=None,
+            balance=None,
+            previous=None,
+            source=None,
+            work=None):
+        """
+        Creates a json representations of new block based on input data &
+        signed with private key or account in **wallet** for offline signing
+
+        .. enable_control required
+        .. version 8.1 required
+
+        :param type: Type of block to create one of **open**, **receive**,
+                     **change**, **send**
+        :type type: str
+
+        :param account: Account for the signed block
+        :type account: str
+
+        :param wallet: Wallet to use
+        :type wallet: str
+
+        :param representative: Representative account for **open** and
+                               **change** blocks
+        :type representative: str
+
+        :param key: Private key to use to open account for **open** blocks
+        :type key: str
+
+        :param destination: Destination account for **send** blocks
+        :type destination: str
+
+        :param amount: Amount in raw for **send** blocks
+        :type amount: int
+
+        :param balance: Balance in raw of account for **send** blocks
+        :type balance: int
+
+        :param previous: Previous block hash for **receive**, **send**
+                       and **change** blocks
+        :type previous: str
+
+        :param source: Source block for **open** and **receive** blocks
+        :type source: str
+
+        :param work: Work value to use for block from external source
+        :type work: str
+
+        :raises: :py:exc:`raiblocks.rpc.RPCException`
+
+        >>> rpc.block_create(
+        ...     type="open",
+        ...     account="xrb_3kdbxitaj7f6mrir6miiwtw4muhcc58e6tn5st6rfaxsdnb7gr4roudwn951",
+        ...     source="19D3D919475DEED4696B5D13018151D1AF88B2BD3BCFF048B45031C1F36D1858",
+        ...     representative="xrb_1hza3f7wiiqa7ig3jczyxj5yo86yegcmqk3criaz838j91sxcckpfhbhhra1",
+        ...     key="0000000000000000000000000000000000000000000000000000000000000001"
+        ... )
+        {
+            "block": {
+                "account": "xrb_3kdbxitaj7f6mrir6miiwtw4muhcc58e6tn5st6rfaxsdnb7gr4roudwn951",
+                "representative": "xrb_1hza3f7wiiqa7ig3jczyxj5yo86yegcmqk3criaz838j91sxcckpfhbhhra1",
+                "signature": "5974324F8CC42DA56F62FC212A17886BDCB18DE363D04DA84EEDC99CB4A33919D14A2CF9DE9D534FAA6D0B91D01F0622205D898293525E692586C84F2DCF9208",
+                "source": "19D3D919475DEED4696B5D13018151D1AF88B2BD3BCFF048B45031C1F36D1858",
+                "type": "open",
+                "work": "4ec76c9bda2325ed"
+            },
+            "hash": "F47B23107E5F34B2CE06F562B5C435DF72A533251CB414C51B2B62A8F63A00E4"
+        }
+
+        >>> rpc.block_create(
+        ...     type="receive",
+        ...     account="xrb_3kdbxitaj7f6mrir6miiwtw4muhcc58e6tn5st6rfaxsdnb7gr4roudwn951",
+        ...     previous="F47B23107E5F34B2CE06F562B5C435DF72A533251CB414C51B2B62A8F63A00E4",
+        ...     source="19D3D919475DEED4696B5D13018151D1AF88B2BD3BCFF048B45031C1F36D1858",
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+        ... )
+        {
+            "block": {
+                "previous": "F47B23107E5F34B2CE06F562B5C435DF72A533251CB414C51B2B62A8F63A00E4",
+                "signature": "A13FD22527771667D5DFF33D69787D734836A3561D8A490C1F4917A05D77EA09860461D5FBFC99246A4EAB5627F119AD477598E22EE021C4711FACF4F3C80D0E",
+                "source": "19D3D919475DEED4696B5D13018151D1AF88B2BD3BCFF048B45031C1F36D1858",
+                "type": "receive",
+                "work": "6acb5dd43a38d76a"
+            },
+            "hash": "314BA8D9057678C1F53371C2DB3026C1FAC01EC8E7802FD9A2E8130FC523429E"
+        }
+
+        >>> rpc.block_create(
+        ...     type="send",
+        ...     account="xrb_3kdbxitaj7f6mrir6miiwtw4muhcc58e6tn5st6rfaxsdnb7gr4roudwn951",
+        ...     amount=10000000000000000000000000000000,
+        ...     balance=20000000000000000000000000000000,
+        ...     destination="xrb_18gmu6engqhgtjnppqam181o5nfhj4sdtgyhy36dan3jr9spt84rzwmktafc",
+        ...     previous="314BA8D9057678C1F53371C2DB3026C1FAC01EC8E7802FD9A2E8130FC523429E",
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+        ...     work="478563b2d9facfd4",
+        ... )
+        {
+            "block": {
+                "balance": "0000007E37BE2022C0914B2680000000",
+                "destination": "xrb_18gmu6engqhgtjnppqam181o5nfhj4sdtgyhy36dan3jr9spt84rzwmktafc",
+                "previous": "314BA8D9057678C1F53371C2DB3026C1FAC01EC8E7802FD9A2E8130FC523429E",
+                "signature": "F19CA177EFA8692C8CBF7478CE3213F56E4A85DF760DA7A9E69141849831F8FD79BA9ED89CEC807B690FB4AA42D5008F9DBA7115E63C935401F1F0EFA547BC00",
+                "type": "send",
+                "work": "478563b2d9facfd4"
+            },
+            "hash": "F958305C0FF0551421D4ABEDCCF302079D020A0A3833E33F185E2B0415D4567A"
+        }
+
+        >>> rpc.block_create(
+        ...     type="change",
+        ...     account="xrb_3kdbxitaj7f6mrir6miiwtw4muhcc58e6tn5st6rfaxsdnb7gr4roudwn951",
+        ...     representative="xrb_18gmu6engqhgtjnppqam181o5nfhj4sdtgyhy36dan3jr9spt84rzwmktafc",
+        ...     previous="F958305C0FF0551421D4ABEDCCF302079D020A0A3833E33F185E2B0415D4567A",
+        ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
+        ... )
+        {
+            "block": {
+                "previous": "F958305C0FF0551421D4ABEDCCF302079D020A0A3833E33F185E2B0415D4567A",
+                "representative": "xrb_18gmu6engqhgtjnppqam181o5nfhj4sdtgyhy36dan3jr9spt84rzwmktafc",
+                "signature": "98B4D56881D9A88B170A6B2976AE21900C26A27F0E2C338D93FDED56183B73D19AA5BEB48E43FCBB8FF8293FDD368CEF50600FECEFD490A0855ED702ED209E04",
+                "type": "change",
+                "work": "55e5b7a83edc3f4f"
+            },
+            "hash": "654FA425CEBFC9E7726089E4EDE7A105462D93DBC915FFB70B50909920A7D286"
+        }
+        """
+
+        payload = {
+            "type": self._process_value(type, 'blocktype'),
+            "account": self._process_value(account, 'account'),
+        }
+
+        if representative is not None:
+            payload['representative'] = self._process_value(representative, 'account')
+
+        if key is not None:
+            payload['key'] = self._process_value(key, 'privatekey')
+
+        if source is not None:
+            payload['source'] = self._process_value(source, 'block')
+
+        if destination is not None:
+            payload['destination'] = self._process_value(destination, 'account')
+
+        if amount is not None:
+            payload['amount'] = self._process_value(amount, 'int')
+
+        if balance is not None:
+            payload['balance'] = self._process_value(balance, 'int')
+
+        if previous is not None:
+            payload['previous'] = self._process_value(previous, 'block')
+
+        if wallet is not None:
+            payload['wallet'] = self._process_value(wallet, 'wallet')
+
+        if work is not None:
+            payload['work'] = self._process_value(work, 'work')
+
+        resp = self.call('block_create', payload)
+        resp['block'] = json.loads(resp['block'])
 
         return resp
 
@@ -1452,7 +1625,7 @@ class RPCClient(object):
 
         """
 
-        key = self._process_value(key, 'private_key')
+        key = self._process_value(key, 'privatekey')
 
         payload = {
             "key": key,
@@ -2019,7 +2192,7 @@ class RPCClient(object):
         payload = {}
 
         if key:
-            payload['key'] = self._process_value(key, 'public_key')
+            payload['key'] = self._process_value(key, 'publickey')
 
         if count is not None:
             payload['count'] = self._process_value(count, 'int')
@@ -2147,7 +2320,7 @@ class RPCClient(object):
         """
 
         wallet = self._process_value(wallet, 'wallet')
-        key = self._process_value(key, 'private_key')
+        key = self._process_value(key, 'privatekey')
 
         payload = {
             "wallet": wallet,

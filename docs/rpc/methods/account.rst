@@ -40,7 +40,7 @@ Get number of blocks for a specific **account**
 ..    
    Get number of blocks for a specific **account**
    
-   :param wallet: Account to get number of blocks for
+   :param account: Account to get number of blocks for
    :type account: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -220,24 +220,24 @@ Lists all the accounts inside **wallet**
 account_move
 ------------
 
-Moves **accounts** from **source_wallet** to **destination_wallet** 
-:py:func:`raiblocks.rpc.RPCClient.account_move(source_wallet, destination_wallet, accounts) <raiblocks.rpc.RPCClient.account_move>`
+Moves **accounts** from **source** to **wallet** 
+:py:func:`raiblocks.rpc.RPCClient.account_move(source, wallet, accounts) <raiblocks.rpc.RPCClient.account_move>`
 
-.. .. py:function:: raiblocks.rpc.RPCClient.account_move(source_wallet, destination_wallet, accounts)
+.. .. py:function:: raiblocks.rpc.RPCClient.account_move(source, wallet, accounts)
 
 ..    
-   Moves **accounts** from **source_wallet** to **destination_wallet**
+   Moves **accounts** from **source** to **wallet**
    
    .. enable_control required
    
-   :param source_wallet: wallet to move accounts from
-   :type source_wallet: str
+   :param source: wallet to move accounts from
+   :type source: str
    
-   :param destination_wallet: wallet to move accounts to
-   :type destination_wallet: str
+   :param wallet: wallet to move accounts to
+   :type wallet: str
    
    :param accounts: accounts to move
-   :type accounts: list
+   :type accounts: list of str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
    
@@ -371,7 +371,7 @@ Returns how many RAW is owned and how many have not yet been received by **accou
    by **accounts** list
    
    :param accounts: list of accounts to return balances for
-   :type accounts: list
+   :type accounts: list of str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
    
@@ -442,7 +442,7 @@ Returns a list of pairs of account and block hash representing the head block fo
    head block for **accounts** list
    
    :param accounts: Accounts to return frontier blocks for
-   :type accounts: list
+   :type accounts: list of str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
    
@@ -473,12 +473,12 @@ Returns a list of block hashes which have not yet been received by these **accou
    these **accounts**
    
    :param accounts: Accounts to return list of block hashes for
-   :type accounts: list
+   :type accounts: list of str
    
    :param count: Max number of blocks to returns
    :type count: int
    
-   :param threshold: Minimum amount per block
+   :param threshold: Minimum amount in raw per block
    :type threshold: int
    
    :param source: if True returns the source as well
@@ -625,11 +625,22 @@ Returns frontier, open block, change representative block, balance, last modifie
    .. enable_control required
    .. version 8.0 required
    
+   :param account: Account to return blocks for
    :type account: str
+   
+   :param count: Max number of blocks to return
    :type count: int
+   
+   :param representative: If true, returns the representative as well
    :type representative: bool
+   
+   :param weight: If true, returns the voting weight as well
    :type weight: bool
+   
+   :param pending: If true, returns the pending amount as well
    :type pending: bool
+   
+   :param sorting: If true, sorts the response by balance
    :type sorting: bool
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -662,8 +673,13 @@ Wait for payment of **amount** to arrive in **account** or until **timeout** mil
    Wait for payment of **amount** to arrive in **account** or until **timeout**
    milliseconds have elapsed.
    
+   :param account: Account to wait for payment
    :type account: str
+   
+   :param amount: Amount in raw of funds to wait for payment to arrive
    :type amount: int
+   
+   :param timeout: Timeout in milliseconds to wait for
    :type timeout: int
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -690,9 +706,16 @@ Returns a list of pending block hashes with amount more or equal to **threshold*
    
    .. version 8.0 required
    
+   :param account: Account to get list of pending block hashes for
    :type account: str
+   
+   :param count: Max blocks to return
    :type count: int
+   
+   :param threshold: Minimum amount in raw for blocks
    :type threshold: int
+   
+   :param source: If true, returns source address as well
    :type source: bool
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -727,9 +750,16 @@ Receive pending **block** for **account** in **wallet**
    
    .. enable_control required
    
+   :param wallet: Wallet of account to receive block for
    :type wallet: str
+   
+   :param account: Account to receive block for
    :type account: str
+   
+   :param block: Block hash to receive
    :type block: str
+   
+   :param work: If set, uses this work for the receive block
    :type work: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -756,10 +786,19 @@ Send **amount** from **source** in **wallet** to **destination**
    
    .. enable_control required
    
+   :param wallet: Wallet of account used to send funds
    :type wallet: str
+   
+   :param source: Account to send funds from
    :type source: str
+   
+   :param destination: Account to send funds to
    :type destination: str
+   
+   :param amount: Amount in raw to send
    :type amount: int
+   
+   :param work: If set, uses this work for the block
    :type work: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -785,6 +824,7 @@ Check whether **account** is a valid account number
 ..    
    Check whether **account** is a valid account number
    
+   :param account: Account number to check
    :type account: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`

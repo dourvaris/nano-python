@@ -17,13 +17,13 @@ def rpc(mock_rpc_session):
 
 class TestRPCClient(object):
 
-    @pytest.mark.parametrize('args', [
+    @pytest.mark.parametrize('arguments', [
         {},
         {'host': 'http://localhost:7076/'},
         {'host': 'http://localhost:7076'},
     ])
-    def test_create(self, args):
-        assert RPCClient(**args)
+    def test_create(self, arguments):
+        assert RPCClient(**arguments)
 
     def test_call_valid_action(self, rpc):
         assert rpc.call('version') == {
@@ -69,7 +69,7 @@ class TestRPCClient(object):
             raise Exception("`%s` not yet implemented" % action)
 
         try:
-            args = test.get('args') or {}
+            arguments = test.get('args') or {}
             expected = test['expected']
             request = test['request']
             response = test['response']
@@ -79,10 +79,10 @@ class TestRPCClient(object):
 
         if "error" in response:
             with pytest.raises(RPCException):
-                result = method(**args)
+                result = method(**arguments)
             return
 
-        result = method(**args)
+        result = method(**arguments)
         request_made = rpc.session.adapter.last_request.json()
 
         assert request_made == request

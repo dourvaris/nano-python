@@ -17,7 +17,7 @@ Initialize bootstrap to specific **IP address** and **port**
    :param address: Ip address to bootstrap
    :type address: str
    
-   :param address: Port to bootstrap
+   :param port: Port to bootstrap
    :type port: int
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -54,7 +54,10 @@ Tells the node to send a keepalive packet to **address**:**port**
    
    .. enable_control required
    
+   :param address: IP address of node to send keepalive packet to
    :type address: str
+   
+   :param port: Port of node to send keepalive packet to
    :type port: int
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -114,6 +117,7 @@ Set **amount** as new receive minimum for node until restart
    .. enable_control required
    .. version 8.0 required
    
+   :param amount: Amount in raw to set as minimum to receive
    :type amount: int
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -175,6 +179,7 @@ Returns a list of pairs of unchecked synchronizing block hash and its json repre
    
    .. version 8.0 required
    
+   :param count: Max amount of unchecked blocks to return
    :type count: int
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -226,6 +231,7 @@ Retrieves a json representation of unchecked synchronizing block by **hash**
    
    .. version 8.0 required
    
+   :param hash: Hash of unchecked block to get
    :type hash: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -247,9 +253,9 @@ unchecked_keys
 --------------
 
 Retrieves unchecked database keys, blocks hashes & a json representations of unchecked pending blocks starting from **key** up to **count** 
-:py:func:`raiblocks.rpc.RPCClient.unchecked_keys(key, count=None) <raiblocks.rpc.RPCClient.unchecked_keys>`
+:py:func:`raiblocks.rpc.RPCClient.unchecked_keys(key=None, count=None) <raiblocks.rpc.RPCClient.unchecked_keys>`
 
-.. .. py:function:: raiblocks.rpc.RPCClient.unchecked_keys(key, count=None)
+.. .. py:function:: raiblocks.rpc.RPCClient.unchecked_keys(key=None, count=None)
 
 ..    
    Retrieves unchecked database keys, blocks hashes & a json
@@ -258,7 +264,10 @@ Retrieves unchecked database keys, blocks hashes & a json representations of unc
    
    .. version 8.0 required
    
+   :param key: Starting key to return unchecked keys for
    :type key: str
+   
+   :param count: Max number of keys/blocks to return
    :type count: int
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`

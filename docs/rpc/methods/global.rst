@@ -92,6 +92,12 @@ Returns a list of pairs of representative and its voting weight
 ..    
    Returns a list of pairs of representative and its voting weight
    
+   :param count: Max amount of representatives to return
+   :type count: int
+   
+   :param sorting: If true, sorts by weight
+   :type sorting: bool
+   
    :raises: :py:exc:`raiblocks.rpc.RPCException`
    
    >>> rpc.representatives()

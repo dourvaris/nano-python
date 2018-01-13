@@ -89,3 +89,33 @@ Known Accounts / Constants
     >>> from raiblocks import KNOWN_ACCOUNT_NAMES
     >>> KNOWN_ACCOUNT_NAMES['Burn']
     'xrb_1111111111111111111111111111111111111111111111111111hifc8npp'
+
+
+Development
+-----------
+
+.. code-block:: text
+
+    virtualenv venv
+    source venv/bin/activate
+    pip install -r requirements.txt -r test-requirements.txt
+
+
+Tests
+-----
+
+.. code-block:: text
+
+    # regular
+    pytest
+
+    # coverage
+    ./coverage
+
+Docs
+----
+
+.. code-block:: text
+
+    cd docs
+    make html

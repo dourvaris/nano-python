@@ -17,6 +17,7 @@ Returns a list of pairs of account and work from **wallet**
    .. enable_control required
    .. version 8.0 required
    
+   :param wallet: Wallet to return work for
    :type wallet: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -43,6 +44,7 @@ Stop generating **work** for block
    
    .. enable_control required
    
+   :param hash: Hash to stop generating work for
    :type hash: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -66,6 +68,7 @@ Generates **work** for block
    
    .. enable_control required
    
+   :param hash: Hash to start generating **work** for
    :type hash: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -90,7 +93,10 @@ Retrieves work for **account** in **wallet**
    .. enable_control required
    .. version 8.0 required
    
+   :param wallet: Wallet to get account work for
    :type wallet: str
+   
+   :param account: Account to get work for
    :type account: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -117,7 +123,10 @@ Add specific **IP address** and **port** as work peer for node until restart
    .. enable_control required
    .. version 8.0 required
    
+   :param address: IP address of work peer to add
    :type address: str
+   
+   :param port: Port work peer to add
    :type port: int
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -182,8 +191,13 @@ Set **work** for **account** in **wallet**
    .. enable_control required
    .. version 8.0 required
    
+   :param wallet: Wallet to set work for account for
    :type wallet: str
+   
+   :param account: Account to set work for
    :type account: str
+   
+   :param work: Work to set for account in wallet
    :type work: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
@@ -206,7 +220,10 @@ Check whether **work** is valid for block
 ..    
    Check whether **work** is valid for block
    
+   :param work: Work to validate
    :type work: str
+   
+   :param hash: Hash of block to validate work for
    :type hash: str
    
    :raises: :py:exc:`raiblocks.rpc.RPCException`
