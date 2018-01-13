@@ -47,9 +47,6 @@ RPC client
         '[::ffff:108.44.38.183]:1032': 4
     }
 
-A full list of available methods can be found in :doc:`/rpc/index`
-
-
 Conversion
 ----------
 
