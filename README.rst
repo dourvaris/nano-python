@@ -99,6 +99,7 @@ Development
     virtualenv venv
     source venv/bin/activate
     pip install -r requirements.txt -r test-requirements.txt
+    python setup.py develop
 
 
 Tests
