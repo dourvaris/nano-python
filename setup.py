@@ -31,7 +31,7 @@ with io.open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 
 _version_re = re.compile(r'__version__\s+=\s+(.*)')
-with open(os.path.join(here, NAME, '__init__.py'), 'rb') as f:
+with open(os.path.join(here, NAME, 'version.py'), 'rb') as f:
     version = str(ast.literal_eval(_version_re.search(
         f.read().decode('utf-8')).group(1)))
 
