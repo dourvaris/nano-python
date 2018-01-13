@@ -13,7 +13,7 @@ from setuptools import find_packages, setup, Command
 # Package meta-data.
 NAME = 'raiblocks'
 DESCRIPTION = 'RaiBlocks Python RPC client for rai_node'
-URL = 'https://github.com/dourvaris/raiblocks'
+URL = 'https://github.com/dourvaris/raiblocks-python'
 EMAIL = 'dourvaris@gmail.com'
 AUTHOR = 'Daniel Dourvaris'
 
@@ -84,6 +84,7 @@ setup(
     tests_require=TESTS_REQUIRE,
     setup_requires=['pytest-runner'],
     include_package_data=True,
+    packages=find_packages(exclude=('tests*',)),
     license='MIT',
     classifiers=[
         # Trove classifiers
