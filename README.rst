@@ -1,3 +1,4 @@
+========================
 RaiBlocks Python Library
 ========================
 
@@ -6,6 +7,10 @@ RaiBlocks Python Library
 
 .. image:: https://travis-ci.org/dourvaris/raiblocks-python.svg?branch=1.0.0rc1
     :target: https://travis-ci.org/dourvaris/raiblocks-python
+
+.. image:: https://readthedocs.org/projects/raiblocks-python/badge/?version=latest
+    :target: http://raiblocks-python.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
 
 .. image:: https://github.com/dourvaris/raiblocks-python/raw/master/coverage.svg?sanitize=true
     :target: https://travis-ci.org/dourvaris/raiblocks-python
@@ -24,15 +29,25 @@ Also included are utilities such as converting rai/xrb and interesting accounts
 
 
 Installation
-------------
+============
 
 .. code-block:: text
 
     pip install raiblocks
 
+Documentation
+=============
+
+https://raiblocks-python.readthedocs.io/
 
 RPC client
-----------
+==========
+
+You can browse the available
+`RPC methods list <https://raiblocks-python.readthedocs.io/en/latest/rpc/index.html>`_
+or check the
+`RPC Client API documentation <https://raiblocks-python.readthedocs.io/en/latest/raiblocks.html#module-raiblocks.rpc>`_
+for examples of usage.
 
 .. code-block:: python
 
@@ -51,7 +66,7 @@ RPC client
     }
 
 Conversion
-----------
+==========
 
 .. code-block:: python
 
@@ -71,7 +86,7 @@ Conversion
 
 
 Known Accounts / Constants
---------------------------
+==========================
 
 .. code-block:: python
 
@@ -95,7 +110,10 @@ Known Accounts / Constants
 
 
 Development
------------
+==========
+
+Setup
+-----
 
 .. code-block:: text
 
@@ -104,9 +122,8 @@ Development
     pip install -r requirements.txt -r test-requirements.txt
     python setup.py develop
 
-
-Tests
------
+Running tests
+-------------
 
 .. code-block:: text
 
@@ -116,8 +133,9 @@ Tests
     # coverage
     ./coverage
 
-Docs
-----
+
+Building docs
+-------------
 
 .. code-block:: text
 
