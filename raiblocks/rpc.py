@@ -1979,7 +1979,7 @@ class RPCClient(object):
         return json.loads(resp['contents'])
 
     @doc_metadata(categories=['node', 'block'])
-    def unchecked_keys(self, key, count=None):
+    def unchecked_keys(self, key=None, count=None):
         """
         Retrieves unchecked database keys, blocks hashes & a json
         representations of unchecked pending blocks starting from **key** up
@@ -2016,11 +2016,10 @@ class RPCClient(object):
 
         """
 
-        key = self._process_value(key, 'public_key')
+        payload = {}
 
-        payload = {
-            "key": key,
-        }
+        if key:
+            payload['key'] = self._process_value(key, 'public_key')
 
         if count is not None:
             payload['count'] = self._process_value(count, 'int')
