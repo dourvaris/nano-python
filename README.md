@@ -1,4 +1,4 @@
-# RaiBlocks Python RPC client for rai_node
+# RaiBlocks Python RPC client + various tools
 
 [![Build Status](https://travis-ci.org/dourvaris/raiblocks-py.svg?branch=master)](https://travis-ci.org/dourvaris/raiblocks-py)
 [![Coverage](./coverage.svg)](https://travis-ci.org/dourvaris/raiblocks-py)
@@ -6,6 +6,8 @@
 A python wrapper for the [RaiBlocks RPC server](https://github.com/clemahieu/raiblocks)
 which tries to make it a little easier to work with by converting RPC responses
 to native python ones and exposing a pythonic api for making RPC calls.
+
+Also included are various utilities such as for converting amounts and named accounts.
 
 Note: This library is still new so there may be bugs and api changes, PRs are welcome.
 
@@ -87,6 +89,20 @@ Decimal('0.000025')
  'urai': Decimal('1000000000000000000'),
  'uxrb': Decimal('1000000000000000000'),
  'xrb': Decimal('1000000000000000000000000')}
+```
+
+### Known Accounts / Constants
+
+```python
+>>> from raiblocks import GENESIS_BLOCK, GENESIS_AMOUNT, KNOWN_ACCOUNT_IDS, KNOWN_ACCOUNT_NAMES
+>>> KNOWN_ACCOUNT_IDS['xrb_1ipx847tk8o46pwxt5qjdbncjqcbwcc1rrmqnkztrfjy5k7z4imsrata9est']
+'Developer Fund'
+>>> KNOWN_ACCOUNT_NAMES['Burn']
+'xrb_1111111111111111111111111111111111111111111111111111hifc8npp'
+>>> GENESIS_BLOCK
+'991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948'
+>>> GENESIS_AMOUNT
+340282366920938463463374607431768211455
 ```
 
 ## Development
