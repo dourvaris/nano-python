@@ -74,12 +74,12 @@ Conversion
     >>> convert(12, from_unit='XRB', to_unit='raw')
     Decimal('1.2E+31')
 
-    >>> converter(0.4, from_unit='krai', to_unit='XRB')
+    >>> convert(0.4, from_unit='krai', to_unit='XRB')
     Traceback (most recent call last):
       File "<stdin>", line 1, in <module>
     ValueError: float values can lead to unexpected
     precision loss, please use a Decimal or string
-    eg. converter('0.4', 'krai', 'XRB')
+    eg. convert('0.4', 'krai', 'XRB')
 
     >>> convert('0.4', from_unit='krai', to_unit='XRB')
     Decimal('0.0004')
