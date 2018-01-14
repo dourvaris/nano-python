@@ -1,8 +1,3 @@
-from textwrap import dedent
-from decimal import Decimal
-from functools import partial
-from itertools import permutations
-
 """
 Conversion tools for converting xrb
 
@@ -22,6 +17,8 @@ Mrai are XRB
 1rai = 1000krai = 1,000,000mrai = 0,000001 XRB
 
 """
+
+from decimal import Decimal
 
 BASE_UNIT = 'raw'
 UNIT_NAMES = ['xrb', 'rai']
@@ -83,5 +80,6 @@ def convert(value, from_unit, to_unit):
     result = value * (from_value_in_base / to_value_in_base)
 
     return result.normalize()
+
 
 _populate_units()

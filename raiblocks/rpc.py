@@ -1,7 +1,6 @@
 import six
 import json
 import requests
-import functools
 
 
 def doc_metadata(categories):
@@ -895,7 +894,6 @@ class RPCClient(object):
         if source:
             payload['source'] = self._process_value(source, 'strbool')
 
-
         resp = self.call('blocks_info', payload)
 
         blocks = resp.get('blocks') or {}
@@ -985,17 +983,17 @@ class RPCClient(object):
 
     @doc_metadata(categories=['block'])
     def block_create(self,
-            type,
-            account,
-            wallet=None,
-            representative=None,
-            key=None,
-            destination=None,
-            amount=None,
-            balance=None,
-            previous=None,
-            source=None,
-            work=None):
+                     type,
+                     account,
+                     wallet=None,
+                     representative=None,
+                     key=None,
+                     destination=None,
+                     amount=None,
+                     balance=None,
+                     previous=None,
+                     source=None,
+                     work=None):
         """
         Creates a json representations of new block based on input data &
         signed with private key or account in **wallet** for offline signing
@@ -3508,4 +3506,3 @@ class RPCClient(object):
             resp[key] = int(resp[key])
 
         return resp
-
