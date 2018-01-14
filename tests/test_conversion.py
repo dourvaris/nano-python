@@ -70,7 +70,7 @@ def test_convert(value, from_unit, expected, to_unit):
     (1, 'badunit', 'XRB'),
     (1, 'XRB', 'badunit'),
     ('string', 'XRB', 'XRB'),
-    # (1.4, 'XRB', 'XRB'),
+    (1.4, 'XRB', 'XRB'),
 ])
 def test_invalid_convert(value, from_unit, to_unit):
     with pytest.raises(ValueError):
