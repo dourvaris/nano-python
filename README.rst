@@ -119,7 +119,7 @@ Setup
 
     virtualenv venv
     source venv/bin/activate
-    pip install -r requirements.txt -r test-requirements.txt
+    pip install -r requirements.pip -r test-requirements.pip
     python setup.py develop
 
 Running tests
