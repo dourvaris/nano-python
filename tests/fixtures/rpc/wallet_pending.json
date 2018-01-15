@@ -1,101 +1,116 @@
 [
   {
     "args": {
-      "count": "1", 
+      "wallet": "51BAC8380F9B5A2E6B2489A277D81789F3F000D1BAEC8EC208142C99059B3930"
+    },
+    "expected": {},
+    "request": {
+      "action": "wallet_pending",
+      "wallet": "51BAC8380F9B5A2E6B2489A277D81789F3F000D1BAEC8EC208142C99059B3930"
+    },
+    "response": {
+      "blocks": ""
+    }
+  },
+  {
+    "args": {
+      "count": "1",
       "wallet": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
-    }, 
+    },
     "expected": {
       "xrb_1111111111111111111111111111111111111111111111111117353trpda": [
         "142A538F36833D1CC78B94E11C766F75818F8B940771335C6C1B8AB880C5BB1D"
-      ], 
+      ],
       "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3": [
         "4C1FEEF0BEA7F50BE35489A1233FE002B212DEA554B55B1B470D78BD8F210C74"
-      ]
-    }, 
+      ],
+      "xrb_tsa8mnijtpxm9fkcm736xtoncuohr33t6k35gi95xu6tergt6p69ck76ogmi": []
+    },
     "request": {
-      "action": "wallet_pending", 
-      "count": "1", 
+      "action": "wallet_pending",
+      "count": "1",
       "wallet": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
-    }, 
+    },
     "response": {
       "blocks": {
         "xrb_1111111111111111111111111111111111111111111111111117353trpda": [
           "142A538F36833D1CC78B94E11C766F75818F8B940771335C6C1B8AB880C5BB1D"
-        ], 
+        ],
         "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3": [
           "4C1FEEF0BEA7F50BE35489A1233FE002B212DEA554B55B1B470D78BD8F210C74"
-        ]
+        ],
+        "xrb_tsa8mnijtpxm9fkcm736xtoncuohr33t6k35gi95xu6tergt6p69ck76ogmi": ""
       }
     }
-  }, 
+  },
   {
     "args": {
-      "count": 1, 
-      "threshold": 1000000000000000000000000, 
+      "count": 1,
+      "threshold": 1000000000000000000000000,
       "wallet": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
-    }, 
+    },
     "expected": {
       "xrb_1111111111111111111111111111111111111111111111111117353trpda": {
         "142A538F36833D1CC78B94E11C766F75818F8B940771335C6C1B8AB880C5BB1D": 6000000000000000000000000000000
-      }, 
+      },
       "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3": {
         "4C1FEEF0BEA7F50BE35489A1233FE002B212DEA554B55B1B470D78BD8F210C74": 106370018000000000000000000000000
       }
-    }, 
+    },
     "request": {
-      "action": "wallet_pending", 
-      "count": "1", 
-      "threshold": "1000000000000000000000000", 
+      "action": "wallet_pending",
+      "count": "1",
+      "threshold": "1000000000000000000000000",
       "wallet": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
-    }, 
+    },
     "response": {
       "blocks": {
         "xrb_1111111111111111111111111111111111111111111111111117353trpda": {
           "142A538F36833D1CC78B94E11C766F75818F8B940771335C6C1B8AB880C5BB1D": "6000000000000000000000000000000"
-        }, 
+        },
         "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3": {
           "4C1FEEF0BEA7F50BE35489A1233FE002B212DEA554B55B1B470D78BD8F210C74": "106370018000000000000000000000000"
         }
       }
     }
-  }, 
+  },
   {
     "args": {
-      "count": 1, 
-      "source": true, 
+      "count": 1,
+      "source": true,
       "wallet": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
-    }, 
+    },
     "expected": {
       "xrb_1111111111111111111111111111111111111111111111111117353trpda": {
         "142A538F36833D1CC78B94E11C766F75818F8B940771335C6C1B8AB880C5BB1D": {
-          "amount": 6000000000000000000000000000000, 
+          "amount": 6000000000000000000000000000000,
           "source": "xrb_3dcfozsmekr1tr9skf1oa5wbgmxt81qepfdnt7zicq5x3hk65fg4fqj58mbr"
         }
-      }, 
+      },
       "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3": {
         "4C1FEEF0BEA7F50BE35489A1233FE002B212DEA554B55B1B470D78BD8F210C74": {
-          "amount": 106370018000000000000000000000000, 
+          "amount": 106370018000000000000000000000000,
           "source": "xrb_13ezf4od79h1tgj9aiu4djzcmmguendtjfuhwfukhuucboua8cpoihmh8byo"
         }
       }
-    }, 
+    },
     "request": {
-      "action": "wallet_pending", 
-      "count": "1", 
-      "source": "true", 
+      "action": "wallet_pending",
+      "count": "1",
+      "source": "true",
       "wallet": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
-    }, 
+    },
     "response": {
       "blocks": {
         "xrb_1111111111111111111111111111111111111111111111111117353trpda": {
           "142A538F36833D1CC78B94E11C766F75818F8B940771335C6C1B8AB880C5BB1D": {
-            "amount": "6000000000000000000000000000000", 
+            "amount": "6000000000000000000000000000000",
             "source": "xrb_3dcfozsmekr1tr9skf1oa5wbgmxt81qepfdnt7zicq5x3hk65fg4fqj58mbr"
           }
-        }, 
+        },
         "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3": {
           "4C1FEEF0BEA7F50BE35489A1233FE002B212DEA554B55B1B470D78BD8F210C74": {
-            "amount": "106370018000000000000000000000000", 
+            "amount": "106370018000000000000000000000000",
             "source": "xrb_13ezf4od79h1tgj9aiu4djzcmmguendtjfuhwfukhuucboua8cpoihmh8byo"
           }
         }

@@ -583,7 +583,10 @@ class RPCClient(object):
 
         blocks = resp.get('blocks') or {}
         for account, data in blocks.items():
-            if isinstance(data, list):  # list of block hashes
+            if isinstance(data, list):  # list of block hashes, no change needed
+                continue
+            if not data:
+                blocks[account] = []  # convert a "" response to []
                 continue
             for key, value in data.items():
                 if isinstance(value, six.string_types):  # amount
@@ -2735,7 +2738,10 @@ class RPCClient(object):
 
         blocks = resp.get('blocks') or {}
         for account, data in blocks.items():
-            if isinstance(data, list):  # list of block hashes
+            if isinstance(data, list):  # list of block hashes, no change needed
+                continue
+            if not data:
+                blocks[account] = []  # convert a "" response to []
                 continue
             for key, value in data.items():
                 if isinstance(value, six.string_types):  # amount

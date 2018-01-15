@@ -22,7 +22,11 @@ def load_mock_rpc_tests():
     for filename in os.listdir(jsons_directory):
         if filename.endswith('.json'):
             action = filename[:-len('.json')]
-            tests = json.load(open(os.path.join(jsons_directory, filename)))
+            try:
+                tests = json.load(open(os.path.join(jsons_directory, filename)))
+            except Exception:
+                print('Failed to load %s test' % filename)
+                raise
             result[action] = tests
     return result
 
