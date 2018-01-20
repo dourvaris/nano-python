@@ -13,6 +13,15 @@ Accounts module
 
 """
 
+import six
+from base64 import b32encode, b32decode
+try:
+    maketrans = bytes.maketrans
+except AttributeError:
+    import string
+    maketrans = string.maketrans
+
+
 KNOWN_ACCOUNT_IDS = {
     'xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3': 'Genesis',
     'xrb_13ezf4od79h1tgj9aiu4djzcmmguendtjfuhwfukhuucboua8cpoihmh8byo': 'Landing',
@@ -37,4 +46,25 @@ KNOWN_ACCOUNT_IDS = {
     'xrb_1niabkx3gbxit5j5yyqcpas71dkffggbr6zpd3heui8rpoocm5xqbdwq44oh': 'KuCoin Representative',
 }
 
+
 KNOWN_ACCOUNT_NAMES = dict((name, account) for account, name in KNOWN_ACCOUNT_IDS.items())
+
+B32_ALPHABET = b'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'
+XRB_ALPHABET = b'13456789abcdefghijkmnopqrstuwxyz'
+XRB_ENCODE_TRANS = maketrans(B32_ALPHABET, XRB_ALPHABET)
+XRB_DECODE_TRANS = maketrans(XRB_ALPHABET, B32_ALPHABET)
+
+
+def xrb_encode(value):
+    """
+    Encodes a hex value to xrb format which uses the base32 algorithm
+    with a custom alphabet: '13456789abcdefghijkmnopqrstuwxyz'
+
+    >>> xrb_encode('hello')
+
+    """
+    return b32encode(value).translate(XRB_ENCODE_TRANS)
+
+
+def xrb_decode(value):
+    return b32decode(value.translate(XRB_DECODE_TRANS))
