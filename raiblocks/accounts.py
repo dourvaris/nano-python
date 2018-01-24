@@ -67,6 +67,7 @@ def bytes_to_xrb(value):
 def hex_to_xrb(value):
     """
     Encodes a hex string to xrb format
+
     >>> xrb_encode(b'deadbeef')
     b'utpuxur'
     """
@@ -77,6 +78,7 @@ def hex_to_xrb(value):
 def xrb_to_bytes(value):
     """
     Encodes an xrb string to bytes
+
     >>> xrb_encode(b'ejkp4s54eokpe')
     b'deadbeef'
     """
@@ -85,6 +87,7 @@ def xrb_to_bytes(value):
 def xrb_to_hex(value):
     """
     Encodes an xrb string to hex
+
     >>> xrb_encode(b'utpuxur')
     b'deadbeef'
     """
