@@ -14,13 +14,8 @@ Accounts module
 """
 
 import six
+import string
 from base64 import b32encode, b32decode
-try:
-    maketrans = bytes.maketrans
-except AttributeError:
-    import string
-    maketrans = string.maketrans
-
 
 KNOWN_ACCOUNT_IDS = {
     'xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3': 'Genesis',
@@ -47,8 +42,10 @@ KNOWN_ACCOUNT_IDS = {
 }
 
 
-KNOWN_ACCOUNT_NAMES = dict((name, account) for account, name in KNOWN_ACCOUNT_IDS.items())
+KNOWN_ACCOUNT_NAMES = dict(
+    (name, account) for account, name in KNOWN_ACCOUNT_IDS.items())
 
+maketrans = bytes.maketrans if hasattr(bytes, 'maketrans') else string.maketrans
 B32_ALPHABET = b'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'
 XRB_ALPHABET = b'13456789abcdefghijkmnopqrstuwxyz'
 XRB_ENCODE_TRANS = maketrans(B32_ALPHABET, XRB_ALPHABET)

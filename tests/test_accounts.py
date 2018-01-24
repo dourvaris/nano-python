@@ -3,9 +3,9 @@ from raiblocks.accounts import xrb_encode, xrb_decode
 
 
 XRB_ENCODE_TESTS = [
-    ('', ''),
-    ('hello', 'f3kpru5h'),
-    ('okay', 'fxop4ya='),
+    (b'', b''),
+    (b'hello', b'f3kpru5h'),
+    (b'okay', b'fxop4ya='),
 ]
 XRB_DECODE_TESTS = [(encoded, decoded) for decoded, encoded in XRB_ENCODE_TESTS]
 
