@@ -1,5 +1,6 @@
 import six
 import json
+import backoff
 import requests
 
 
@@ -53,6 +54,9 @@ class RPCClient(object):
         self.session = session
         self.host = host
 
+    @backoff.on_exception(backoff.expo,
+                          requests.exceptions.RequestException,
+                          max_tries=3)
     def call(self, action, params=None):
         """
         Makes an RPC call to the server and returns the json response
@@ -75,15 +79,9 @@ class RPCClient(object):
 
         """
         params = params or {}
-
         params['action'] = action
 
-        try:
-            resp = self.session.post(self.host, json=params)
-        except Exception:
-            # TODO: dan: handle timeouts/backoff
-            raise
-
+        resp = self.session.post(self.host, json=params)
         result = resp.json()
 
         if 'error' in result:
