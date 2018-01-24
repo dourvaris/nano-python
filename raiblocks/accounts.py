@@ -15,6 +15,7 @@ Accounts module
 
 import six
 import string
+from binascii import hexlify, unhexlify
 from base64 import b32encode, b32decode
 
 KNOWN_ACCOUNT_IDS = {
@@ -52,16 +53,39 @@ XRB_ENCODE_TRANS = maketrans(B32_ALPHABET, XRB_ALPHABET)
 XRB_DECODE_TRANS = maketrans(XRB_ALPHABET, B32_ALPHABET)
 
 
-def xrb_encode(value):
+def bytes_to_xrb(value):
     """
     Encodes a hex value to xrb format which uses the base32 algorithm
     with a custom alphabet: '13456789abcdefghijkmnopqrstuwxyz'
 
-    >>> xrb_encode('hello')
-
+    >>> xrb_encode(b'deadbeef')
+    b'ejkp4s54eokpe'
     """
     return b32encode(value).translate(XRB_ENCODE_TRANS)
 
 
-def xrb_decode(value):
+def hex_to_xrb(value):
+    """
+    Encodes a hex string to xrb format
+    >>> xrb_encode(b'deadbeef')
+    b'utpuxur'
+    """
+
+    return bytes_to_xrb(unhexlify(value))
+
+
+def xrb_to_bytes(value):
+    """
+    Encodes an xrb string to bytes
+    >>> xrb_encode(b'ejkp4s54eokpe')
+    b'deadbeef'
+    """
     return b32decode(value.translate(XRB_DECODE_TRANS))
+
+def xrb_to_hex(value):
+    """
+    Encodes an xrb string to hex
+    >>> xrb_encode(b'utpuxur')
+    b'deadbeef'
+    """
+    return hexlify(xrb_to_bytes(value))
