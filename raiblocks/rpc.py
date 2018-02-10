@@ -1267,8 +1267,12 @@ class RPCClient(object):
         }
 
         resp = self.call('delegators', payload)
+        delegators = resp.get('delegators') or {}
 
-        return resp.get('delegators') or {}
+        for k, v in delegators.items():
+            delegators[k] = int(v)
+
+        return delegators
 
     @doc_metadata(categories=['account'])
     def delegators_count(self, account):
