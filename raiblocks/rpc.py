@@ -1,6 +1,5 @@
 import six
 import json
-import backoff
 import requests
 
 
@@ -54,9 +53,6 @@ class RPCClient(object):
         self.session = session
         self.host = host
 
-    @backoff.on_exception(backoff.expo,
-                          requests.exceptions.RequestException,
-                          max_tries=3)
     def call(self, action, params=None):
         """
         Makes an RPC call to the server and returns the json response
@@ -68,6 +64,7 @@ class RPCClient(object):
         :type params: dict
 
         :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`requests.exceptions.RequestException`
 
         >>> rpc.call(
         ...     action='account_balance',

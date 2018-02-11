@@ -49,6 +49,10 @@ or check the
 `RPC Client API documentation <https://raiblocks-python.readthedocs.io/en/latest/raiblocks.html#module-raiblocks.rpc>`_
 for examples of usage.
 
+.. warning:: The RPC client **DOES NOT** handle timeouts or retries
+    automatically since this could lead to unwanted retries of requests
+    causing **double spends**. Keep this in mind when implementing retries.
+
 .. code-block:: python
 
     >>> from raiblocks import RPCClient
@@ -64,6 +68,8 @@ for examples of usage.
         '[::ffff:75.171.168.5]:7075': 4,
         '[::ffff:108.44.38.183]:1032': 4
     }
+
+
 
 Conversion
 ==========
