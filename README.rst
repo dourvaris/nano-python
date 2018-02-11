@@ -152,3 +152,11 @@ Building docs
 
     # live building
     make live
+
+
+Making a release
+----------------
+
+- Update CHANGELOG.rst
+- bumpversion [major|minor|patch]
+- python setup.py upload
