@@ -1,11 +1,11 @@
 nano package
-=================
+============
 
 Submodules
 ----------
 
 nano\.accounts module
---------------------------
+---------------------
 
 .. automodule:: nano.accounts
     :members:
@@ -13,7 +13,7 @@ nano\.accounts module
     :show-inheritance:
 
 nano\.blocks module
-------------------------
+-------------------
 
 .. automodule:: nano.blocks
     :members:
@@ -21,7 +21,7 @@ nano\.blocks module
     :show-inheritance:
 
 nano\.conversion module
-----------------------------
+-----------------------
 
 .. automodule:: nano.conversion
     :members:
@@ -29,7 +29,7 @@ nano\.conversion module
     :show-inheritance:
 
 nano\.rpc module
----------------------
+----------------
 
 .. automodule:: nano.rpc
     :members:
