@@ -18,15 +18,15 @@ class RPCException(Exception):
     """ Base class for RPC errors """
 
 
-class RPCClient(object):
+class Client(object):
     """
-    RaiBlocks node RPC client
+    Nano (RaiBlocks) node RPC client
 
     :param host: RPC server host, defaults to `'http://localhost:7076'`
     :param session: optional :py:class:`requests.Session` session to use for this client
 
-    >>> from raiblocks.rpc import RPCClient
-    >>> rpc = RPCClient('http://localhost:7076')
+    >>> from nano.rpc import Client
+    >>> rpc = Client('http://localhost:7076')
     >>> rpc.version()
     {
         'rpc_version': 1,
@@ -37,7 +37,7 @@ class RPCClient(object):
 
     def __init__(self, host='http://localhost:7076', session=None):
         """
-        Initialize the RaiBlocks RPC client
+        Initialize the Nano (RaiBlocks) RPC client
 
         :param host: location of the RPC server eg. http://localhost:7076
         :type host: str
@@ -63,7 +63,7 @@ class RPCClient(object):
         :param params: Dict of arguments to send with RPC call
         :type params: dict
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
         :raises: :py:exc:`requests.exceptions.RequestException`
 
         >>> rpc.call(
@@ -110,7 +110,7 @@ class RPCClient(object):
         :param account: Account id to return balance of
         :type account: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.account_balance(
         ...     account="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
@@ -144,7 +144,7 @@ class RPCClient(object):
         :param accounts: list of accounts to return balances for
         :type accounts: list of str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.accounts_balances(
         ...     accounts=[
@@ -188,7 +188,7 @@ class RPCClient(object):
         :param account: Account to get number of blocks for
         :type account: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.account_block_count(account="xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3")
         19
@@ -223,7 +223,7 @@ class RPCClient(object):
         :param work: If false, disables work generation after creating account
         :type work: bool
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.accounts_create(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
@@ -260,7 +260,7 @@ class RPCClient(object):
         :param accounts: Accounts to return frontier blocks for
         :type accounts: list of str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.accounts_frontiers(
         ...     accounts=[
@@ -307,7 +307,7 @@ class RPCClient(object):
         :param pending: if True, also returns the pending balance
         :type pending: bool
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.account_info(
         ...     account="xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3"
@@ -357,7 +357,7 @@ class RPCClient(object):
         :param work: If false, disables work generation after creating account
         :type work: bool
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.account_create(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
@@ -387,7 +387,7 @@ class RPCClient(object):
         :param key: Public key to get account for
         :type key: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.account_get(
         ...    key="3068BB1CA04525BB0E416C485FE6A67FD52540227D267CC8B6E8DA958A7FA039"
@@ -417,7 +417,7 @@ class RPCClient(object):
         :param count: number of blocks to return
         :type count: int
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.account_history(
         ...     account="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
@@ -458,7 +458,7 @@ class RPCClient(object):
         :param wallet: Wallet to get account list for
         :type wallet: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.account_list(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
@@ -495,7 +495,7 @@ class RPCClient(object):
         :param accounts: accounts to move
         :type accounts: list of str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.account_move(
         ...     source="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
@@ -540,7 +540,7 @@ class RPCClient(object):
         :param source: if True returns the source as well
         :type source: bool
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.accounts_pending(
         ...     accounts=[
@@ -601,7 +601,7 @@ class RPCClient(object):
         :param account: Account to get public key for
         :type account: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.account_key(
         ...     account="xrb_1e5aqegc1jb7qe964u4adzmcezyo6o146zb8hm6dft8tkp79za3sxwjym5rx"
@@ -633,7 +633,7 @@ class RPCClient(object):
         :param account: Account to remove
         :type account: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.account_remove(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
@@ -663,7 +663,7 @@ class RPCClient(object):
         :param account: Account to get representative for
         :type account: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.account_representative(
         ...     account="xrb_39a73oy5ungrhxy5z5oao1xso4zo7dmgpjd4u74xcrx3r1w6rtazuouw6qfi"
@@ -701,7 +701,7 @@ class RPCClient(object):
         :param work: If set, is used as the work for the block
         :type work: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.account_representative_set(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
@@ -737,7 +737,7 @@ class RPCClient(object):
         :param account: Account to get voting weight for
         :type account: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.account_weight(
         ...     account="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
@@ -761,7 +761,7 @@ class RPCClient(object):
         """
         Returns how many rai are in the public supply
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.available_supply()
         10000
@@ -780,7 +780,7 @@ class RPCClient(object):
         :param hash: Hash of block to return representation for
         :type hash: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.block(
         ...     hash="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
@@ -814,7 +814,7 @@ class RPCClient(object):
         :param hashes: List of block hashes to return
         :type hashes: list of str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.blocks(
         ...     hashes=["000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"]
@@ -861,7 +861,7 @@ class RPCClient(object):
         :param source: If true, returns source account as well
         :type source: bool
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.blocks_info(hashes=["000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"])
         {
@@ -912,7 +912,7 @@ class RPCClient(object):
         :param hash: Hash of the block to return account for
         :type hash: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.block_account(
         ...     hash="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
@@ -937,7 +937,7 @@ class RPCClient(object):
         Reports the number of blocks in the ledger and unchecked synchronizing
         blocks
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.block_count()
         {
@@ -960,7 +960,7 @@ class RPCClient(object):
         Reports the number of blocks in the ledger by type (send, receive,
         open, change)
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.block_count_type()
         {
@@ -1035,7 +1035,7 @@ class RPCClient(object):
         :param work: Work value to use for block from external source
         :type work: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.block_create(
         ...     type="open",
@@ -1163,7 +1163,7 @@ class RPCClient(object):
         :param port: Port to bootstrap
         :type port: int
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.bootstrap(address="::ffff:138.201.94.249", port="7075")
         True
@@ -1186,7 +1186,7 @@ class RPCClient(object):
         """
         Initialize multi-connection bootstrap to random peers
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.bootstrap_any()
         True
@@ -1208,7 +1208,7 @@ class RPCClient(object):
         :param count: Number of blocks to return up to
         :type count: int
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.chain(
         ...     block="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
@@ -1243,7 +1243,7 @@ class RPCClient(object):
         :param account: Account to return delegators for
         :type account: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.delegators(
         ...     account="xrb_1111111111111111111111111111111111111111111111111117353trpda"
@@ -1281,7 +1281,7 @@ class RPCClient(object):
         :param account: Account to get number of delegators for
         :type account: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.delegators_count(
         ...     account="xrb_1111111111111111111111111111111111111111111111111117353trpda"
@@ -1311,7 +1311,7 @@ class RPCClient(object):
         :param index: Index of the generated keypair
         :type index: int
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.deterministic_key(
         ...     seed="0000000000000000000000000000000000000000000000000000000000000000",
@@ -1349,7 +1349,7 @@ class RPCClient(object):
         :param count: Max amount to return
         :type count: int
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.frontiers(
         ...     account="xrb_1111111111111111111111111111111111111111111111111111hifc8npp",
@@ -1379,7 +1379,7 @@ class RPCClient(object):
         """
         Reports the number of accounts in the ledger
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.frontier_count()
         1000
@@ -1401,7 +1401,7 @@ class RPCClient(object):
         :param count: Max number of blocks to return
         :type count: int
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.history(
         ...     hash="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
@@ -1443,7 +1443,7 @@ class RPCClient(object):
         :param amount: Amount in raw to convert to Mrai
         :type amount: int
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.mrai_from_raw(amount=1000000000000000000000000000000)
         1
@@ -1468,7 +1468,7 @@ class RPCClient(object):
         :param amount: Amount in Mrai to convert to raw
         :type amount: int
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.mrai_to_raw(amount=1)
         1000000000000000000000000000000
@@ -1493,7 +1493,7 @@ class RPCClient(object):
         :param amount: Amount in raw to convert to krai
         :type amount: int
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.krai_from_raw(amount=1000000000000000000000000000)
         1
@@ -1517,7 +1517,7 @@ class RPCClient(object):
         :param amount: Amount in krai to convert to raw
         :type amount: int
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.krai_to_raw(amount=1)
         1000000000000000000000000000
@@ -1542,7 +1542,7 @@ class RPCClient(object):
         :param amount: Amount in raw to convert to rai
         :type amount: int
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.rai_from_raw(amount=1000000000000000000000000)
         1
@@ -1567,7 +1567,7 @@ class RPCClient(object):
         :param amount: Amount in rai to convert to raw
         :type amount: int
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.rai_to_raw(amount=1)
         1000000000000000000000000
@@ -1589,7 +1589,7 @@ class RPCClient(object):
         """
         Generates an **adhoc random keypair**
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.key_create()
         {
@@ -1612,7 +1612,7 @@ class RPCClient(object):
         :param key: Private key to generate account and public key of
         :type key: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.key_expand(
             key="781186FB9EF17DB6E3D1056550D9FAE5D5BBADA6A6BC370E4CBB938B1DC71DA3"
@@ -1648,7 +1648,7 @@ class RPCClient(object):
         :param port: Port of node to send keepalive packet to
         :type port: int
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.keepalive(address="::ffff:192.168.1.1", port=1024)
         True
@@ -1695,7 +1695,7 @@ class RPCClient(object):
         :param sorting: If true, sorts the response by balance
         :type sorting: bool
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.ledger(
         ...     account="xrb_1111111111111111111111111111111111111111111111111111hifc8npp",
@@ -1759,7 +1759,7 @@ class RPCClient(object):
         :param wallet: Wallet to begin payment in
         :type wallet: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.payment_begin(
         ... wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
@@ -1780,7 +1780,7 @@ class RPCClient(object):
 
     # NOTE(dan): Server RPC is broken here - it *should* return an
     # 'error' for 'No wallet found', but it returns 'status' instead
-    # https://github.com/clemahieu/raiblocks/blob/e9592e5/rai/node/rpc.cpp#L2238
+    # https://github.com/clemahieu/nano/blob/e9592e5/rai/node/rpc.cpp#L2238
     @doc_metadata(categories=['wallet'])
     def payment_init(self, wallet):
         """
@@ -1790,7 +1790,7 @@ class RPCClient(object):
         :param wallet: Wallet to init payment in
         :type wallet: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.payment_init(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
@@ -1820,7 +1820,7 @@ class RPCClient(object):
         :param wallet: Wallet to end payment session for
         :type wallet: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.payment_end(
         ...     account="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
@@ -1856,7 +1856,7 @@ class RPCClient(object):
         :param timeout: Timeout in milliseconds to wait for
         :type timeout: int
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.payment_wait(
         ...     account="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
@@ -1889,7 +1889,7 @@ class RPCClient(object):
         :param block: Block to publish
         :type block: dict or json
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> block = {
             "account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
@@ -1938,7 +1938,7 @@ class RPCClient(object):
         :param work: If set, uses this work for the receive block
         :type work: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.receive(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
@@ -1975,7 +1975,7 @@ class RPCClient(object):
         .. enable_control required
         .. version 8.0 required
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.receive_minimum()
         1000000000000000000000000
@@ -1997,7 +1997,7 @@ class RPCClient(object):
         :param amount: Amount in raw to set as minimum to receive
         :type amount: int
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.receive_minimum_set(amount=1000000000000000000000000000000)
         True
@@ -2024,7 +2024,7 @@ class RPCClient(object):
         :param sorting: If true, sorts by weight
         :type sorting: bool
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.representatives()
         {
@@ -2066,7 +2066,7 @@ class RPCClient(object):
         :param count: Max amount of unchecked blocks to return
         :type count: int
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.unchecked(count=1)
         {
@@ -2103,7 +2103,7 @@ class RPCClient(object):
         .. enable_control required
         .. version 8.0 required
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.unchecked_clear()
         True
@@ -2125,7 +2125,7 @@ class RPCClient(object):
         :param hash: Hash of unchecked block to get
         :type hash: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.unchecked_get(
         ...     hash="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
@@ -2166,7 +2166,7 @@ class RPCClient(object):
         :param count: Max number of keys/blocks to return
         :type count: int
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.unchecked_keys(
         ...     key="FA5B51D063BADDF345EFD7EF0D3C5FB115C85B1EF4CDE89D8B7DF3EAF60A04A4",
@@ -2213,7 +2213,7 @@ class RPCClient(object):
         :param account: Account number to check
         :type account: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.validate_account_number(
         ...     account="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000"
@@ -2239,7 +2239,7 @@ class RPCClient(object):
         :param wallet: Wallet to get default representative account for
         :type wallet: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.wallet_representative(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
@@ -2271,7 +2271,7 @@ class RPCClient(object):
         :param representative: Representative account to set for **wallet**
         :type representative: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.wallet_representative_set(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
@@ -2309,7 +2309,7 @@ class RPCClient(object):
         :param work: If false, disables work generation
         :type work: bool
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.wallet_add(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
@@ -2342,7 +2342,7 @@ class RPCClient(object):
         :param wallet: Wallet to return sum of balances for
         :type wallet: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.wallet_balance_total(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
@@ -2376,7 +2376,7 @@ class RPCClient(object):
         :param wallet: Wallet to return balances for
         :type wallet: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.wallet_balances(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
@@ -2417,7 +2417,7 @@ class RPCClient(object):
         :param seed: Seed to change wallet to
         :type seed: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.wallet_change_seed(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
@@ -2449,7 +2449,7 @@ class RPCClient(object):
         :param account: Account to check exists in **wallet**
         :type account: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.wallet_contains(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
@@ -2477,7 +2477,7 @@ class RPCClient(object):
 
         .. enable_control required
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.wallet_create()
         "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
@@ -2498,7 +2498,7 @@ class RPCClient(object):
         :param wallet: Wallet to destroy
         :type wallet: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.wallet_destroy(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
@@ -2524,7 +2524,7 @@ class RPCClient(object):
         :param wallet: Wallet to export
         :type wallet: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.wallet_export(wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F")
         {
@@ -2551,7 +2551,7 @@ class RPCClient(object):
         :param wallet: Wallet to return frontiers for
         :type wallet: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.wallet_frontiers(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
@@ -2604,7 +2604,7 @@ class RPCClient(object):
         :param wallet: Wallet to lock
         :type wallet: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.wallet_lock(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
@@ -2630,7 +2630,7 @@ class RPCClient(object):
         :param wallet: Wallet to check if locked
         :type wallet: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.wallet_locked(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
@@ -2659,7 +2659,7 @@ class RPCClient(object):
         :param password: Password to enter
         :type password: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.wallet_unlock(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
@@ -2701,7 +2701,7 @@ class RPCClient(object):
         :param source: If true, returns source account as well
         :type source: bool
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.wallet_pending(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
@@ -2767,7 +2767,7 @@ class RPCClient(object):
         :param count: Max amount of blocks to rebroadcast since frontier block
         :type count: int
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.wallet_republish(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
@@ -2804,7 +2804,7 @@ class RPCClient(object):
         :param wallet: Wallet to return work for
         :type wallet: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.wallet_work_get(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
@@ -2839,7 +2839,7 @@ class RPCClient(object):
         :param password: Password to set
         :type password: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.password_change(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
@@ -2870,7 +2870,7 @@ class RPCClient(object):
         :param password: Password to enter
         :type password: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.password_enter(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
@@ -2899,7 +2899,7 @@ class RPCClient(object):
         :param wallet: Wallet to check password for
         :type wallet: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.password_valid(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
@@ -2923,7 +2923,7 @@ class RPCClient(object):
         """
         Returns a list of pairs of peer IPv6:port and its node network version
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.peers()
         {
@@ -2961,7 +2961,7 @@ class RPCClient(object):
         :param source: If true, returns source address as well
         :type source: bool
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.pending(
         ...     account="xrb_1111111111111111111111111111111111111111111111111117353trpda"
@@ -3023,7 +3023,7 @@ class RPCClient(object):
         :param hash: Hash of block to check if pending
         :type hash: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.pending_exists(
             hash="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
@@ -3051,7 +3051,7 @@ class RPCClient(object):
         :param hash: Hash to stop generating work for
         :type hash: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.work_cancel(
         ...     hash="718CC2121C3E641059BC1C2CFC45666C99E8AE922F7A807B7D07B62C995D79E2"
@@ -3079,7 +3079,7 @@ class RPCClient(object):
         :param hash: Hash to start generating **work** for
         :type hash: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.work_generate(
         ...     hash="718CC2121C3E641059BC1C2CFC45666C99E8AE922F7A807B7D07B62C995D79E2"
@@ -3112,7 +3112,7 @@ class RPCClient(object):
         :param account: Account to get work for
         :type account: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.work_get(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
@@ -3151,7 +3151,7 @@ class RPCClient(object):
         :param work: Work to set for account in wallet
         :type work: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.work_set(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
@@ -3190,7 +3190,7 @@ class RPCClient(object):
         :param port: Port work peer to add
         :type port: int
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.work_peer_add(address="::ffff:172.17.0.1", port="7076")
         True
@@ -3217,7 +3217,7 @@ class RPCClient(object):
         .. enable_control required
         .. version 8.0 required
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.work_peers()
         [
@@ -3238,7 +3238,7 @@ class RPCClient(object):
         .. enable_control required
         .. version 8.0 required
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.work_peers_clear()
         True
@@ -3259,7 +3259,7 @@ class RPCClient(object):
         :param hash: Hash of block to validate work for
         :type hash: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.work_validate(
         ...     work="2bf29ef00786a6bc",
@@ -3300,7 +3300,7 @@ class RPCClient(object):
                              blocks for receive/open up to **destinations** depth
         :type destinations: int
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.republish(
         ...     hash="991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948"
@@ -3342,7 +3342,7 @@ class RPCClient(object):
         :param wallet: Wallet to search for pending blocks
         :type wallet: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.search_pending(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
@@ -3370,7 +3370,7 @@ class RPCClient(object):
         .. enable_control required
         .. version 8.0 required
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.search_pending_all()
         True
@@ -3403,7 +3403,7 @@ class RPCClient(object):
         :param work: If set, uses this work for the block
         :type work: str
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.send(
         ...     wallet="000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F",
@@ -3447,7 +3447,7 @@ class RPCClient(object):
         :param count: Max number of successor blocks to return
         :type count: int
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.successors(
         ...     block="991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948",
@@ -3478,7 +3478,7 @@ class RPCClient(object):
 
         .. enable_control required
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.stop()
         True
@@ -3494,7 +3494,7 @@ class RPCClient(object):
         """
         Returns the node's RPC version
 
-        :raises: :py:exc:`raiblocks.rpc.RPCException`
+        :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.version()
         {
@@ -3511,3 +3511,5 @@ class RPCClient(object):
             resp[key] = int(resp[key])
 
         return resp
+
+RPCClient = Client

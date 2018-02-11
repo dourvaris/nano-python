@@ -1,16 +1,16 @@
 [
   {
     "expected": {
-      "node_vendor": "RaiBlocks 9.0", 
-      "rpc_version": 1, 
+      "node_vendor": "RaiBlocks 9.0",
+      "rpc_version": 1,
       "store_version": 10
-    }, 
+    },
     "request": {
       "action": "version"
-    }, 
+    },
     "response": {
-      "node_vendor": "RaiBlocks 9.0", 
-      "rpc_version": "1", 
+      "node_vendor": "RaiBlocks 9.0",
+      "rpc_version": "1",
       "store_version": "10"
     }
   }

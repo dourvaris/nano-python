@@ -1,37 +1,37 @@
-raiblocks package
+nano package
 =================
 
 Submodules
 ----------
 
-raiblocks\.accounts module
+nano\.accounts module
 --------------------------
 
-.. automodule:: raiblocks.accounts
+.. automodule:: nano.accounts
     :members:
     :undoc-members:
     :show-inheritance:
 
-raiblocks\.blocks module
+nano\.blocks module
 ------------------------
 
-.. automodule:: raiblocks.blocks
+.. automodule:: nano.blocks
     :members:
     :undoc-members:
     :show-inheritance:
 
-raiblocks\.conversion module
+nano\.conversion module
 ----------------------------
 
-.. automodule:: raiblocks.conversion
+.. automodule:: nano.conversion
     :members:
     :undoc-members:
     :show-inheritance:
 
-raiblocks\.rpc module
+nano\.rpc module
 ---------------------
 
-.. automodule:: raiblocks.rpc
+.. automodule:: nano.rpc
     :members:
     :undoc-members:
     :show-inheritance:

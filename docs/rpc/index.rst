@@ -3,7 +3,7 @@
 RPC methods
 ===========
 
-This documents the available methods on the :py:class:`raiblocks.rpc.RPCClient`
+This documents the available methods on the :py:class:`nano.rpc.Client`
 
 .. toctree::
    :glob:

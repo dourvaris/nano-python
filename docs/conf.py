@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# raiblocks documentation build configuration file, created by
+# nano documentation build configuration file, created by
 # sphinx-quickstart on Thu Jan 11 17:32:46 2018.
 #
 # This file is execfile()d with the current directory set to its
@@ -52,7 +52,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'raiblocks'
+project = u'nano'
 copyright = u'2018, Daniel Dourvaris'
 author = u'Daniel Dourvaris'
 
@@ -119,7 +119,7 @@ html_sidebars = {
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'raiblocksdoc'
+htmlhelp_basename = 'nanodoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -146,7 +146,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'raiblocks.tex', u'raiblocks Documentation',
+    (master_doc, 'nano.tex', u'nano Documentation',
      u'Daniel Dourvaris', 'manual'),
 ]
 
@@ -156,7 +156,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'raiblocks', u'raiblocks Documentation',
+    (master_doc, 'nano', u'nano Documentation',
      [author], 1)
 ]
 
@@ -167,8 +167,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'raiblocks', u'raiblocks Documentation',
-     author, 'raiblocks', 'One line description of project.',
+    (master_doc, 'nano', u'nano Documentation',
+     author, 'nano', 'One line description of project.',
      'Miscellaneous'),
 ]
 

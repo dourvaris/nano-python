@@ -9,11 +9,11 @@ Conversion tools
 
 For converting between rai/xrb amounts.
 
-The :meth:`raiblocks.conversion.convert` function takes ``int``, ``Decimal`` or ``string`` arguments (no ``float``):
+The :meth:`nano.conversion.convert` function takes ``int``, ``Decimal`` or ``string`` arguments (no ``float``):
 
 .. code-block:: python
 
-    >>> from raiblocks import convert
+    >>> from nano import convert
     >>> convert(12, from_unit='XRB', to_unit='raw')
     Decimal('1.2E+31')
 
@@ -39,7 +39,7 @@ The :meth:`raiblocks.conversion.convert` function takes ``int``, ``Decimal`` or 
 
 For a dict of all available units and their amount in raw:
 
-    >>> from raiblocks import UNITS_TO_RAW
+    >>> from nano import UNITS_TO_RAW
     >>> UNITS_TO_RAW
     {'Grai': Decimal('1000000000000000000000000000000000'),
      'Gxrb': Decimal('1000000000000000000000000000000000'),
@@ -61,7 +61,7 @@ Known Accounts / Constants
 
 .. code-block:: python
 
-    >>> from raiblocks import GENESIS_BLOCK_HASH, KNOWN_ACCOUNT_IDS, KNOWN_ACCOUNT_NAMES
+    >>> from nano import GENESIS_BLOCK_HASH, KNOWN_ACCOUNT_IDS, KNOWN_ACCOUNT_NAMES
     >>> KNOWN_ACCOUNT_IDS['xrb_1ipx847tk8o46pwxt5qjdbncjqcbwcc1rrmqnkztrfjy5k7z4imsrata9est']
     'Developer Fund'
     >>> KNOWN_ACCOUNT_NAMES['Burn']

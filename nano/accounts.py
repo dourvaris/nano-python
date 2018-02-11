@@ -1,12 +1,12 @@
 """
 Accounts module
 
-``raiblocks.accounts.KNOWN_ACCOUNT_IDS``: dict of account ids => names eg.
+``nano.accounts.KNOWN_ACCOUNT_IDS``: dict of account ids => names eg.
 
 >>> KNOWN_ACCOUNT_IDS['xrb_1ipx847tk8o46pwxt5qjdbncjqcbwcc1rrmqnkztrfjy5k7z4imsrata9est']
 'Developer Fund'
 
-``raiblocks.accounts.KNOWN_ACCOUNT_NAMES``: dict of names => account ids
+``nano.accounts.KNOWN_ACCOUNT_NAMES``: dict of names => account ids
 
 >>> KNOWN_ACCOUNT_NAMES['Burn']
 'xrb_1111111111111111111111111111111111111111111111111111hifc8npp'

@@ -1,27 +1,27 @@
-========================
-RaiBlocks Python Library
-========================
+===============================
+Nano (RaiBlocks) Python Library
+===============================
 
-.. image:: https://img.shields.io/pypi/l/raiblocks.svg
-    :target: https://github.com/dourvaris/raiblocks-python/blob/master/LICENSE
+.. image:: https://img.shields.io/pypi/l/nano-python.svg
+    :target: https://github.com/dourvaris/nano-python/blob/master/LICENSE
 
-.. image:: https://travis-ci.org/dourvaris/raiblocks-python.svg?branch=1.0.0rc1
-    :target: https://travis-ci.org/dourvaris/raiblocks-python
+.. image:: https://travis-ci.org/dourvaris/nano-python.svg?branch=1.0.0rc1
+    :target: https://travis-ci.org/dourvaris/nano-python
 
-.. image:: https://readthedocs.org/projects/raiblocks-python/badge/?version=latest
-    :target: http://raiblocks-python.readthedocs.io/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/nano-python/badge/?version=latest
+    :target: http://nano-python.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
-.. image:: https://github.com/dourvaris/raiblocks-python/raw/master/coverage.svg?sanitize=true
-    :target: https://travis-ci.org/dourvaris/raiblocks-python
+.. image:: https://github.com/dourvaris/nano-python/raw/master/coverage.svg?sanitize=true
+    :target: https://travis-ci.org/dourvaris/nano-python
 
-.. image:: https://img.shields.io/pypi/pyversions/raiblocks.svg?style=flat-square
-    :target: https://pypi.python.org/pypi/raiblocks
+.. image:: https://img.shields.io/pypi/pyversions/nano-python.svg?style=flat-square
+    :target: https://pypi.python.org/pypi/nano-python
 
-.. image:: https://img.shields.io/pypi/v/raiblocks.svg
-    :target: https://pypi.python.org/pypi/raiblocks
+.. image:: https://img.shields.io/pypi/v/nano-python.svg
+    :target: https://pypi.python.org/pypi/nano-python
 
-This library contains a python wrapper for the RaiBlocks RPC server
+This library contains a python wrapper for the Nano (RaiBlocks) RPC server
 which tries to make it a little easier to work with by converting RPC responses
 to native python ones and exposing a pythonic api for making RPC calls.
 
@@ -33,20 +33,20 @@ Installation
 
 .. code-block:: text
 
-    pip install raiblocks
+    pip install nano-python
 
 Documentation
 =============
 
-https://raiblocks-python.readthedocs.io/
+https://nano-python.readthedocs.io/
 
 RPC client
 ==========
 
 You can browse the available
-`RPC methods list <https://raiblocks-python.readthedocs.io/en/latest/rpc/index.html>`_
+`RPC methods list <https://nano-python.readthedocs.io/en/latest/rpc/index.html>`_
 or check the
-`RPC Client API documentation <https://raiblocks-python.readthedocs.io/en/latest/raiblocks.html#module-raiblocks.rpc>`_
+`RPC Client API documentation <https://nano-python.readthedocs.io/en/latest/nano.html#module-nano.rpc>`_
 for examples of usage.
 
 .. warning:: The RPC client **DOES NOT** handle timeouts or retries
@@ -55,8 +55,8 @@ for examples of usage.
 
 .. code-block:: python
 
-    >>> from raiblocks import RPCClient
-    >>> rpc = RPCClient('http://localhost:7076')
+    >>> import nano
+    >>> rpc = nano.rpc.Client('http://localhost:7076')
     >>> rpc.version()
     {
         'rpc_version': 1,
@@ -76,7 +76,7 @@ Conversion
 
 .. code-block:: python
 
-    >>> from raiblocks import convert
+    >>> from nano import convert
     >>> convert(12, from_unit='XRB', to_unit='raw')
     Decimal('1.2E+31')
 
@@ -96,21 +96,21 @@ Known Accounts / Constants
 
 .. code-block:: python
 
-    >>> from raiblocks import GENESIS_BLOCK_HASH
+    >>> from nano import GENESIS_BLOCK_HASH
     >>> GENESIS_BLOCK_HASH
     '991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948'
 
 
 .. code-block:: python
 
-    >>> from raiblocks import KNOWN_ACCOUNT_IDS
+    >>> from nano import KNOWN_ACCOUNT_IDS
     >>> KNOWN_ACCOUNT_IDS['xrb_1ipx847tk8o46pwxt5qjdbncjqcbwcc1rrmqnkztrfjy5k7z4imsrata9est']
     'Developer Fund'
 
 
 .. code-block:: python
 
-    >>> from raiblocks import KNOWN_ACCOUNT_NAMES
+    >>> from nano import KNOWN_ACCOUNT_NAMES
     >>> KNOWN_ACCOUNT_NAMES['Burn']
     'xrb_1111111111111111111111111111111111111111111111111111hifc8npp'
 

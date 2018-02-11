@@ -1,5 +1,5 @@
 import pytest
-from raiblocks.accounts import (
+from nano.accounts import (
     bytes_to_xrb, xrb_to_bytes, hex_to_xrb, xrb_to_hex)
 
 

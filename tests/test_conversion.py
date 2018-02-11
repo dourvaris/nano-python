@@ -1,7 +1,7 @@
 import pytest
 from decimal import Decimal
-import raiblocks.conversion
-from raiblocks.conversion import convert
+import nano.conversion
+from nano.conversion import convert
 
 @pytest.mark.parametrize('value,from_unit,expected,to_unit', [
 (

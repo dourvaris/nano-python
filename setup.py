@@ -11,9 +11,10 @@ from shutil import rmtree
 from setuptools import find_packages, setup, Command
 
 # Package meta-data.
-NAME = 'raiblocks'
-DESCRIPTION = 'RaiBlocks Python RPC client for rai_node'
-URL = 'https://github.com/dourvaris/raiblocks-python'
+PYPI_NAME = 'nano-python'
+NAME = 'nano'
+DESCRIPTION = 'Nano (RaiBlocks) Python RPC client for rai_node'
+URL = 'https://github.com/dourvaris/nano-python'
 EMAIL = 'dourvaris@gmail.com'
 AUTHOR = 'Daniel Dourvaris'
 
@@ -69,7 +70,7 @@ class UploadCommand(Command):
         sys.exit()
 
 setup(
-    name=NAME,
+    name=PYPI_NAME,
     version=version,
     description=DESCRIPTION,
     long_description=long_description,

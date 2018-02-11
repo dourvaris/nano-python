@@ -7,7 +7,7 @@ import sys
 import inspect
 import textwrap
 
-from raiblocks import RPCClient
+from nano.rpc import Client
 
 
 def indent(value, n=2, character=' '):
@@ -25,16 +25,16 @@ def indent(value, n=2, character=' '):
 
 def extract_docs():
     """
-    Parses the RPCClient for methods that have a __doc_meta__ attribute and
-    saves generated docs
-
+    Parses the nano.rpc.Client for methods that have a __doc_meta__ attribute
+    and saves generated docs
     """
+
     methods = []
 
     def _key(entry):
         return
 
-    sorted_entries = sorted(RPCClient.__dict__.items(), key=lambda x: x[0])
+    sorted_entries = sorted(Client.__dict__.items(), key=lambda x: x[0])
 
     tree = {}
     meta_key = '__doc_meta__'
@@ -71,9 +71,9 @@ def extract_docs():
             {func_name_line}
 
             {func_desc}
-            :py:func:`raiblocks.rpc.RPCClient.{func_spec} <raiblocks.rpc.RPCClient.{func_name}>`
+            :py:func:`nano.rpc.Client.{func_spec} <nano.rpc.Client.{func_name}>`
 
-            .. .. py:function:: raiblocks.rpc.RPCClient.{func_spec}
+            .. .. py:function:: nano.rpc.Client.{func_spec}
 
             .. {doc}
             """).format(func_spec=func_spec,

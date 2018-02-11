@@ -1,7 +1,7 @@
-RaiBlocks Python Library
-========================
+Nano (RaiBlocks) Python Library
+===============================
 
-This library contains a python wrapper for the RaiBlocks RPC server
+This library contains a python wrapper for the Nano (RaiBlocks) RPC server
 which tries to make it a little easier to work with by converting RPC responses
 to native python ones and exposing a pythonic api for making RPC calls.
 
@@ -15,7 +15,7 @@ Also included are utilities such as converting rai/xrb and interesting accounts
    readme
    rpc/index
    utilities
-   raiblocks
+   nano
 
 Indices and tables
 ==================
