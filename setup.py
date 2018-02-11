@@ -20,7 +20,7 @@ AUTHOR = 'Daniel Dourvaris'
 with open('requirements.pip') as f:
     INSTALL_REQUIRES = f.read().splitlines()
 
-with open('test-requirements.pip') as f:
+with open('requirements-dev.pip') as f:
     TESTS_REQUIRE = f.read().splitlines()
 
 here = os.path.abspath(os.path.dirname(__file__))
