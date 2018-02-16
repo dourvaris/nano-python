@@ -157,6 +157,10 @@ Building docs
 Making a release
 ----------------
 
-- Update CHANGELOG.rst
-- bumpversion [major|minor|patch]
-- python setup.py upload
+.. code-block:: text
+
+    vim CHANGELOG.rst # update changes
+
+    bumpversion [major|minor|patch]
+
+    python setup.py upload
