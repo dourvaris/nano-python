@@ -3382,7 +3382,7 @@ class Client(object):
         return 'success' in resp
 
     @doc_metadata(categories=['wallet', 'account'])
-    def send(self, wallet, source, destination, amount, work=None):
+    def send(self, wallet, source, destination, amount, work=None, id=None):
         """
         Send **amount** from **source** in **wallet** to **destination**
 
@@ -3403,6 +3403,28 @@ class Client(object):
         :param work: If set, uses this work for the block
         :type work: str
 
+        :param id:  Unique identifier for this request
+
+                    .. version 10.0 required
+
+                    You can (and should) specify a unique id for each spend
+                    to provide idempotency. That means that if you call send
+                    two times with the same id, the second request won't
+                    send any additional Nano, and will return the first
+                    block instead. The id can be any string. This may be a
+                    required parameter in the future.
+
+                    If you accidentally reuse an id, the send will not go
+                    through (it will be seen as a duplicate request), so
+                    make sure your ids are unique! They must be unique per
+                    node, and are not segregated per wallet.
+
+                    Using the same id for requests with different parameters
+                    (wallet, source, destination, and amount) is undefined
+                    behavior and may result in an error in the future.
+
+        :type send_id: str
+
         :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.send(
@@ -3410,7 +3432,8 @@ class Client(object):
         ...     source="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
         ...     destination="xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
         ...     amount=1000000,
-        ...     work="2bf29ef00786a6bc"
+        ...     work="2bf29ef00786a6bc",
+        ...     id="tx-13258"
         ... )
         "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
 
@@ -3427,6 +3450,9 @@ class Client(object):
             "destination": destination,
             "amount": amount,
         }
+
+        if id is not None:
+            payload["id"] = self._process_value(id, 'string')
 
         if work is not None:
             payload['work'] = self._process_value(work, 'work')
