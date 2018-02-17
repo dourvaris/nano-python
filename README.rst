@@ -53,6 +53,9 @@ for examples of usage.
     automatically since this could lead to unwanted retries of requests
     causing **double spends**. Keep this in mind when implementing retries.
 
+    When using version 10.0 of the RPC node, use the send id when making spends
+    as described at https://github.com/nanocurrency/raiblocks/wiki/RPC-protocol#highly-recommended-id
+
 .. code-block:: python
 
     >>> import nano

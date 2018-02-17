@@ -2,6 +2,12 @@ Changelog
 =========
 
 
+Version 2.0.1 (2018-02-17)
+--------------------------
+
+- Add "id" parameter to `nano.rpc.Client.send` method to avoiding dup sends
+
+
 Version 2.0.0 (2018-02-11)
 --------------------------
 
