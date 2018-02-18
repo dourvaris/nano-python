@@ -13,10 +13,8 @@ Accounts module
 
 """
 
-import six
-import string
-from binascii import hexlify, unhexlify
-from base64 import b32encode, b32decode
+from .crypto import b32xrb_encode, b32xrb_decode, address_checksum
+
 
 KNOWN_ACCOUNT_IDS = {
     'xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3': 'Genesis',
@@ -46,49 +44,61 @@ KNOWN_ACCOUNT_IDS = {
 KNOWN_ACCOUNT_NAMES = dict(
     (name, account) for account, name in KNOWN_ACCOUNT_IDS.items())
 
-maketrans = bytes.maketrans if hasattr(bytes, 'maketrans') else string.maketrans
-B32_ALPHABET = b'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'
-XRB_ALPHABET = b'13456789abcdefghijkmnopqrstuwxyz'
-XRB_ENCODE_TRANS = maketrans(B32_ALPHABET, XRB_ALPHABET)
-XRB_DECODE_TRANS = maketrans(XRB_ALPHABET, B32_ALPHABET)
 
-
-def bytes_to_xrb(value):
+def public_key_to_xrb_address(public_key):
     """
-    Encodes a hex value to xrb format which uses the base32 algorithm
-    with a custom alphabet: '13456789abcdefghijkmnopqrstuwxyz'
+    Convert `public_key` (bytes) to an xrb address
 
-    >>> xrb_encode(b'deadbeef')
-    b'ejkp4s54eokpe'
-    """
-    return b32encode(value).translate(XRB_ENCODE_TRANS)
+    >>> public_key_to_xrb_address(b'00000000000000000000000000000000')
+    'xrb_1e3i81r51e3i81r51e3i81r51e3i81r51e3i81r51e3i81r51e3imxssakuq'
 
+    :param public_key: public key in bytes
+    :type public_key: bytes
 
-def hex_to_xrb(value):
-    """
-    Encodes a hex string to xrb format
-
-    >>> xrb_encode(b'deadbeef')
-    b'utpuxur'
+    :return: xrb address
+    :rtype: str
     """
 
-    return bytes_to_xrb(unhexlify(value))
+    if not len(public_key) == 32:
+        raise ValueError('public key must be 32 chars')
+
+    padded = b'000' + public_key
+    address = b32xrb_encode(padded)[4:]
+    checksum = b32xrb_encode(address_checksum(public_key))
+    return 'xrb_' + address.decode('ascii') + checksum.decode('ascii')
 
 
-def xrb_to_bytes(value):
+def xrb_address_to_public_key(address):
     """
-    Encodes an xrb string to bytes
+    Convert an xrb address to public key in bytes
 
-    >>> xrb_encode(b'ejkp4s54eokpe')
-    b'deadbeef'
-    """
-    return b32decode(value.translate(XRB_DECODE_TRANS))
+    >>> xrb_address_to_public_key('xrb_1e3i81r51e3i81r51e3i81r51e3i'\
+                                  '81r51e3i81r51e3i81r51e3imxssakuq')
+    b'00000000000000000000000000000000'
 
-def xrb_to_hex(value):
-    """
-    Encodes an xrb string to hex
+    :param address: xrb address
+    :type address: bytes
 
-    >>> xrb_encode(b'utpuxur')
-    b'deadbeef'
+    :return: public key in bytes
+    :rtype: bytes
+
+    :raises ValueError:
     """
-    return hexlify(xrb_to_bytes(value))
+
+    address = bytearray(address, 'ascii')
+
+    if not address.startswith(b'xrb_'):
+        raise ValueError('address does not start with xrb_: %s' % address)
+
+    if len(address) != 64:
+        raise ValueError('address must be 64 chars long: %s' % address)
+
+    address = bytes(address)
+    key_b32xrb = b'1111' + address[4:56]
+    key_bytes = b32xrb_decode(key_b32xrb)[3:]
+    checksum = address[56:]
+
+    if b32xrb_encode(address_checksum(key_bytes)) != checksum:
+        raise ValueError('invalid address, invalid checksum: %s' % address)
+
+    return key_bytes

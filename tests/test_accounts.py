@@ -1,39 +1,76 @@
 import pytest
+
+from binascii import hexlify, unhexlify
 from nano.accounts import (
-    bytes_to_xrb, xrb_to_bytes, hex_to_xrb, xrb_to_hex)
+    address_checksum, public_key_to_xrb_address, xrb_address_to_public_key)
 
 
-XRB_BYTES_ENCODE_TESTS = [
-    (b'', b''),
-    (b'hello', b'f3kpru5h'),
-    (b'okay', b'fxop4ya='),
-    (b'deadbeef', b'ejkp4s54eokpe==='),
+ACCOUNT_TESTS = [
+    {
+        'address': ('xrb_3n4fgjgiisyoc1zjen5o1jq3554u'
+                    '3t8htjsr6k5yibza3p9yp3kfpgeycnxj'),
+        'public_hex': ('D04D745D0867D5503F165075046E118C'
+                       '5B0E8CFD47382487E827E80D8FEB064D'),
+    },
+    {
+        'address': ('xrb_34147sxe87n51z174urzg8cbboda'
+                    'hrf7gzuyqbshtkw3ueqgme883mecq9wn'),
+        'public_hex': ('88022E7AC3168307C0516F1F719494D5'
+                       '687E1A577F7EBA72FD4B81DB2EE9B0C6'),
+    }
 ]
-XRB_BYTES_DECODE_TESTS = [
-    (encoded, decoded) for decoded, encoded in XRB_BYTES_ENCODE_TESTS]
 
-@pytest.mark.parametrize('value,expected', XRB_BYTES_ENCODE_TESTS)
-def test_bytes_to_xrb(value, expected):
-    assert bytes_to_xrb(value) == expected
-
-
-@pytest.mark.parametrize('value,expected', XRB_BYTES_DECODE_TESTS)
-def test_xrb_to_bytes(value, expected):
-    assert xrb_to_bytes(value) == expected
+@pytest.mark.parametrize('data', ACCOUNT_TESTS)
+def test_xrb_address_to_public_key(data):
+    public_key = xrb_address_to_public_key(data['address'])
+    assert public_key == unhexlify(data['public_hex'])
 
 
-XRB_HEX_ENCODE_TESTS = [
-    (b'', b''),
-    (b'deadbeef', b'utpuxur='),
-]
-XRB_HEX_DECODE_TESTS = [
-    (encoded, decoded) for decoded, encoded in XRB_HEX_ENCODE_TESTS]
+@pytest.mark.parametrize('address,error_msg', [
+    ('xrb_34147sxe87n51z174urzg8cbbodahrf7gzuyqbshtkw3ueqgme883mecq9wn',
+     ''),
+    ('xrb_34147sxe87n51z174urzg8cbbodahrf7gzuyqbshtkw3ueqgme883mecq9w3',
+     'invalid checksum'),
+    ('xrp_34147sxe87n51z174urzg8cbbodahrf7gzuyqbshtkw3ueqgme883mecq9w3',
+     'does not start with xrb_'),
+    ('xrb_34147sxe87n51z174urzg8cbbodahrf7gzuyqbshtkw3ueqgme883mecq9wn3',
+     'must be 64 chars'),
+    ('xrb_34147sxe87n51z174urzg8cbbodahrf7gzuyqbshtkw3ueqgme883mecq9w',
+     'must be 64 chars'),
+])
+def test_invalid_xrb_addresses(address, error_msg):
+    if not error_msg:  # test the valid case is working
+        assert xrb_address_to_public_key(address) == (
+            unhexlify('88022E7AC3168307C0516F1F719494D5'
+                      '687E1A577F7EBA72FD4B81DB2EE9B0C6'))
+        return
 
-@pytest.mark.parametrize('value,expected', XRB_HEX_ENCODE_TESTS)
-def test_hex_to_xrb(value, expected):
-    assert hex_to_xrb(value) == expected
+    with pytest.raises(ValueError) as e_info:
+        xrb_address_to_public_key(address)
+
+    assert e_info.match(error_msg)
 
 
-@pytest.mark.parametrize('value,expected', XRB_HEX_DECODE_TESTS)
-def test_xrb_to_hex(value, expected):
-    assert xrb_to_hex(value) == expected
+@pytest.mark.parametrize('data', ACCOUNT_TESTS)
+def test_public_key_to_xrb_address(data):
+    address = public_key_to_xrb_address(unhexlify(data['public_hex']))
+    assert address == data['address']
+
+
+@pytest.mark.parametrize('public_key,error_msg', [
+    (b'00000000000000000000000000000000', ''),
+    (b'000000000000000000000000000000000', 'must be 32 chars'),
+    (b'0000000000000000000000000000000', 'must be 32 chars'),
+])
+def test_invalid_private_keys(public_key, error_msg):
+    if not error_msg:  # test the valid case is working
+        assert public_key_to_xrb_address(public_key) == (
+            'xrb_1e3i81r51e3i81r51e3i81r51e3i'
+            '81r51e3i81r51e3i81r51e3imxssakuq')
+        return
+
+    with pytest.raises(ValueError) as e_info:
+        public_key_to_xrb_address(public_key)
+
+    assert e_info.match(error_msg)
+

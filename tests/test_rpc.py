@@ -1,4 +1,5 @@
 import json
+# import mock
 import pytest
 import requests
 import requests_mock
@@ -104,3 +105,27 @@ class TestRPCClient(object):
                 continue
             if attr not in mock_rpc_tests:
                 raise Exception('`%s` rpc method has no test' % attr)
+
+    def test_unimplemented_test_fails(self, rpc):
+        with pytest.raises(Exception) as e_info:
+            self.test_rpc_methods(rpc, 'invalid', {})
+        assert e_info.match('not yet implemented')
+
+    def test_invalid_test_fails(self, rpc):
+        with pytest.raises(Exception) as e_info:
+            self.test_rpc_methods(rpc, 'version', {})
+        assert e_info.match('invalid test')
+
+    def test_bad_test_fails(self, rpc):
+        with pytest.raises(AssertionError) as e_info:
+            self.test_rpc_methods(rpc,
+                'version', {
+                    'expected': None,
+                    'request': {'action': 'version'},
+                    'response': {}
+                })
+
+    # def test_rpc_missing_test_fails(self):
+    #     with mock.patch(RPCClient.__dict__) as patched_client:
+    #         patched_client.__dict__ = {'fake_method': lambda *a, **k: None}
+    #         self.test_all_rpc_methods_are_tested()
