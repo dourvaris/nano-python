@@ -35,7 +35,7 @@ class Client(object):
     }
     """
 
-    def __init__(self, host='http://localhost:7076', session=None):
+    def __init__(self, host='http://localhost:7076', session=None, timeout=3):
         """
         Initialize the Nano (RaiBlocks) RPC client
 
@@ -50,6 +50,7 @@ class Client(object):
         if not session:
             session = requests.Session()
 
+        self.timeout = timeout
         self.session = session
         self.host = host
 
@@ -78,7 +79,8 @@ class Client(object):
         params = params or {}
         params['action'] = action
 
-        resp = self.session.post(self.host, json=params)
+        resp = self.session.post(self.host, json=params, timeout=self.timeout)
+
         result = resp.json()
 
         if 'error' in result:
