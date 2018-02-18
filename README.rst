@@ -72,6 +72,17 @@ for examples of usage.
         '[::ffff:108.44.38.183]:1032': 4
     }
 
+Crypto/Accounts
+===============
+
+.. code-block:: python
+    >>> from nano import generate_account, verify_signature, sign_message
+    >>> account = generate_account(seed='someseed')
+    >>> signature = sign_message(b'this', account['private_key_bytes'])
+    >>> verify_signature(b'this', signature, account['public_key_bytes'])
+    True
+    >>> verify_signature(b'that', signature, account['public_key_bytes'])
+    False
 
 
 Conversion

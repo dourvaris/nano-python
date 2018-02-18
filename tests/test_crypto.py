@@ -140,6 +140,8 @@ def test_sign_message(data):
     message = data['message']
     expected_signature = data['signature']
 
+    signature = sign_message(message, private_key)
+    assert signature == expected_signature
     signature = sign_message(message, private_key, public_key)
     assert signature == expected_signature
 

@@ -205,7 +205,7 @@ def publickey_unsafe(sk, hash_func=H):
     h = hash_func(sk)
     a = 2 ** (b - 2) + sum(2 ** i * bit(h, i) for i in range(3, b - 2))
     A = scalarmult_B(a)
-    return encodepoint(A)
+    return bytes(encodepoint(A))
 
 
 def Hint(m, hasher=H):
@@ -225,7 +225,7 @@ def signature_unsafe(m, sk, pk, hash_func=H):
     )
     R = scalarmult_B(r)
     S = (r + Hint(encodepoint(R) + pk + m) * a) % l
-    return encodepoint(R) + encodeint(S)
+    return bytes(encodepoint(R) + encodeint(S))
 
 
 def isoncurve(P):

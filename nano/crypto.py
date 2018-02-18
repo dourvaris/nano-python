@@ -118,7 +118,7 @@ def verify_signature(message, signature, public_key):
     return True
 
 
-def sign_message(message, private_key, public_key):
+def sign_message(message, private_key, public_key=None):
     """
     Signs a `message` using `private_key` and `public_key`
 
@@ -137,5 +137,8 @@ def sign_message(message, private_key, public_key):
     :return: the signature of the signed message
     :rtype: bytes
     """
+
+    if public_key is None:
+        public_key = private_to_public_key(private_key)
 
     return ed25519_blake2.signature_unsafe(message, private_key, public_key)

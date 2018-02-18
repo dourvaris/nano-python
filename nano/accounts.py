@@ -13,7 +13,10 @@ Accounts module
 
 """
 
-from .crypto import b32xrb_encode, b32xrb_decode, address_checksum
+import random
+from binascii import hexlify, unhexlify
+from .crypto import (
+    b32xrb_encode, b32xrb_decode, address_checksum, keypair_from_seed)
 
 
 KNOWN_ACCOUNT_IDS = {
@@ -102,3 +105,41 @@ def xrb_address_to_public_key(address):
         raise ValueError('invalid address, invalid checksum: %s' % address)
 
     return key_bytes
+
+
+def generate_account(seed=None, index=0):
+    """
+    Generates an adhoc account and keypair
+
+    >>> account = generate_account(seed=unhexlify('0'*64))
+    {'address': u'xrb_3i1aq1cchnmbn9x5rsbap8b15akfh7wj7pwskuzi7ahz8oq6cobd99d4r3b7',
+     'private_key_bytes': '\x9f\x0eDLi\xf7zI\xbd\x0b\xe8\x9d\xb9,8\xfeq>\tc\x16\\\xca\x12\xfa\xf5q-vW\x12\x0f',
+     'private_key_hex': '9f0e444c69f77a49bd0be89db92c38fe713e0963165cca12faf5712d7657120f',
+     'public_key_bytes': '\xc0\x08\xb8\x14\xa7\xd2i\xa1\xfa<e(\xb1\x92\x01\xa2Myy\x12\xdb\x99\x96\xff\x02\xa1\xff5nEU+',
+     'public_key_hex': 'c008b814a7d269a1fa3c6528b19201a24d797912db9996ff02a1ff356e45552b'}
+
+    :param seed: the seed in bytes to use to generate the account, if not
+                 provided one is generated randomly
+    :type seed: bytes
+
+    :param index: the index offset for deterministic account generation
+    :type index: int
+
+    :return: dict containing the account address and pub/priv keys in hex/bytes
+    :rtype: dict
+    """
+
+    if not seed:
+        seed = hexlify(
+            ''.join(random.choice('0123456789ABCDEF') for i in range(64)))
+
+    pair = keypair_from_seed(seed, index=index)
+    result = {
+        'address': public_key_to_xrb_address(pair['public']),
+        'private_key_bytes': pair['private'],
+        'public_key_bytes': pair['public'],
+    }
+    result['private_key_hex'] = hexlify(pair['private'])
+    result['public_key_hex'] = hexlify(pair['public'])
+
+    return result

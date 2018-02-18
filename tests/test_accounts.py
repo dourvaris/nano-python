@@ -1,8 +1,10 @@
 import pytest
 
 from binascii import hexlify, unhexlify
+from nano.crypto import private_to_public_key
 from nano.accounts import (
-    address_checksum, public_key_to_xrb_address, xrb_address_to_public_key)
+    address_checksum, public_key_to_xrb_address, xrb_address_to_public_key,
+    generate_account)
 
 
 ACCOUNT_TESTS = [
@@ -74,3 +76,34 @@ def test_invalid_private_keys(public_key, error_msg):
 
     assert e_info.match(error_msg)
 
+
+
+def test_generate_account_from_seed():
+    account = generate_account(seed=unhexlify(64 * '0'))
+
+    public_key = unhexlify('c008b814a7d269a1fa3c6528b19201a2'
+                           '4d797912db9996ff02a1ff356e45552b')
+    private_key = unhexlify('9f0e444c69f77a49bd0be89db92c38fe7'
+                            '13e0963165cca12faf5712d7657120f')
+
+    assert account == {
+        'address': (u'xrb_3i1aq1cchnmbn9x5rsbap8b15akf'
+                     'h7wj7pwskuzi7ahz8oq6cobd99d4r3b7'),
+        'public_key_bytes': public_key,
+        'public_key_hex': hexlify(public_key),
+        'private_key_bytes': private_key,
+        'private_key_hex': hexlify(private_key),
+    }
+
+
+def test_generate_account_random():
+    seen = set()
+    for i in range(5):
+        account = generate_account()
+        assert account['address'] not in seen
+        seen.add(account['address'])
+
+        assert private_to_public_key(
+            account['private_key_bytes']) == account['public_key_bytes']
+        assert public_key_to_xrb_address(
+            account['public_key_bytes']) == account['address']
