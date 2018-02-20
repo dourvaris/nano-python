@@ -130,7 +130,7 @@ def generate_account(seed=None, index=0):
     """
 
     if not seed:
-        seed = hexlify(
+        seed = unhexlify(
             ''.join(random.choice('0123456789ABCDEF') for i in range(64)))
 
     pair = keypair_from_seed(seed, index=index)
