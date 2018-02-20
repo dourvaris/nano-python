@@ -3,11 +3,7 @@ import json
 import pytest
 import requests
 import requests_mock
-
-try:
-    from collections import OrderedDict
-except ImportError:
-    from ordereddict import OrderedDict
+from collections import OrderedDict
 
 
 class MockRPCMatchException(Exception):

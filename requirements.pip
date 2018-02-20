@@ -1,7 +1,6 @@
 certifi==2017.11.5
 chardet==3.0.4
 idna==2.6
-ordereddict==1.1
 pyblake2==1.1.0
 requests==2.18.4
 six==1.11.0

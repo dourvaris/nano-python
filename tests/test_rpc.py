@@ -1,5 +1,5 @@
 import json
-# import mock
+import mock
 import pytest
 import requests
 import requests_mock
@@ -96,7 +96,6 @@ class TestRPCClient(object):
 
         assert result == expected
 
-
     def test_all_rpc_methods_are_tested(self):
         for attr in RPCClient.__dict__:
             if attr.startswith('_'):
@@ -124,8 +123,3 @@ class TestRPCClient(object):
                     'request': {'action': 'version'},
                     'response': {}
                 })
-
-    # def test_rpc_missing_test_fails(self):
-    #     with mock.patch(RPCClient.__dict__) as patched_client:
-    #         patched_client.__dict__ = {'fake_method': lambda *a, **k: None}
-    #         self.test_all_rpc_methods_are_tested()
