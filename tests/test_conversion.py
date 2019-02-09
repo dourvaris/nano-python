@@ -6,14 +6,14 @@ from nano.conversion import convert
 @pytest.mark.parametrize('value,from_unit,expected,to_unit', [
 (
     Decimal('1'), 'XRB',
-    Decimal('1'), 'XRB',
+    Decimal('1'), 'NANO',
 ),
 (
     Decimal('1'), 'XRB',
     Decimal('0.001'), 'Gxrb',
 ),
 (
-    Decimal('1'), 'XRB',
+    Decimal('1'), 'NANO',
     Decimal('1'), 'Mxrb',
 ),
 (
@@ -30,7 +30,7 @@ from nano.conversion import convert
 ),
 (
     Decimal('1'), 'XRB',
-    Decimal('1000000000000'), 'uxrb',
+    Decimal('1000000000000'), 'urai',
 ),
 (
     Decimal('340282366920938463463374607431768211455'), 'raw',
@@ -42,10 +42,10 @@ from nano.conversion import convert
 ),
 (
     Decimal('-1'), 'XRB',
-    Decimal('-1'), 'XRB',
+    Decimal('-1'), 'Mrai',
 ),
 (
-    Decimal('-1'), 'XRB',
+    Decimal('-1'), 'NANO',
     Decimal('-1000000'), 'xrb',
 ),
 (
