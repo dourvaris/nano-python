@@ -1,5 +1,4 @@
 import json
-import mock
 import pytest
 import requests
 import requests_mock
