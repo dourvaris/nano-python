@@ -1,1 +1,0 @@
-py.test $@ --cov-report term-missing --cov=nano tests --cov-fail-under=100
