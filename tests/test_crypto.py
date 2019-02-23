@@ -1,10 +1,11 @@
-import pytest
 from binascii import unhexlify
+
+import pytest
+
 from nano.crypto import (
     b32xrb_encode, b32xrb_decode, address_checksum, private_to_public_key,
     keypair_from_seed, verify_signature, sign_message
 )
-
 
 SIGNING_TESTS = [
     {
@@ -20,7 +21,6 @@ SIGNING_TESTS = [
                                '56860BE529539EEBCE810C9D1603540F'),
     }
 ]
-
 
 B32XRB_TESTS = [
     (b'', b''),
@@ -44,10 +44,10 @@ def test_b32xrb_decode(decoded, encoded):
 
 @pytest.mark.parametrize('private_key,public_key', [
     (
-        unhexlify('9f0e444c69f77a49bd0be89db92c38fe'
-                  '713e0963165cca12faf5712d7657120f'),
-        unhexlify('c008b814a7d269a1fa3c6528b19201a2'
-                  '4d797912db9996ff02a1ff356e45552b'),
+            unhexlify('9f0e444c69f77a49bd0be89db92c38fe'
+                      '713e0963165cca12faf5712d7657120f'),
+            unhexlify('c008b814a7d269a1fa3c6528b19201a2'
+                      '4d797912db9996ff02a1ff356e45552b'),
     )
 ])
 def test_private_to_public_key(private_key, public_key):
@@ -62,60 +62,61 @@ def test_private_to_public_key(private_key, public_key):
 def test_address_checksum(value, expected):
     assert address_checksum(value) == expected
 
+
 @pytest.mark.parametrize('args,expected', [
     (
-        (unhexlify(b'0' * 64),),
-        {
-            'private': unhexlify('9f0e444c69f77a49bd0be89db92c38fe'
-                                 '713e0963165cca12faf5712d7657120f'),
-            'public': unhexlify('c008b814a7d269a1fa3c6528b19201a24'
-                                'd797912db9996ff02a1ff356e45552b'),
-        }
+            (unhexlify(b'0' * 64),),
+            {
+                'private': unhexlify('9f0e444c69f77a49bd0be89db92c38fe'
+                                     '713e0963165cca12faf5712d7657120f'),
+                'public': unhexlify('c008b814a7d269a1fa3c6528b19201a24'
+                                    'd797912db9996ff02a1ff356e45552b'),
+            }
     ),
     (
-        (unhexlify(b'0' * 64), 0),
-        {
-            'private': unhexlify('9f0e444c69f77a49bd0be89db92c38fe'
-                                 '713e0963165cca12faf5712d7657120f'),
-            'public': unhexlify('c008b814a7d269a1fa3c6528b19201a24'
-                                'd797912db9996ff02a1ff356e45552b'),
-        }
+            (unhexlify(b'0' * 64), 0),
+            {
+                'private': unhexlify('9f0e444c69f77a49bd0be89db92c38fe'
+                                     '713e0963165cca12faf5712d7657120f'),
+                'public': unhexlify('c008b814a7d269a1fa3c6528b19201a24'
+                                    'd797912db9996ff02a1ff356e45552b'),
+            }
     ),
     (
-        (unhexlify(b'0' * 64), 1),
-        {
-            'private': unhexlify('b73b723bf7bd042b66ad3332718ba98d'
-                                 'e7312f95ed3d05a130c9204552a7afff'),
-            'public': unhexlify('e30d22b7935bcc25412fc07427391ab4c'
-                                '98a4ad68baa733300d23d82c9d20ad3'),
-        }
+            (unhexlify(b'0' * 64), 1),
+            {
+                'private': unhexlify('b73b723bf7bd042b66ad3332718ba98d'
+                                     'e7312f95ed3d05a130c9204552a7afff'),
+                'public': unhexlify('e30d22b7935bcc25412fc07427391ab4c'
+                                    '98a4ad68baa733300d23d82c9d20ad3'),
+            }
     ),
     (
-        (unhexlify(b'1' * 64),),
-        {
-            'private': unhexlify('DBD5DF42B3D4120A9E8F6D3B2EEDCDC2'
-                                 '1AD27CF76E95978564F66F44E0240184'),
-            'public': unhexlify('2791D5A1697D454448F9EEABA2A336E52'
-                                '2D5767E570B326278F5532194F642C8'),
-        }
+            (unhexlify(b'1' * 64),),
+            {
+                'private': unhexlify('DBD5DF42B3D4120A9E8F6D3B2EEDCDC2'
+                                     '1AD27CF76E95978564F66F44E0240184'),
+                'public': unhexlify('2791D5A1697D454448F9EEABA2A336E52'
+                                    '2D5767E570B326278F5532194F642C8'),
+            }
     ),
     (
-        (unhexlify(b'1' * 64), 0),
-        {
-            'private': unhexlify('DBD5DF42B3D4120A9E8F6D3B2EEDCDC2'
-                                 '1AD27CF76E95978564F66F44E0240184'),
-            'public': unhexlify('2791D5A1697D454448F9EEABA2A336E52'
-                                '2D5767E570B326278F5532194F642C8'),
-        }
+            (unhexlify(b'1' * 64), 0),
+            {
+                'private': unhexlify('DBD5DF42B3D4120A9E8F6D3B2EEDCDC2'
+                                     '1AD27CF76E95978564F66F44E0240184'),
+                'public': unhexlify('2791D5A1697D454448F9EEABA2A336E52'
+                                    '2D5767E570B326278F5532194F642C8'),
+            }
     ),
     (
-        (unhexlify(b'1' * 64), 1),
-        {
-            'private': unhexlify('4A6E3512ACBB38A3D6BCF53D5452E11F'
-                                 '6B34C30D0405139E3328FD7A63E2D612'),
-            'public': unhexlify('E04BC3CAEDAA1787E9373A105453160E4'
-                                'B6BEDFE1782A0DBA0C98A89D435DD27'),
-        }
+            (unhexlify(b'1' * 64), 1),
+            {
+                'private': unhexlify('4A6E3512ACBB38A3D6BCF53D5452E11F'
+                                     '6B34C30D0405139E3328FD7A63E2D612'),
+                'public': unhexlify('E04BC3CAEDAA1787E9373A105453160E4'
+                                    'B6BEDFE1782A0DBA0C98A89D435DD27'),
+            }
     ),
 ])
 def test_keypair_from_seed(args, expected):
@@ -147,9 +148,9 @@ def test_sign_message(data):
 
 
 @pytest.mark.parametrize('message,signature,public_key,error_msg', [
-    (b'a message', b'badsig', b'0'*32, 'signature length is wrong'),
-    (b'a message', b'0'*64, b'badpubkey', 'public-key length is wrong'),
-    (b'a message', b'0'*64, b'0'*32, 'decoding point that is not on curve'),
+    (b'a message', b'badsig', b'0' * 32, 'signature length is wrong'),
+    (b'a message', b'0' * 64, b'badpubkey', 'public-key length is wrong'),
+    (b'a message', b'0' * 64, b'0' * 32, 'decoding point that is not on curve'),
 ])
 def test_verify_signature_invalid(message, signature, public_key, error_msg):
     with pytest.raises(ValueError) as e_info:

@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import ast
 import io
 import os
 import re
-import ast
 import sys
 from shutil import rmtree
 
@@ -26,10 +26,8 @@ with open('requirements-dev.pip') as f:
 
 here = os.path.abspath(os.path.dirname(__file__))
 
-
 with io.open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = '\n' + f.read()
-
 
 _version_re = re.compile(r'__version__\s+=\s+(.*)')
 with open(os.path.join(here, NAME, 'version.py'), 'rb') as f:
@@ -68,6 +66,7 @@ class UploadCommand(Command):
         os.system('twine upload dist/*')
 
         sys.exit()
+
 
 setup(
     name=PYPI_NAME,

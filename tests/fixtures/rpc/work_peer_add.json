@@ -1,15 +1,15 @@
 [
   {
     "args": {
-      "address": "::ffff:172.17.0.1", 
+      "address": "::ffff:172.17.0.1",
       "port": 7076
-    }, 
-    "expected": true, 
+    },
+    "expected": true,
     "request": {
-      "action": "work_peer_add", 
-      "address": "::ffff:172.17.0.1", 
+      "action": "work_peer_add",
+      "address": "::ffff:172.17.0.1",
       "port": "7076"
-    }, 
+    },
     "response": {
       "success": ""
     }

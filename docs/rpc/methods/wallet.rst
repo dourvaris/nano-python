@@ -164,7 +164,7 @@ Creates new accounts, insert next deterministic keys in **wallet** up to **count
    to **count**
 
    .. enable_control required
-   .. version 8.0 required
+.. version 8.0 required
 
    :param wallet: Wallet to create new accounts in
    :type wallet: str
@@ -734,7 +734,7 @@ Returns a list of block hashes which have not yet been received by accounts in t
    accounts in this **wallet**
 
    .. enable_control required
-   .. version 8.0 required
+.. version 8.0 required
 
    :param wallet: Wallet to get list of pending block hashes for
    :type wallet: str
@@ -827,7 +827,7 @@ Rebroadcast blocks for accounts from **wallet** starting at frontier down to **c
    down to **count** to the network
 
    .. enable_control required
-   .. version 8.0 required
+.. version 8.0 required
 
    :param wallet: Wallet to rebroadcast blocks for
    :type wallet: str

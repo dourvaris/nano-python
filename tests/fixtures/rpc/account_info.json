@@ -2,62 +2,62 @@
   {
     "args": {
       "account": "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3"
-    }, 
+    },
     "expected": {
-      "balance": 235580100176034320859259343606608761791, 
-      "block_count": 33, 
-      "frontier": "FF84533A571D953A596EA401FD41743AC85D04F406E76FDE4408EAED50B473C5", 
-      "modified_timestamp": 1501793775, 
-      "open_block": "991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948", 
+      "balance": 235580100176034320859259343606608761791,
+      "block_count": 33,
+      "frontier": "FF84533A571D953A596EA401FD41743AC85D04F406E76FDE4408EAED50B473C5",
+      "modified_timestamp": 1501793775,
+      "open_block": "991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948",
       "representative_block": "991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948"
-    }, 
+    },
     "request": {
-      "account": "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3", 
+      "account": "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3",
       "action": "account_info"
-    }, 
+    },
     "response": {
-      "balance": "235580100176034320859259343606608761791", 
-      "block_count": "33", 
-      "frontier": "FF84533A571D953A596EA401FD41743AC85D04F406E76FDE4408EAED50B473C5", 
-      "modified_timestamp": "1501793775", 
-      "open_block": "991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948", 
+      "balance": "235580100176034320859259343606608761791",
+      "block_count": "33",
+      "frontier": "FF84533A571D953A596EA401FD41743AC85D04F406E76FDE4408EAED50B473C5",
+      "modified_timestamp": "1501793775",
+      "open_block": "991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948",
       "representative_block": "991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948"
     }
-  }, 
+  },
   {
     "args": {
-      "account": "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3", 
-      "pending": true, 
-      "representative": true, 
+      "account": "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3",
+      "pending": true,
+      "representative": true,
       "weight": true
-    }, 
+    },
     "expected": {
-      "balance": 235580100176034320859259343606608761791, 
-      "block_count": 33, 
-      "frontier": "FF84533A571D953A596EA401FD41743AC85D04F406E76FDE4408EAED50B473C5", 
-      "modified_timestamp": 1501793775, 
-      "open_block": "991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948", 
-      "pending": 2309370929000000000000000000000000, 
-      "representative": "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3", 
-      "representative_block": "991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948", 
+      "balance": 235580100176034320859259343606608761791,
+      "block_count": 33,
+      "frontier": "FF84533A571D953A596EA401FD41743AC85D04F406E76FDE4408EAED50B473C5",
+      "modified_timestamp": 1501793775,
+      "open_block": "991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948",
+      "pending": 2309370929000000000000000000000000,
+      "representative": "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3",
+      "representative_block": "991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948",
       "weight": 1105577030935649664609129644855132177
-    }, 
+    },
     "request": {
-      "account": "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3", 
-      "action": "account_info", 
-      "pending": "true", 
-      "representative": "true", 
+      "account": "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3",
+      "action": "account_info",
+      "pending": "true",
+      "representative": "true",
       "weight": "true"
-    }, 
+    },
     "response": {
-      "balance": "235580100176034320859259343606608761791", 
-      "block_count": "33", 
-      "frontier": "FF84533A571D953A596EA401FD41743AC85D04F406E76FDE4408EAED50B473C5", 
-      "modified_timestamp": "1501793775", 
-      "open_block": "991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948", 
-      "pending": "2309370929000000000000000000000000", 
-      "representative": "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3", 
-      "representative_block": "991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948", 
+      "balance": "235580100176034320859259343606608761791",
+      "block_count": "33",
+      "frontier": "FF84533A571D953A596EA401FD41743AC85D04F406E76FDE4408EAED50B473C5",
+      "modified_timestamp": "1501793775",
+      "open_block": "991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948",
+      "pending": "2309370929000000000000000000000000",
+      "representative": "xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3",
+      "representative_block": "991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948",
       "weight": "1105577030935649664609129644855132177"
     }
   }

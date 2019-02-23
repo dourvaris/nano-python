@@ -15,9 +15,9 @@ Accounts module
 
 import random
 from binascii import hexlify, unhexlify
+
 from .crypto import (
     b32xrb_encode, b32xrb_decode, address_checksum, keypair_from_seed)
-
 
 KNOWN_ACCOUNT_IDS = {
     'xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3': 'Genesis',
@@ -42,7 +42,6 @@ KNOWN_ACCOUNT_IDS = {
     'xrb_369dmjiipkuwar1zxxiuixaqq1kfmyp9rwsttksxdbf8zi3qwit1kxiujpdo': 'RaiBlocks Community',
     'xrb_1niabkx3gbxit5j5yyqcpas71dkffggbr6zpd3heui8rpoocm5xqbdwq44oh': 'KuCoin Representative',
 }
-
 
 KNOWN_ACCOUNT_NAMES = dict(
     (name, account) for account, name in KNOWN_ACCOUNT_IDS.items())

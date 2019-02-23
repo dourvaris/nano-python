@@ -1,6 +1,7 @@
-import six
 import json
+
 import requests
+import six
 
 
 def doc_metadata(categories):
@@ -11,6 +12,7 @@ def doc_metadata(categories):
             'categories': categories
         }
         return f
+
     return wrapper
 
 
@@ -3539,5 +3541,6 @@ class Client(object):
             resp[key] = int(resp[key])
 
         return resp
+
 
 RPCClient = Client

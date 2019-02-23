@@ -1,9 +1,9 @@
 [
   {
-    "expected": 1000000000000000000000000, 
+    "expected": 1000000000000000000000000,
     "request": {
       "action": "receive_minimum"
-    }, 
+    },
     "response": {
       "amount": "1000000000000000000000000"
     }

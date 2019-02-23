@@ -1,9 +1,10 @@
 import string
 import struct
-from . import ed25519_blake2
-from pyblake2 import blake2b
 from base64 import b32encode, b32decode
 
+from pyblake2 import blake2b
+
+from . import ed25519_blake2
 
 maketrans = hasattr(bytes, 'maketrans') and bytes.maketrans or string.maketrans
 B32_ALPHABET = b'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'

@@ -1,9 +1,10 @@
-import os
 import json
+import os
+from collections import OrderedDict
+
 import pytest
 import requests
 import requests_mock
-from collections import OrderedDict
 
 
 class MockRPCMatchException(Exception):

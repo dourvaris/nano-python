@@ -8,8 +8,8 @@ python:
 dist: xenial
 
 install:
-    - pip install -r requirements.pip
-    - pip install -r requirements-dev.pip
-    - pip install -e .
+  - pip install -r requirements.pip
+  - pip install -r requirements-dev.pip
+  - pip install -e .
 
 script: ./coverage

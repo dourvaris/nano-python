@@ -1,6 +1,5 @@
 import pytest
-import requests
-import requests_mock
+
 from conftest import MockRPCMatchException
 
 

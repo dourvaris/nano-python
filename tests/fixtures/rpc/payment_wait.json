@@ -1,17 +1,17 @@
 [
   {
     "args": {
-      "account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000", 
-      "amount": 1, 
+      "account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+      "amount": 1,
       "timeout": 1000
-    }, 
-    "expected": true, 
+    },
+    "expected": true,
     "request": {
-      "account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000", 
-      "action": "payment_wait", 
-      "amount": "1", 
+      "account": "xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpi00000000",
+      "action": "payment_wait",
+      "amount": "1",
       "timeout": "1000"
-    }, 
+    },
     "response": {
       "status": "success"
     }

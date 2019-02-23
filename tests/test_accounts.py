@@ -1,11 +1,11 @@
+from binascii import hexlify, unhexlify
+
 import pytest
 
-from binascii import hexlify, unhexlify
-from nano.crypto import private_to_public_key
 from nano.accounts import (
-    address_checksum, public_key_to_xrb_address, xrb_address_to_public_key,
+    public_key_to_xrb_address, xrb_address_to_public_key,
     generate_account)
-
+from nano.crypto import private_to_public_key
 
 ACCOUNT_TESTS = [
     {
@@ -21,6 +21,7 @@ ACCOUNT_TESTS = [
                        '687E1A577F7EBA72FD4B81DB2EE9B0C6'),
     }
 ]
+
 
 @pytest.mark.parametrize('data', ACCOUNT_TESTS)
 def test_xrb_address_to_public_key(data):
@@ -77,7 +78,6 @@ def test_invalid_private_keys(public_key, error_msg):
     assert e_info.match(error_msg)
 
 
-
 def test_generate_account_from_seed():
     account = generate_account(seed=unhexlify(64 * '0'))
 
@@ -88,7 +88,7 @@ def test_generate_account_from_seed():
 
     assert account == {
         'address': (u'xrb_3i1aq1cchnmbn9x5rsbap8b15akf'
-                     'h7wj7pwskuzi7ahz8oq6cobd99d4r3b7'),
+                    'h7wj7pwskuzi7ahz8oq6cobd99d4r3b7'),
         'public_key_bytes': public_key,
         'public_key_hex': hexlify(public_key),
         'private_key_bytes': private_key,

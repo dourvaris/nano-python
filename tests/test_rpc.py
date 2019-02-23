@@ -1,11 +1,9 @@
 import json
+
 import pytest
-import requests
-import requests_mock
 
-from nano.rpc import RPCClient, RPCException
 from conftest import MockRPCMatchException, load_mock_rpc_tests
-
+from nano.rpc import RPCClient, RPCException
 
 mock_rpc_tests = load_mock_rpc_tests()
 
@@ -117,8 +115,8 @@ class TestRPCClient(object):
     def test_bad_test_fails(self, rpc):
         with pytest.raises(AssertionError) as e_info:
             self.test_rpc_methods(rpc,
-                'version', {
-                    'expected': None,
-                    'request': {'action': 'version'},
-                    'response': {}
-                })
+                                  'version', {
+                                      'expected': None,
+                                      'request': {'action': 'version'},
+                                      'response': {}
+                                  })

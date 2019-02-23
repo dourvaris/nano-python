@@ -2,9 +2,8 @@
 Generates docs for the rpc client
 """
 
-import os
-import sys
 import inspect
+import os
 import textwrap
 
 from nano.rpc import Client
@@ -101,9 +100,9 @@ def extract_docs():
             docfile.write('%s\n' % (len(title) * '='))
             docfile.write('\n')
 
-
             for func_doc in func_docs:
                 docfile.write(func_doc + '\n')
+
 
 if __name__ == '__main__':
     extract_docs()

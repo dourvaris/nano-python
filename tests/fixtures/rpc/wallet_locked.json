@@ -2,25 +2,25 @@
   {
     "args": {
       "wallet": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
-    }, 
-    "expected": false, 
+    },
+    "expected": false,
     "request": {
-      "action": "wallet_locked", 
+      "action": "wallet_locked",
       "wallet": "000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
-    }, 
+    },
     "response": {
       "locked": "0"
     }
-  }, 
+  },
   {
     "args": {
       "wallet": "111D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
-    }, 
-    "expected": true, 
+    },
+    "expected": true,
     "request": {
-      "action": "wallet_locked", 
+      "action": "wallet_locked",
       "wallet": "111D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F"
-    }, 
+    },
     "response": {
       "locked": "1"
     }

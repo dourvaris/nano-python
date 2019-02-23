@@ -95,7 +95,7 @@ Returns receive minimum for node
    Returns receive minimum for node
 
    .. enable_control required
-   .. version 8.0 required
+.. version 8.0 required
 
    :raises: :py:exc:`nano.rpc.RPCException`
 
@@ -115,7 +115,7 @@ Set **amount** as new receive minimum for node until restart
    Set **amount** as new receive minimum for node until restart
 
    .. enable_control required
-   .. version 8.0 required
+.. version 8.0 required
 
    :param amount: Amount in raw to set as minimum to receive
    :type amount: int
@@ -138,7 +138,7 @@ Tells the node to look for pending blocks for any account in all available walle
    available wallets
 
    .. enable_control required
-   .. version 8.0 required
+.. version 8.0 required
 
    :raises: :py:exc:`nano.rpc.RPCException`
 
@@ -209,7 +209,7 @@ Clear unchecked synchronizing blocks
    Clear unchecked synchronizing blocks
 
    .. enable_control required
-   .. version 8.0 required
+.. version 8.0 required
 
    :raises: :py:exc:`nano.rpc.RPCException`
 

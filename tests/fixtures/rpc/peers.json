@@ -2,10 +2,10 @@
   {
     "expected": {
       "[::ffff:172.17.0.1]:32841": 3
-    }, 
+    },
     "request": {
       "action": "peers"
-    }, 
+    },
     "response": {
       "peers": {
         "[::ffff:172.17.0.1]:32841": "3"
