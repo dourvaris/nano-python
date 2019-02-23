@@ -1,6 +1,7 @@
 bumpversion
 pytest
 pytest-cov
+pytest-xdist
 pytest-runner
 requests_mock
 sphinx
