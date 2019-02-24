@@ -30,7 +30,7 @@ with io.open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = '\n' + f.read()
 
 _version_re = re.compile(r'__version__\s+=\s+(.*)')
-with open(os.path.join(here, NAME, 'version.py'), 'rb') as f:
+with open(os.path.join(here, 'src', NAME, 'version.py'), 'rb') as f:
     version = str(ast.literal_eval(_version_re.search(
         f.read().decode('utf-8')).group(1)))
 
@@ -84,7 +84,8 @@ setup(
     tests_require=TESTS_REQUIRE,
     setup_requires=['pytest-runner'],
     include_package_data=True,
-    packages=find_packages(exclude=('tests*',)),
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
     license='MIT',
     classifiers=[
         # Trove classifiers

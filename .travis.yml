@@ -12,4 +12,5 @@ install:
   - pip install -r requirements-dev.pip
   - pip install -e .
 
-script: pytest
+script: pytest --cov-fail-under=99 -n auto
+
