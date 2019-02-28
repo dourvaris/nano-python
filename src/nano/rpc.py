@@ -72,7 +72,7 @@ class Client(object):
         >>> rpc.call(
         ...     action='account_balance',
         ...     params={
-        ...         'account': xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3'
+        ...         'account': 'xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3'
         ...     })
         {'balance': '325586539664609129644855132177',
          'pending': '2309370940000000000000000000000000'}
