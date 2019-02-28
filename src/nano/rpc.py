@@ -3427,8 +3427,6 @@ class Client(object):
                     (wallet, source, destination, and amount) is undefined
                     behavior and may result in an error in the future.
 
-        :type send_id: str
-
         :raises: :py:exc:`nano.rpc.RPCException`
 
         >>> rpc.send(
