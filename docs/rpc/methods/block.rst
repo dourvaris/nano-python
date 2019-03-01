@@ -111,7 +111,7 @@ Creates a json representations of new block based on input data & signed with pr
    signed with private key or account in **wallet** for offline signing
 
    .. enable_control required
-.. version 8.1 required
+   .. version 8.1 required
 
    :param type: Type of block to create one of **open**, **receive**,
                 **change**, **send**
@@ -561,7 +561,7 @@ Clear unchecked synchronizing blocks
    Clear unchecked synchronizing blocks
 
    .. enable_control required
-.. version 8.0 required
+   .. version 8.0 required
 
    :raises: :py:exc:`nano.rpc.RPCException`
 

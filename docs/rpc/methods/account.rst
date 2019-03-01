@@ -406,7 +406,7 @@ Creates new accounts, insert next deterministic keys in **wallet** up to **count
    to **count**
 
    .. enable_control required
-.. version 8.0 required
+   .. version 8.0 required
 
    :param wallet: Wallet to create new accounts in
    :type wallet: str
@@ -623,7 +623,7 @@ Returns frontier, open block, change representative block, balance, last modifie
    **account** up to **count**
 
    .. enable_control required
-.. version 8.0 required
+   .. version 8.0 required
 
    :param account: Account to return blocks for
    :type account: str

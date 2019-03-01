@@ -15,7 +15,7 @@ Returns a list of pairs of account and work from **wallet**
    Returns a list of pairs of account and work from **wallet**
 
    .. enable_control required
-.. version 8.0 required
+   .. version 8.0 required
 
    :param wallet: Wallet to return work for
    :type wallet: str
@@ -91,7 +91,7 @@ Retrieves work for **account** in **wallet**
    Retrieves work for **account** in **wallet**
 
    .. enable_control required
-.. version 8.0 required
+   .. version 8.0 required
 
    :param wallet: Wallet to get account work for
    :type wallet: str
@@ -121,7 +121,7 @@ Add specific **IP address** and **port** as work peer for node until restart
    restart
 
    .. enable_control required
-.. version 8.0 required
+   .. version 8.0 required
 
    :param address: IP address of work peer to add
    :type address: str
@@ -147,7 +147,7 @@ Retrieve work peers
    Retrieve work peers
 
    .. enable_control required
-.. version 8.0 required
+   .. version 8.0 required
 
    :raises: :py:exc:`nano.rpc.RPCException`
 
@@ -169,7 +169,7 @@ Clear work peers node list until restart
    Clear work peers node list until restart
 
    .. enable_control required
-.. version 8.0 required
+   .. version 8.0 required
 
    :raises: :py:exc:`nano.rpc.RPCException`
 
@@ -189,7 +189,7 @@ Set **work** for **account** in **wallet**
    Set **work** for **account** in **wallet**
 
    .. enable_control required
-.. version 8.0 required
+   .. version 8.0 required
 
    :param wallet: Wallet to set work for account for
    :type wallet: str
