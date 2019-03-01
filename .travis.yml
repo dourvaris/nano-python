@@ -12,5 +12,5 @@ install:
   - pip install -r requirements-dev.pip
   - pip install -e .
 
-script: ./coverage.sh
+script: bash coverage.sh
 
