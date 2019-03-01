@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 import ast
 import io
@@ -31,8 +30,9 @@ with io.open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 _version_re = re.compile(r'__version__\s+=\s+(.*)')
 with open(os.path.join(here, 'src', NAME, 'version.py'), 'rb') as f:
-    version = str(ast.literal_eval(_version_re.search(
-        f.read().decode('utf-8')).group(1)))
+    version = str(
+        ast.literal_eval(_version_re.search(f.read().decode('utf-8')).group(1))
+    )
 
 
 class UploadCommand(Command):
@@ -102,10 +102,8 @@ setup(
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Software Development :: Libraries',
-        'Development Status :: 3 - Alpha'
+        'Development Status :: 3 - Alpha',
     ],
     # $ setup.py publish support.
-    cmdclass={
-        'upload': UploadCommand,
-    },
+    cmdclass={'upload': UploadCommand},
 )

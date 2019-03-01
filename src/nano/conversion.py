@@ -26,9 +26,7 @@ from decimal import Decimal
 
 BASE_UNIT = 'raw'
 UNIT_NAMES = ['xrb', 'rai', 'nano']
-UNITS_TO_RAW = {
-    BASE_UNIT: Decimal(1)
-}
+UNITS_TO_RAW = {BASE_UNIT: Decimal(1)}
 
 
 def _populate_units():

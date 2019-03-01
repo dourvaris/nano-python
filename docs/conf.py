@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # nano documentation build configuration file, created by
 # sphinx-quickstart on Thu Jan 11 17:32:46 2018.
@@ -38,7 +37,8 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
     'sphinx.ext.viewcode',
-    'sphinx.ext.githubpages']
+    'sphinx.ext.githubpages',
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -84,6 +84,7 @@ pygments_style = 'sphinx'
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
 
+
 # -- Options for HTML output ----------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
@@ -115,10 +116,12 @@ html_sidebars = {
     ]
 }
 
+
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'nanodoc'
+
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -126,15 +129,12 @@ latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
     #
     # 'papersize': 'letterpaper',
-
     # The font size ('10pt', '11pt' or '12pt').
     #
     # 'pointsize': '10pt',
-
     # Additional stuff for the LaTeX preamble.
     #
     # 'preamble': '',
-
     # Latex figure (float) alignment
     #
     # 'figure_align': 'htbp',
@@ -144,18 +144,16 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'nano.tex', u'nano Documentation',
-     u'Daniel Dourvaris', 'manual'),
+    (master_doc, 'nano.tex', u'nano Documentation', u'Daniel Dourvaris', 'manual')
 ]
+
 
 # -- Options for manual page output ---------------------------------------
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    (master_doc, 'nano', u'nano Documentation',
-     [author], 1)
-]
+man_pages = [(master_doc, 'nano', u'nano Documentation', [author], 1)]
+
 
 # -- Options for Texinfo output -------------------------------------------
 
@@ -163,10 +161,17 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'nano', u'nano Documentation',
-     author, 'nano', 'One line description of project.',
-     'Miscellaneous'),
+    (
+        master_doc,
+        'nano',
+        u'nano Documentation',
+        author,
+        'nano',
+        'One line description of project.',
+        'Miscellaneous',
+    )
 ]
+
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {'https://docs.python.org/': None}

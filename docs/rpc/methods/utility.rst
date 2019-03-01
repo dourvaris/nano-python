@@ -197,5 +197,3 @@ Multiply an rai amount by the rai ratio.
 
    >>> rpc.rai_to_raw(amount=1)
    1000000000000000000000000
-
-

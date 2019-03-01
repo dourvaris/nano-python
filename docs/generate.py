@@ -2,8 +2,9 @@
 Generates docs for the rpc client
 """
 
-import inspect
 import os
+import sys
+import inspect
 import textwrap
 
 from nano.rpc import Client
@@ -65,7 +66,8 @@ def extract_docs():
                 break
         func_desc = ' '.join(func_desc_lines)
 
-        doc = textwrap.dedent("""\
+        doc = textwrap.dedent(
+            """\
             {func_name}
             {func_name_line}
 
@@ -75,11 +77,14 @@ def extract_docs():
             .. .. py:function:: nano.rpc.Client.{func_spec}
 
             .. {doc}
-            """).format(func_spec=func_spec,
-                        func_name_line='-' * len(func_name),
-                        func_name=func_name,
-                        func_desc=func_desc,
-                        doc=doc)
+            """
+        ).format(
+            func_spec=func_spec,
+            func_name_line='-' * len(func_name),
+            func_name=func_name,
+            func_desc=func_desc,
+            doc=doc,
+        )
 
         categories = meta['categories']
         for category in categories:

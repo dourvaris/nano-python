@@ -176,8 +176,8 @@ def scalarmult_B(e):
 def encodeint(y):
     bits = [(y >> i) & 1 for i in range(b)]
     return bytearray(
-        sum([bits[i * 8 + j] << j for j in range(8)])
-        for i in range(b // 8))
+        sum([bits[i * 8 + j] << j for j in range(8)]) for i in range(b // 8)
+    )
 
 
 def encodepoint(P):
@@ -187,8 +187,7 @@ def encodepoint(P):
     y = (y * zi) % q
     bits = [(y >> i) & 1 for i in range(b - 1)] + [x & 1]
     return bytearray(
-        sum([bits[i * 8 + j] << j for j in range(8)])
-        for i in range(b // 8)
+        sum([bits[i * 8 + j] << j for j in range(8)]) for i in range(b // 8)
     )
 
 
@@ -219,9 +218,7 @@ def signature_unsafe(m, sk, pk, hash_func=H):
     """
     h = hash_func(sk)
     a = 2 ** (b - 2) + sum(2 ** i * bit(h, i) for i in range(3, b - 2))
-    r = Hint(
-        bytearray([h[j] for j in range(b // 8, b // 4)]) + m
-    )
+    r = Hint(bytearray([h[j] for j in range(b // 8, b // 4)]) + m)
     R = scalarmult_B(r)
     S = (r + Hint(encodepoint(R) + pk + m) * a) % l
     return bytes(encodepoint(R) + encodeint(S))
@@ -229,9 +226,11 @@ def signature_unsafe(m, sk, pk, hash_func=H):
 
 def isoncurve(P):
     (x, y, z, t) = P
-    return (z % q != 0 and
-            x * y % q == z * t % q and
-            (y * y - x * x - z * z - d * t * t) % q == 0)
+    return (
+        z % q != 0
+        and x * y % q == z * t % q
+        and (y * y - x * x - z * z - d * t * t) % q == 0
+    )
 
 
 def decodeint(s):
@@ -269,14 +268,18 @@ def checkvalid(s, m, pk):
     m = bytearray(m)
     pk = bytearray(pk)
 
-    R = decodepoint(s[:b // 8])
+    R = decodepoint(s[: b // 8])
     A = decodepoint(pk)
-    S = decodeint(s[b // 8:b // 4])
+    S = decodeint(s[b // 8 : b // 4])
     h = Hint(encodepoint(R) + pk + m)
 
     (x1, y1, z1, t1) = P = scalarmult_B(S)
     (x2, y2, z2, t2) = Q = edwards_add(R, scalarmult(A, h))
 
-    if (not isoncurve(P) or not isoncurve(Q) or
-            (x1 * z2 - x2 * z1) % q != 0 or (y1 * z2 - y2 * z1) % q != 0):
+    if (
+        not isoncurve(P)
+        or not isoncurve(Q)
+        or (x1 * z2 - x2 * z1) % q != 0
+        or (y1 * z2 - y2 * z1) % q != 0
+    ):
         raise SignatureMismatch("signature does not pass verification")

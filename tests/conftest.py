@@ -12,13 +12,14 @@ class MockRPCMatchException(Exception):
 
 
 def load_mock_rpc_tests():
-    jsons_directory = os.path.join(os.path.dirname(
-        os.path.realpath(__file__)), 'fixtures', 'rpc')
+    jsons_directory = os.path.join(
+        os.path.dirname(os.path.realpath(__file__)), 'fixtures', 'rpc'
+    )
 
     result = OrderedDict()
     for filename in os.listdir(jsons_directory):
         if filename.endswith('.json'):
-            action = filename[:-len('.json')]
+            action = filename[: -len('.json')]
             try:
                 tests = json.load(open(os.path.join(jsons_directory, filename)))
             except Exception:
@@ -41,8 +42,9 @@ def mock_rpc_session():
         request_json = json.dumps(request.json(), sort_keys=True)
         if request_json not in responses:
             raise MockRPCMatchException(
-                'No mock response found for this request: %s' % json.dumps(
-                    request.json(), sort_keys=True, indent=2))
+                'No mock response found for this request: %s'
+                % json.dumps(request.json(), sort_keys=True, indent=2)
+            )
         return responses[request_json]
 
     for action, tests in load_mock_rpc_tests().items():
@@ -51,10 +53,6 @@ def mock_rpc_session():
             res_body = json.dumps(test['response'], sort_keys=True)
             responses[req_body] = res_body
 
-    adapter.register_uri(
-        'POST',
-        'mock://localhost:7076/',
-        text=_text_callback,
-    )
+    adapter.register_uri('POST', 'mock://localhost:7076/', text=_text_callback)
 
     return session

@@ -13,4 +13,3 @@ install:
   - pip install -e .
 
 script: bash coverage.sh
-

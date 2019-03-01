@@ -55,10 +55,7 @@ def keypair_from_seed(seed, index=0):
     h.update(seed + struct.pack(">L", index))
     priv_key = h.digest()
     pub_key = private_to_public_key(priv_key)
-    return {
-        'private': priv_key,
-        'public': pub_key,
-    }
+    return {'private': priv_key, 'public': pub_key}
 
 
 def b32xrb_encode(value):

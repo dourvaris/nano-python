@@ -35,4 +35,3 @@ nano\.rpc module
     :members:
     :undoc-members:
     :show-inheritance:
-

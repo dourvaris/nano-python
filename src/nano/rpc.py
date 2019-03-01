@@ -8,9 +8,7 @@ def doc_metadata(categories):
     """ Decorator to add doc metadata for docs generation """
 
     def wrapper(f):
-        f.__doc_meta__ = {
-            'categories': categories
-        }
+        f.__doc_meta__ = {'categories': categories}
         return f
 
     return wrapper
@@ -128,9 +126,7 @@ class Client(object):
 
         account = self._process_value(account, 'account')
 
-        payload = {
-            "account": account,
-        }
+        payload = {"account": account}
 
         resp = self.call('account_balance', payload)
 
@@ -171,9 +167,7 @@ class Client(object):
 
         accounts = self._process_value(accounts, 'list')
 
-        payload = {
-            "accounts": accounts,
-        }
+        payload = {"accounts": accounts}
 
         resp = self.call('accounts_balances', payload)
         accounts_balances = resp.get('balances') or {}
@@ -201,9 +195,7 @@ class Client(object):
 
         account = self._process_value(account, 'account')
 
-        payload = {
-            "account": account,
-        }
+        payload = {"account": account}
 
         resp = self.call('account_block_count', payload)
 
@@ -243,10 +235,7 @@ class Client(object):
         wallet = self._process_value(wallet, 'wallet')
         count = self._process_value(count, 'int')
 
-        payload = {
-            "wallet": wallet,
-            "count": count,
-        }
+        payload = {"wallet": wallet, "count": count}
 
         if not work:
             payload['work'] = self._process_value(work, 'strbool')
@@ -283,17 +272,14 @@ class Client(object):
 
         accounts = self._process_value(accounts, 'list')
 
-        payload = {
-            "accounts": accounts,
-        }
+        payload = {"accounts": accounts}
 
         resp = self.call('accounts_frontiers', payload)
 
         return resp.get('frontiers') or {}
 
     @doc_metadata(categories=['account'])
-    def account_info(self, account, representative=False, weight=False,
-                     pending=False):
+    def account_info(self, account, representative=False, weight=False, pending=False):
         """
         Returns frontier, open block, change representative block, balance,
         last modified timestamp from local database & block count for
@@ -329,9 +315,7 @@ class Client(object):
 
         account = self._process_value(account, 'account')
 
-        payload = {
-            "account": account,
-        }
+        payload = {"account": account}
 
         if representative:
             payload['representative'] = self._process_value(representative, 'strbool')
@@ -342,7 +326,13 @@ class Client(object):
 
         resp = self.call('account_info', payload)
 
-        for key in ('modified_timestamp', 'block_count', 'balance', 'pending', 'weight'):
+        for key in (
+            'modified_timestamp',
+            'block_count',
+            'balance',
+            'pending',
+            'weight',
+        ):
             if key in resp:
                 resp[key] = int(resp[key])
 
@@ -372,9 +362,7 @@ class Client(object):
 
         wallet = self._process_value(wallet, 'wallet')
 
-        payload = {
-            "wallet": wallet,
-        }
+        payload = {"wallet": wallet}
 
         if not work:
             payload['work'] = self._process_value(work, 'strbool')
@@ -402,9 +390,7 @@ class Client(object):
 
         key = self._process_value(key, 'publickey')
 
-        payload = {
-            "key": key,
-        }
+        payload = {"key": key}
 
         resp = self.call('account_get', payload)
 
@@ -441,10 +427,7 @@ class Client(object):
         account = self._process_value(account, 'account')
         count = self._process_value(count, 'int')
 
-        payload = {
-            "account": account,
-            "count": count,
-        }
+        payload = {"account": account, "count": count}
 
         resp = self.call('account_history', payload)
         history = resp.get('history') or []
@@ -475,9 +458,7 @@ class Client(object):
 
         wallet = self._process_value(wallet, 'wallet')
 
-        payload = {
-            "wallet": wallet,
-        }
+        payload = {"wallet": wallet}
 
         resp = self.call('account_list', payload)
 
@@ -516,11 +497,7 @@ class Client(object):
         source = self._process_value(source, 'wallet')
         accounts = self._process_value(accounts, 'list')
 
-        payload = {
-            "wallet": wallet,
-            "source": source,
-            "accounts": accounts,
-        }
+        payload = {"wallet": wallet, "source": source, "accounts": accounts}
 
         resp = self.call('account_move', payload)
 
@@ -564,9 +541,7 @@ class Client(object):
 
         """
 
-        payload = {
-            "accounts": accounts,
-        }
+        payload = {"accounts": accounts}
 
         accounts = self._process_value(accounts, 'list')
         if count is not None:
@@ -616,9 +591,7 @@ class Client(object):
 
         account = self._process_value(account, 'account')
 
-        payload = {
-            "account": account,
-        }
+        payload = {"account": account}
 
         resp = self.call('account_key', payload)
 
@@ -650,10 +623,7 @@ class Client(object):
         wallet = self._process_value(wallet, 'wallet')
         account = self._process_value(account, 'account')
 
-        payload = {
-            "wallet": wallet,
-            "account": account,
-        }
+        payload = {"wallet": wallet, "account": account}
 
         resp = self.call('account_remove', payload)
 
@@ -678,9 +648,7 @@ class Client(object):
 
         account = self._process_value(account, 'account')
 
-        payload = {
-            "account": account,
-        }
+        payload = {"account": account}
 
         resp = self.call('account_representative', payload)
 
@@ -752,9 +720,7 @@ class Client(object):
 
         account = self._process_value(account, 'account')
 
-        payload = {
-            "account": account,
-        }
+        payload = {"account": account}
 
         resp = self.call('account_weight', payload)
 
@@ -802,9 +768,7 @@ class Client(object):
 
         hash = self._process_value(hash, 'block')
 
-        payload = {
-            "hash": hash,
-        }
+        payload = {"hash": hash}
 
         resp = self.call('block', payload)
 
@@ -838,9 +802,7 @@ class Client(object):
 
         hashes = self._process_value(hashes, 'list')
 
-        payload = {
-            "hashes": hashes,
-        }
+        payload = {"hashes": hashes}
 
         resp = self.call('blocks', payload)
         blocks = resp.get('blocks') or {}
@@ -887,9 +849,7 @@ class Client(object):
 
         hashes = self._process_value(hashes, 'list')
 
-        payload = {
-            "hashes": hashes,
-        }
+        payload = {"hashes": hashes}
 
         if pending:
             payload['pending'] = self._process_value(pending, 'strbool')
@@ -927,9 +887,7 @@ class Client(object):
 
         hash = self._process_value(hash, 'block')
 
-        payload = {
-            "hash": hash,
-        }
+        payload = {"hash": hash}
 
         resp = self.call('block_account', payload)
 
@@ -984,18 +942,20 @@ class Client(object):
         return resp
 
     @doc_metadata(categories=['block'])
-    def block_create(self,
-                     type,
-                     account,
-                     wallet=None,
-                     representative=None,
-                     key=None,
-                     destination=None,
-                     amount=None,
-                     balance=None,
-                     previous=None,
-                     source=None,
-                     work=None):
+    def block_create(
+        self,
+        type,
+        account,
+        wallet=None,
+        representative=None,
+        key=None,
+        destination=None,
+        amount=None,
+        balance=None,
+        previous=None,
+        source=None,
+        work=None,
+    ):
         """
         Creates a json representations of new block based on input data &
         signed with private key or account in **wallet** for offline signing
@@ -1176,10 +1136,7 @@ class Client(object):
         address = self._process_value(address, 'ipaddr')
         port = self._process_value(port, 'int')
 
-        payload = {
-            "address": address,
-            "port": port,
-        }
+        payload = {"address": address, "port": port}
 
         resp = self.call('bootstrap', payload)
 
@@ -1227,10 +1184,7 @@ class Client(object):
         block = self._process_value(block, 'block')
         count = self._process_value(count, 'int')
 
-        payload = {
-            "block": block,
-            "count": count,
-        }
+        payload = {"block": block, "count": count}
 
         resp = self.call('chain', payload)
 
@@ -1263,9 +1217,7 @@ class Client(object):
 
         account = self._process_value(account, 'account')
 
-        payload = {
-            "account": account,
-        }
+        payload = {"account": account}
 
         resp = self.call('delegators', payload)
         delegators = resp.get('delegators') or {}
@@ -1296,9 +1248,7 @@ class Client(object):
 
         account = self._process_value(account, 'account')
 
-        payload = {
-            "account": account,
-        }
+        payload = {"account": account}
 
         resp = self.call('delegators_count', payload)
 
@@ -1332,10 +1282,7 @@ class Client(object):
         seed = self._process_value(seed, 'seed')
         index = self._process_value(index, 'int')
 
-        payload = {
-            "seed": seed,
-            "index": index,
-        }
+        payload = {"seed": seed, "index": index}
 
         resp = self.call('deterministic_key', payload)
 
@@ -1369,10 +1316,7 @@ class Client(object):
         account = self._process_value(account, 'account')
         count = self._process_value(count, 'int')
 
-        payload = {
-            "account": account,
-            "count": count,
-        }
+        payload = {"account": account, "count": count}
 
         resp = self.call('frontiers', payload)
 
@@ -1425,10 +1369,7 @@ class Client(object):
         hash = self._process_value(hash, 'block')
         count = self._process_value(count, 'int')
 
-        payload = {
-            "hash": hash,
-            "count": count,
-        }
+        payload = {"hash": hash, "count": count}
 
         resp = self.call('history', payload)
 
@@ -1456,9 +1397,7 @@ class Client(object):
 
         amount = self._process_value(amount, 'int')
 
-        payload = {
-            "amount": amount,
-        }
+        payload = {"amount": amount}
 
         resp = self.call('mrai_from_raw', payload)
 
@@ -1481,9 +1420,7 @@ class Client(object):
 
         amount = self._process_value(amount, 'int')
 
-        payload = {
-            "amount": amount,
-        }
+        payload = {"amount": amount}
 
         resp = self.call('mrai_to_raw', payload)
 
@@ -1505,9 +1442,7 @@ class Client(object):
 
         amount = self._process_value(amount, 'int')
 
-        payload = {
-            "amount": amount,
-        }
+        payload = {"amount": amount}
 
         resp = self.call('krai_from_raw', payload)
 
@@ -1530,9 +1465,7 @@ class Client(object):
 
         amount = self._process_value(amount, 'int')
 
-        payload = {
-            "amount": amount,
-        }
+        payload = {"amount": amount}
 
         resp = self.call('krai_to_raw', payload)
 
@@ -1555,9 +1488,7 @@ class Client(object):
 
         amount = self._process_value(amount, 'int')
 
-        payload = {
-            "amount": amount,
-        }
+        payload = {"amount": amount}
 
         resp = self.call('rai_from_raw', payload)
 
@@ -1580,9 +1511,7 @@ class Client(object):
 
         amount = self._process_value(amount, 'int')
 
-        payload = {
-            "amount": amount,
-        }
+        payload = {"amount": amount}
 
         resp = self.call('rai_to_raw', payload)
 
@@ -1631,9 +1560,7 @@ class Client(object):
 
         key = self._process_value(key, 'privatekey')
 
-        payload = {
-            "key": key,
-        }
+        payload = {"key": key}
 
         resp = self.call('key_expand', payload)
 
@@ -1661,18 +1588,22 @@ class Client(object):
         address = self._process_value(address, 'ipaddr')
         port = self._process_value(port, 'int')
 
-        payload = {
-            "address": address,
-            "port": port,
-        }
+        payload = {"address": address, "port": port}
 
         resp = self.call('keepalive', payload)
 
         return resp == {}
 
     @doc_metadata(categories=['account'])
-    def ledger(self, account, count=None, representative=False, weight=False,
-               pending=False, sorting=False):
+    def ledger(
+        self,
+        account,
+        count=None,
+        representative=False,
+        weight=False,
+        pending=False,
+        sorting=False,
+    ):
         """
         Returns frontier, open block, change representative block, balance,
         last modified timestamp from local database & block count starting at
@@ -1720,9 +1651,7 @@ class Client(object):
 
         account = self._process_value(account, 'account')
 
-        payload = {
-            "account": account,
-        }
+        payload = {"account": account}
 
         if count is not None:
             payload['count'] = self._process_value(count, 'int')
@@ -1742,9 +1671,7 @@ class Client(object):
         resp = self.call('ledger', payload)
         accounts = resp.get('accounts') or {}
 
-        int_keys = (
-            'balance', 'modified_timestamp', 'block_count', 'weight', 'pending'
-        )
+        int_keys = ('balance', 'modified_timestamp', 'block_count', 'weight', 'pending')
         for account, frontier in accounts.items():
             for key in int_keys:
                 if key in frontier:
@@ -1774,9 +1701,7 @@ class Client(object):
 
         wallet = self._process_value(wallet, 'wallet')
 
-        payload = {
-            "wallet": wallet,
-        }
+        payload = {"wallet": wallet}
 
         resp = self.call('payment_begin', payload)
 
@@ -1804,9 +1729,7 @@ class Client(object):
 
         wallet = self._process_value(wallet, 'wallet')
 
-        payload = {
-            "wallet": wallet,
-        }
+        payload = {"wallet": wallet}
 
         resp = self.call('payment_init', payload)
 
@@ -1836,10 +1759,7 @@ class Client(object):
         account = self._process_value(account, 'account')
         wallet = self._process_value(wallet, 'wallet')
 
-        payload = {
-            "account": account,
-            "wallet": wallet,
-        }
+        payload = {"account": account, "wallet": wallet}
 
         resp = self.call('payment_end', payload)
 
@@ -1875,11 +1795,7 @@ class Client(object):
         amount = self._process_value(amount, 'int')
         timeout = self._process_value(timeout, 'int')
 
-        payload = {
-            "account": account,
-            "amount": amount,
-            "timeout": timeout,
-        }
+        payload = {"account": account, "amount": amount, "timeout": timeout}
 
         resp = self.call('payment_wait', payload)
 
@@ -1915,9 +1831,7 @@ class Client(object):
         if isinstance(block, dict):
             block = json.dumps(block, sort_keys=True)
 
-        payload = {
-            "block": block,
-        }
+        payload = {"block": block}
 
         resp = self.call('process', payload)
 
@@ -1958,11 +1872,7 @@ class Client(object):
         account = self._process_value(account, 'account')
         block = self._process_value(block, 'block')
 
-        payload = {
-            "wallet": wallet,
-            "account": account,
-            "block": block,
-        }
+        payload = {"wallet": wallet, "account": account, "block": block}
 
         if work:
             payload['work'] = self._process_value(work, 'work')
@@ -2009,9 +1919,7 @@ class Client(object):
 
         amount = self._process_value(amount, 'int')
 
-        payload = {
-            "amount": amount,
-        }
+        payload = {"amount": amount}
 
         resp = self.call('receive_minimum_set', payload)
 
@@ -2147,9 +2055,7 @@ class Client(object):
 
         hash = self._process_value(hash, 'block')
 
-        payload = {
-            "hash": hash,
-        }
+        payload = {"hash": hash}
 
         resp = self.call('unchecked_get', payload)
 
@@ -2227,9 +2133,7 @@ class Client(object):
 
         account = self._process_value(account, 'account')
 
-        payload = {
-            "account": account,
-        }
+        payload = {"account": account}
 
         resp = self.call('validate_account_number', payload)
 
@@ -2254,9 +2158,7 @@ class Client(object):
 
         wallet = self._process_value(wallet, 'wallet')
 
-        payload = {
-            "wallet": wallet,
-        }
+        payload = {"wallet": wallet}
 
         resp = self.call('wallet_representative', payload)
 
@@ -2288,10 +2190,7 @@ class Client(object):
         wallet = self._process_value(wallet, 'wallet')
         representative = self._process_value(representative, 'account')
 
-        payload = {
-            "wallet": wallet,
-            "representative": representative,
-        }
+        payload = {"wallet": wallet, "representative": representative}
 
         resp = self.call('wallet_representative_set', payload)
 
@@ -2326,10 +2225,7 @@ class Client(object):
         wallet = self._process_value(wallet, 'wallet')
         key = self._process_value(key, 'privatekey')
 
-        payload = {
-            "wallet": wallet,
-            "key": key,
-        }
+        payload = {"wallet": wallet, "key": key}
 
         if not work:
             payload['work'] = self._process_value(work, 'strbool')
@@ -2360,9 +2256,7 @@ class Client(object):
 
         wallet = self._process_value(wallet, 'wallet')
 
-        payload = {
-            "wallet": wallet,
-        }
+        payload = {"wallet": wallet}
 
         resp = self.call('wallet_balance_total', payload)
 
@@ -2396,9 +2290,7 @@ class Client(object):
 
         wallet = self._process_value(wallet, 'wallet')
 
-        payload = {
-            "wallet": wallet,
-        }
+        payload = {"wallet": wallet}
 
         resp = self.call('wallet_balances', payload)
         balances = resp.get('balances') or {}
@@ -2433,10 +2325,7 @@ class Client(object):
         wallet = self._process_value(wallet, 'wallet')
         seed = self._process_value(seed, 'seed')
 
-        payload = {
-            "wallet": wallet,
-            "seed": seed,
-        }
+        payload = {"wallet": wallet, "seed": seed}
 
         resp = self.call('wallet_change_seed', payload)
 
@@ -2465,10 +2354,7 @@ class Client(object):
         wallet = self._process_value(wallet, 'wallet')
         account = self._process_value(account, 'account')
 
-        payload = {
-            "wallet": wallet,
-            "account": account,
-        }
+        payload = {"wallet": wallet, "account": account}
 
         resp = self.call('wallet_contains', payload)
 
@@ -2512,9 +2398,7 @@ class Client(object):
 
         wallet = self._process_value(wallet, 'wallet')
 
-        payload = {
-            "wallet": wallet,
-        }
+        payload = {"wallet": wallet}
 
         resp = self.call('wallet_destroy', payload)
 
@@ -2538,9 +2422,7 @@ class Client(object):
 
         wallet = self._process_value(wallet, 'wallet')
 
-        payload = {
-            "wallet": wallet,
-        }
+        payload = {"wallet": wallet}
 
         resp = self.call('wallet_export', payload)
 
@@ -2568,9 +2450,7 @@ class Client(object):
 
         wallet = self._process_value(wallet, 'wallet')
 
-        payload = {
-            "wallet": wallet,
-        }
+        payload = {"wallet": wallet}
 
         resp = self.call('wallet_frontiers', payload)
 
@@ -2592,9 +2472,7 @@ class Client(object):
 
         wallet = self._process_value(wallet, 'wallet')
 
-        payload = {
-            "wallet": wallet,
-        }
+        payload = {"wallet": wallet}
 
         resp = self.call('wallet_key_valid', payload)
 
@@ -2618,9 +2496,7 @@ class Client(object):
 
         wallet = self._process_value(wallet, 'wallet')
 
-        payload = {
-            "wallet": wallet,
-        }
+        payload = {"wallet": wallet}
 
         resp = self.call('wallet_lock', payload)
 
@@ -2644,9 +2520,7 @@ class Client(object):
 
         wallet = self._process_value(wallet, 'wallet')
 
-        payload = {
-            "wallet": wallet,
-        }
+        payload = {"wallet": wallet}
 
         resp = self.call('wallet_locked', payload)
 
@@ -2675,10 +2549,7 @@ class Client(object):
 
         wallet = self._process_value(wallet, 'wallet')
 
-        payload = {
-            "wallet": wallet,
-            "password": password,
-        }
+        payload = {"wallet": wallet, "password": password}
 
         resp = self.call('wallet_unlock', payload)
 
@@ -2724,9 +2595,7 @@ class Client(object):
 
         wallet = self._process_value(wallet, 'wallet')
 
-        payload = {
-            "wallet": wallet,
-        }
+        payload = {"wallet": wallet}
 
         if count is not None:
             payload['count'] = self._process_value(count, 'int')
@@ -2788,10 +2657,7 @@ class Client(object):
         wallet = self._process_value(wallet, 'wallet')
         count = self._process_value(count, 'int')
 
-        payload = {
-            "wallet": wallet,
-            "count": count,
-        }
+        payload = {"wallet": wallet, "count": count}
 
         resp = self.call('wallet_republish', payload)
 
@@ -2822,9 +2688,7 @@ class Client(object):
 
         wallet = self._process_value(wallet, 'wallet')
 
-        payload = {
-            "wallet": wallet,
-        }
+        payload = {"wallet": wallet}
 
         resp = self.call('wallet_work_get', payload)
 
@@ -2854,10 +2718,7 @@ class Client(object):
 
         wallet = self._process_value(wallet, 'wallet')
 
-        payload = {
-            "wallet": wallet,
-            "password": password,
-        }
+        payload = {"wallet": wallet, "password": password}
 
         resp = self.call('password_change', payload)
 
@@ -2886,10 +2747,7 @@ class Client(object):
 
         wallet = self._process_value(wallet, 'wallet')
 
-        payload = {
-            "wallet": wallet,
-            "password": password,
-        }
+        payload = {"wallet": wallet, "password": password}
 
         resp = self.call('password_enter', payload)
 
@@ -2914,9 +2772,7 @@ class Client(object):
 
         wallet = self._process_value(wallet, 'wallet')
 
-        payload = {
-            "wallet": wallet,
-        }
+        payload = {"wallet": wallet}
 
         resp = self.call('password_valid', payload)
 
@@ -2987,9 +2843,7 @@ class Client(object):
 
         account = self._process_value(account, 'account')
 
-        payload = {
-            "account": account,
-        }
+        payload = {"account": account}
 
         if count is not None:
             payload['count'] = self._process_value(count, 'int')
@@ -3037,9 +2891,7 @@ class Client(object):
 
         hash = self._process_value(hash, 'block')
 
-        payload = {
-            "hash": hash,
-        }
+        payload = {"hash": hash}
 
         resp = self.call('pending_exists', payload)
 
@@ -3066,9 +2918,7 @@ class Client(object):
 
         hash = self._process_value(hash, 'block')
 
-        payload = {
-            "hash": hash,
-        }
+        payload = {"hash": hash}
 
         resp = self.call('work_cancel', payload)
         return resp == {}
@@ -3094,9 +2944,7 @@ class Client(object):
 
         hash = self._process_value(hash, 'block')
 
-        payload = {
-            "hash": hash,
-        }
+        payload = {"hash": hash}
 
         resp = self.call('work_generate', payload)
 
@@ -3129,10 +2977,7 @@ class Client(object):
         wallet = self._process_value(wallet, 'wallet')
         account = self._process_value(account, 'account')
 
-        payload = {
-            "wallet": wallet,
-            "account": account,
-        }
+        payload = {"wallet": wallet, "account": account}
 
         resp = self.call('work_get', payload)
 
@@ -3169,11 +3014,7 @@ class Client(object):
         account = self._process_value(account, 'account')
         work = self._process_value(work, 'work')
 
-        payload = {
-            "wallet": wallet,
-            "account": account,
-            "work": work,
-        }
+        payload = {"wallet": wallet, "account": account, "work": work}
 
         resp = self.call('work_set', payload)
 
@@ -3204,10 +3045,7 @@ class Client(object):
         address = self._process_value(address, 'ipaddr')
         port = self._process_value(port, 'int')
 
-        payload = {
-            "address": address,
-            "port": port,
-        }
+        payload = {"address": address, "port": port}
 
         resp = self.call('work_peer_add', payload)
 
@@ -3276,10 +3114,7 @@ class Client(object):
         work = self._process_value(work, 'work')
         hash = self._process_value(hash, 'block')
 
-        payload = {
-            "work": work,
-            "hash": hash,
-        }
+        payload = {"work": work, "hash": hash}
 
         resp = self.call('work_validate', payload)
 
@@ -3318,9 +3153,7 @@ class Client(object):
 
         hash = self._process_value(hash, 'block')
 
-        payload = {
-            "hash": hash,
-        }
+        payload = {"hash": hash}
 
         if count is not None:
             payload['count'] = self._process_value(count, 'int')
@@ -3357,9 +3190,7 @@ class Client(object):
 
         wallet = self._process_value(wallet, 'wallet')
 
-        payload = {
-            "wallet": wallet,
-        }
+        payload = {"wallet": wallet}
 
         resp = self.call('search_pending', payload)
 
@@ -3490,10 +3321,7 @@ class Client(object):
         block = self._process_value(block, 'block')
         count = self._process_value(count, 'int')
 
-        payload = {
-            "block": block,
-            "count": count,
-        }
+        payload = {"block": block, "count": count}
 
         resp = self.call('successors', payload)
 
