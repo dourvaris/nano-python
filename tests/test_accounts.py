@@ -6,6 +6,7 @@ from nano.accounts import (
     public_key_to_xrb_address,
     xrb_address_to_public_key,
     generate_account,
+    address_checksum,  # we can't remove this
 )
 from nano.crypto import private_to_public_key
 
