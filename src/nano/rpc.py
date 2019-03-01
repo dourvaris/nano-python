@@ -3239,6 +3239,7 @@ class Client(object):
         :type work: str
 
         :param id:  Unique identifier for this request
+        :param id: str
 
                     .. version 10.0 required
 
