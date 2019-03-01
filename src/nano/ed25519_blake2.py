@@ -110,7 +110,7 @@ def edwards_add(P, Q):
     t3 = e * h
     z3 = f * g
 
-    return (x3 % q, y3 % q, z3 % q, t3 % q)
+    return x3 % q, y3 % q, z3 % q, t3 % q
 
 
 def edwards_double(P):
@@ -131,7 +131,7 @@ def edwards_double(P):
     t3 = e * h
     z3 = f * g
 
-    return (x3 % q, y3 % q, z3 % q, t3 % q)
+    return x3 % q, y3 % q, z3 % q, t3 % q
 
 
 def scalarmult(P, e):
