@@ -2,12 +2,12 @@
   {
     "args": {
       "amount": 1
-    }, 
-    "expected": 1000000000000000000000000, 
+    },
+    "expected": 1000000000000000000000000,
     "request": {
-      "action": "rai_to_raw", 
+      "action": "rai_to_raw",
       "amount": "1"
-    }, 
+    },
     "response": {
       "amount": "1000000000000000000000000"
     }

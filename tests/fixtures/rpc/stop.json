@@ -1,9 +1,9 @@
 [
   {
-    "expected": true, 
+    "expected": true,
     "request": {
       "action": "stop"
-    }, 
+    },
     "response": {
       "success": ""
     }

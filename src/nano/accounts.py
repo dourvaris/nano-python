@@ -15,9 +15,8 @@ Accounts module
 
 import random
 from binascii import hexlify, unhexlify
-from .crypto import (
-    b32xrb_encode, b32xrb_decode, address_checksum, keypair_from_seed)
 
+from .crypto import b32xrb_encode, b32xrb_decode, address_checksum, keypair_from_seed
 
 KNOWN_ACCOUNT_IDS = {
     'xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3': 'Genesis',
@@ -43,9 +42,9 @@ KNOWN_ACCOUNT_IDS = {
     'xrb_1niabkx3gbxit5j5yyqcpas71dkffggbr6zpd3heui8rpoocm5xqbdwq44oh': 'KuCoin Representative',
 }
 
-
 KNOWN_ACCOUNT_NAMES = dict(
-    (name, account) for account, name in KNOWN_ACCOUNT_IDS.items())
+    (name, account) for account, name in KNOWN_ACCOUNT_IDS.items()
+)
 
 
 def public_key_to_xrb_address(public_key):
@@ -130,8 +129,7 @@ def generate_account(seed=None, index=0):
     """
 
     if not seed:
-        seed = unhexlify(
-            ''.join(random.choice('0123456789ABCDEF') for i in range(64)))
+        seed = unhexlify(''.join(random.choice('0123456789ABCDEF') for i in range(64)))
 
     pair = keypair_from_seed(seed, index=index)
     result = {

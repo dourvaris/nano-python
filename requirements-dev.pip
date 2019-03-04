@@ -1,8 +1,10 @@
 bumpversion
 pytest
 pytest-cov
+pytest-xdist
 pytest-runner
 requests_mock
 sphinx
 sphinx-autobuild
 sphinx_rtd_theme
+pre-commit

@@ -66,7 +66,8 @@ def extract_docs():
                 break
         func_desc = ' '.join(func_desc_lines)
 
-        doc = textwrap.dedent("""\
+        doc = textwrap.dedent(
+            """\
             {func_name}
             {func_name_line}
 
@@ -76,11 +77,14 @@ def extract_docs():
             .. .. py:function:: nano.rpc.Client.{func_spec}
 
             .. {doc}
-            """).format(func_spec=func_spec,
-                        func_name_line='-' * len(func_name),
-                        func_name=func_name,
-                        func_desc=func_desc,
-                        doc=doc)
+            """
+        ).format(
+            func_spec=func_spec,
+            func_name_line='-' * len(func_name),
+            func_name=func_name,
+            func_desc=func_desc,
+            doc=doc,
+        )
 
         categories = meta['categories']
         for category in categories:
@@ -101,9 +105,9 @@ def extract_docs():
             docfile.write('%s\n' % (len(title) * '='))
             docfile.write('\n')
 
-
             for func_doc in func_docs:
                 docfile.write(func_doc + '\n')
+
 
 if __name__ == '__main__':
     extract_docs()

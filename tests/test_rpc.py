@@ -1,12 +1,9 @@
 import json
-import mock
+
 import pytest
-import requests
-import requests_mock
 
-from nano.rpc import RPCClient, RPCException
 from conftest import MockRPCMatchException, load_mock_rpc_tests
-
+from nano.rpc import RPCClient, RPCException
 
 mock_rpc_tests = load_mock_rpc_tests()
 
@@ -17,12 +14,10 @@ def rpc(mock_rpc_session):
 
 
 class TestRPCClient(object):
-
-    @pytest.mark.parametrize('arguments', [
-        {},
-        {'host': 'http://localhost:7076/'},
-        {'host': 'http://localhost:7076'},
-    ])
+    @pytest.mark.parametrize(
+        'arguments',
+        [{}, {'host': 'http://localhost:7076/'}, {'host': 'http://localhost:7076'}],
+    )
     def test_create(self, arguments):
         assert RPCClient(**arguments)
 
@@ -30,7 +25,7 @@ class TestRPCClient(object):
         assert rpc.call('version') == {
             "rpc_version": "1",
             "store_version": "10",
-            "node_vendor": "RaiBlocks 9.0"
+            "node_vendor": "RaiBlocks 9.0",
         }
 
     def test_call_invalid_action(self, rpc):
@@ -38,11 +33,10 @@ class TestRPCClient(object):
         with pytest.raises(MockRPCMatchException):
             assert rpc.call('versions')
 
-    @pytest.mark.parametrize('action,test', [
-        (action, test)
-        for action, tests in mock_rpc_tests.items()
-        for test in tests
-    ])
+    @pytest.mark.parametrize(
+        'action,test',
+        [(action, test) for action, tests in mock_rpc_tests.items() for test in tests],
+    )
     def test_rpc_methods(self, rpc, action, test):
         """
         Tests should be in the format:
@@ -76,7 +70,8 @@ class TestRPCClient(object):
             response = test['response']
         except KeyError:
             raise Exception(
-                'invalid test for %s: %s' % (action, json.dumps(test, indent=2)))
+                'invalid test for %s: %s' % (action, json.dumps(test, indent=2))
+            )
 
         if "error" in response:
             with pytest.raises(RPCException):
@@ -117,9 +112,8 @@ class TestRPCClient(object):
 
     def test_bad_test_fails(self, rpc):
         with pytest.raises(AssertionError) as e_info:
-            self.test_rpc_methods(rpc,
-                'version', {
-                    'expected': None,
-                    'request': {'action': 'version'},
-                    'response': {}
-                })
+            self.test_rpc_methods(
+                rpc,
+                'version',
+                {'expected': None, 'request': {'action': 'version'}, 'response': {}},
+            )

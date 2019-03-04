@@ -1,10 +1,9 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
+import ast
 import io
 import os
 import re
-import ast
 import sys
 from shutil import rmtree
 
@@ -26,15 +25,14 @@ with open('requirements-dev.pip') as f:
 
 here = os.path.abspath(os.path.dirname(__file__))
 
-
 with io.open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = '\n' + f.read()
 
-
 _version_re = re.compile(r'__version__\s+=\s+(.*)')
-with open(os.path.join(here, NAME, 'version.py'), 'rb') as f:
-    version = str(ast.literal_eval(_version_re.search(
-        f.read().decode('utf-8')).group(1)))
+with open(os.path.join(here, 'src', NAME, 'version.py'), 'rb') as f:
+    version = str(
+        ast.literal_eval(_version_re.search(f.read().decode('utf-8')).group(1))
+    )
 
 
 class UploadCommand(Command):
@@ -69,6 +67,7 @@ class UploadCommand(Command):
 
         sys.exit()
 
+
 setup(
     name=PYPI_NAME,
     version=version,
@@ -85,27 +84,26 @@ setup(
     tests_require=TESTS_REQUIRE,
     setup_requires=['pytest-runner'],
     include_package_data=True,
-    packages=find_packages(exclude=('tests*',)),
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
     license='MIT',
     classifiers=[
         # Trove classifiers
         # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Software Development :: Libraries',
-        'Development Status :: 3 - Alpha'
+        'Development Status :: 3 - Alpha',
     ],
     # $ setup.py publish support.
-    cmdclass={
-        'upload': UploadCommand,
-    },
+    cmdclass={'upload': UploadCommand},
 )

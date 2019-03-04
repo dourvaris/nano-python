@@ -1,9 +1,9 @@
 [
   {
-    "expected": true, 
+    "expected": true,
     "request": {
       "action": "search_pending_all"
-    }, 
+    },
     "response": {
       "success": ""
     }

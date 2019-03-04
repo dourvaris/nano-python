@@ -2,6 +2,12 @@ Changelog
 =========
 
 
+Version 2.1.0 (2019-02-09)
+--------------------------
+
+- Updates the conversion tools to current nomenclature
+
+
 Version 2.0.1 (2018-02-17)
 --------------------------
 

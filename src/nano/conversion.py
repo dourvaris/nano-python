@@ -1,39 +1,36 @@
 """
-Conversion tools for converting xrb
+Conversion tools for converting Nano units
+Units source: https://github.com/nanocurrency/nano-node/wiki/Distribution,-Mining-and-Units
 
 
-Gxrb = 1000000000000000000000000000000000raw, 10^33
+Gnano/Gxrb/Grai = 1000000000000000000000000000000000raw, 10^33
 
-Mxrb = 1000000000000000000000000000000raw, 10^30
+Mnano/Mxrb/Mrai = 1000000000000000000000000000000raw, 10^30
 
-kxrb = 1000000000000000000000000000raw, 10^27
+knano/kxrb/krai = 1000000000000000000000000000raw, 10^27
 
-xrb  = 1000000000000000000000000raw, 10^24
+nano/xrb/rai  = 1000000000000000000000000raw, 10^24
 
-mxrb = 1000000000000000000000raw, 10^21
+mnano/mxrb/mrai = 1000000000000000000000raw, 10^21
 
-uxrb = 1000000000000000000raw, 10^18
+unano/uxrb/urai = 1000000000000000000raw, 10^18
 
-1 Mxrb used to be also called 1 Mrai
-1 xrb is 10^24 raw
 1 raw is the smallest possible division
-
-Mrai are XRB
-1rai = 1000krai = 1,000,000mrai = 0,000001 XRB
+Mnano used to be called Mxrb or Mrai
+1 nano (formerly xrb or rai) is 10^24 raw
+Mnano is also called NANO, or in the past XRB
 
 """
 
 from decimal import Decimal
 
 BASE_UNIT = 'raw'
-UNIT_NAMES = ['xrb', 'rai']
-UNITS_TO_RAW = {
-    BASE_UNIT: Decimal(1)
-}
+UNIT_NAMES = ['xrb', 'rai', 'nano']
+UNITS_TO_RAW = {BASE_UNIT: Decimal(1)}
 
 
 def _populate_units():
-    # populate the existing units, eg krai, Mrai, Mxrb etc.
+    # populate the existing units, eg krai, Mrai, Mxrb, Gnano etc.
     for name in UNIT_NAMES:
         for i, prefix in enumerate(['G', 'M', 'k', '', 'm', 'u']):
             in_raw = 10 ** (33 - (i * 3))
@@ -41,7 +38,8 @@ def _populate_units():
             UNITS_TO_RAW[unit_name] = Decimal(in_raw)
 
     # special case for XRB
-    UNITS_TO_RAW['XRB'] = UNITS_TO_RAW['Mxrb']
+    UNITS_TO_RAW['XRB'] = UNITS_TO_RAW['Mnano']
+    UNITS_TO_RAW['NANO'] = UNITS_TO_RAW['Mnano']
 
 
 def convert(value, from_unit, to_unit):

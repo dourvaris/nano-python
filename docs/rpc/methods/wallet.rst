@@ -872,5 +872,3 @@ Unlocks **wallet** using **password**
    ...     password="test"
    ... )
    True
-
-

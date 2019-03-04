@@ -109,6 +109,3 @@ Returns a list of pairs of representative and its voting weight
        "xrb_114nk4rwjctu6n6tr6g6ps61g1w3hdpjxfas4xj1tq6i8jyomc5d858xr1xi":
            0
    }
-
-
-

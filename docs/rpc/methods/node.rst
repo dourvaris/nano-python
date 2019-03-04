@@ -311,5 +311,3 @@ Returns the node's RPC version
        "store_version": 10,
        "node_vendor": "RaiBlocks 9.0"
    }
-
-

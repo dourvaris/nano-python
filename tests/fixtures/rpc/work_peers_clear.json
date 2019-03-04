@@ -1,9 +1,9 @@
 [
   {
-    "expected": true, 
+    "expected": true,
     "request": {
       "action": "work_peers_clear"
-    }, 
+    },
     "response": {
       "success": ""
     }

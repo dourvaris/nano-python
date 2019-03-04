@@ -233,5 +233,3 @@ Check whether **work** is valid for block
    ...     hash="718CC2121C3E641059BC1C2CFC45666C99E8AE922F7A807B7D07B62C995D79E2"
    ... )
    True
-
-

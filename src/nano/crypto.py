@@ -1,9 +1,10 @@
 import string
 import struct
-from . import ed25519_blake2
-from pyblake2 import blake2b
 from base64 import b32encode, b32decode
 
+from pyblake2 import blake2b
+
+from . import ed25519_blake2
 
 maketrans = hasattr(bytes, 'maketrans') and bytes.maketrans or string.maketrans
 B32_ALPHABET = b'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'
@@ -54,10 +55,7 @@ def keypair_from_seed(seed, index=0):
     h.update(seed + struct.pack(">L", index))
     priv_key = h.digest()
     pub_key = private_to_public_key(priv_key)
-    return {
-        'private': priv_key,
-        'public': pub_key,
-    }
+    return {'private': priv_key, 'public': pub_key}
 
 
 def b32xrb_encode(value):
